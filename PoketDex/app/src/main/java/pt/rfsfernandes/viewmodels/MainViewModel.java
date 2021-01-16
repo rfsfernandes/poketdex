@@ -1,15 +1,7 @@
 package pt.rfsfernandes.viewmodels;
 
-import android.app.Application;
-import android.content.Context;
-
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentActivity;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import pt.rfsfernandes.custom.Constants;
 import pt.rfsfernandes.data.remote.DataSource;
 import pt.rfsfernandes.data.repository.Repository;
 import pt.rfsfernandes.data.repository.ResponseCallBack;
@@ -20,12 +12,11 @@ import static pt.rfsfernandes.custom.Constants.RESULT_LIMIT;
 
 
 public class MainViewModel extends ViewModel {
-  private int currentOffset = 0;
   private final Repository mRepository = new Repository(DataSource.getPokemonService());
   private final MutableLiveData<PokemonListResponse> mPokemonListResponseMutableLiveData =
       new MutableLiveData<>();
-
   private final MutableLiveData<String> mFecthErrorLiveData = new MutableLiveData<>();
+  private int currentOffset = 0;
 
   public MutableLiveData<PokemonListResponse> getPokemonListResponseMutableLiveData() {
     return mPokemonListResponseMutableLiveData;
@@ -44,7 +35,7 @@ public class MainViewModel extends ViewModel {
           pokemonResult.setListPosition(currentOffset + (i + 1));
         }
         getPokemonListResponseMutableLiveData().setValue(response);
-        if(response.getNextPage() != null) {
+        if (response.getNextPage() != null) {
           currentOffset += RESULT_LIMIT;
         }
       }

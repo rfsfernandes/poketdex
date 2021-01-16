@@ -1,20 +1,16 @@
 package pt.rfsfernandes.custom.template_adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.content.Context;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import pt.rfsfernandes.R;
 import androidx.recyclerview.widget.RecyclerView;
+import pt.rfsfernandes.R;
 
 
 public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.TemplateViewHolder> {
@@ -49,6 +45,17 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.Templa
     return objectList.size();
   }
 
+  /**
+   * Refreshes the objectList and notifies the adapter that the dataset has changed.
+   *
+   * @param objectList The updated list to send to this adapter.
+   */
+
+  public void refreshList(List<Object> objectList) {
+    this.objectList = objectList;
+    notifyDataSetChanged();
+  }
+
   class TemplateViewHolder extends RecyclerView.ViewHolder {
 
     /**
@@ -59,7 +66,6 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.Templa
 
     TemplateViewHolder(@NonNull View itemView) {
       super(itemView);
-      ButterKnife.bind(this, itemView);
     }
 
     /**
@@ -71,17 +77,6 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.Templa
 
     }
 
-  }
-
-  /**
-   * Refreshes the objectList and notifies the adapter that the dataset has changed.
-   *
-   * @param objectList The updated list to send to this adapter.
-   */
-
-  public void refreshList(List<Object> objectList) {
-    this.objectList = objectList;
-    notifyDataSetChanged();
   }
 
 }

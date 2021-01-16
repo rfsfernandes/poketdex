@@ -8,7 +8,7 @@ import pt.rfsfernandes.model.SimpleModelData;
  * Class Ability created at 1/16/21 14:43 for the project PoketDex
  * By: rodrigofernandes
  */
-public class  Ability {
+public class Ability {
   @SerializedName("ability")
   private SimpleModelData ability;
 
