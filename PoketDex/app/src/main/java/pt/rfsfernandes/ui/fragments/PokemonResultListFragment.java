@@ -1,29 +1,36 @@
 package pt.rfsfernandes.ui.fragments;
 
-import android.content.Context;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import pt.rfsfernandes.R;
-import pt.rfsfernandes.ui.fragments.dummy.DummyContent;
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import pt.rfsfernandes.custom.adapters.ItemListClicked;
+import pt.rfsfernandes.custom.adapters.PokemonResultAdapter;
+import pt.rfsfernandes.databinding.FragmentPokemonResultListBinding;
+import pt.rfsfernandes.model.service_responses.PokemonResult;
+import pt.rfsfernandes.viewmodels.MainViewModel;
 
 /**
  * A fragment representing a list of Items.
  */
-public class PokemonResultListFragment extends Fragment {
+public class PokemonResultListFragment extends Fragment implements ItemListClicked<PokemonResult> {
 
-  // TODO: Customize parameter argument names
-  private static final String ARG_COLUMN_COUNT = "column-count";
-  // TODO: Customize parameters
-  private int mColumnCount = 1;
+  private MainViewModel mMainViewModel;
+  private PokemonResultAdapter mPokemonResultAdapter;
+  private FragmentPokemonResultListBinding binding;
+  private List<PokemonResult> mPokemonResultList = new ArrayList<>();
+  private boolean isLoading = false;
 
   /**
    * Mandatory empty constructor for the fragment manager to instantiate the
@@ -32,41 +39,73 @@ public class PokemonResultListFragment extends Fragment {
   public PokemonResultListFragment() {
   }
 
-  // TODO: Customize parameter initialization
-  @SuppressWarnings("unused")
-  public static PokemonResultListFragment newInstance(int columnCount) {
-    PokemonResultListFragment fragment = new PokemonResultListFragment();
-    Bundle args = new Bundle();
-    args.putInt(ARG_COLUMN_COUNT, columnCount);
-    fragment.setArguments(args);
-    return fragment;
-  }
 
   @Override
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    if (getArguments() != null) {
-      mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-    }
-  }
-
-  @Override
-  public View onCreateView(LayoutInflater inflater, ViewGroup container,
+  public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_pokemon_result_list, container, false);
+    binding = FragmentPokemonResultListBinding.inflate(inflater, container, false);
+    View view = binding.getRoot();
+    mMainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+    mPokemonResultAdapter = new PokemonResultAdapter(this);
 
-    // Set the adapter
-    if (view instanceof RecyclerView) {
-      Context context = view.getContext();
-      RecyclerView recyclerView = (RecyclerView) view;
-      if (mColumnCount <= 1) {
-        recyclerView.setLayoutManager(new LinearLayoutManager(context));
-      } else {
-        recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-      }
-      recyclerView.setAdapter(new PokemonResultAdapter(DummyContent.ITEMS));
-    }
+    binding.list.setLayoutManager(new LinearLayoutManager(requireContext()));
+    binding.list.setAdapter(mPokemonResultAdapter);
+
     return view;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    initViewModel();
+
+//    if (((LinearLayoutManager) binding.list.getLayoutManager()).findLastCompletelyVisibleItemPosition() == mPokemonResultList.size() - 1) {
+//      //bottom of list!
+//      mMainViewModel.loadResults();
+//    }
+
+    binding.list.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+      @Override
+      public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+        super.onScrollStateChanged(recyclerView, newState);
+      }
+
+      @Override
+      public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+        super.onScrolled(recyclerView, dx, dy);
+        LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+//        if (!isLoading) {
+        if (!isLoading && linearLayoutManager != null && linearLayoutManager.findLastVisibleItemPosition() == mPokemonResultList.size() - 1) {
+          //bottom of list!
+          mMainViewModel.loadResults();
+          isLoading = true;
+//            isLoading = true;
+        }
+//        }
+      }
+    });
+
+  }
+
+  private void initViewModel() {
+    mMainViewModel.getPokemonListResponseMutableLiveData().observe(getViewLifecycleOwner(),
+        results -> {
+          isLoading = false;
+          mPokemonResultList = results;
+          mPokemonResultAdapter.refreshList(results);
+        });
+  }
+
+  @Override
+  public void onDestroyView() {
+    super.onDestroyView();
+    binding = null;
+  }
+
+  @Override
+  public void onClick(PokemonResult object) {
+    Toast.makeText(requireContext(), object.getName(), Toast.LENGTH_SHORT).show();
   }
 }

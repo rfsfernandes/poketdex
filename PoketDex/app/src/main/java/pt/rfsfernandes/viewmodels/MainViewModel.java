@@ -1,5 +1,7 @@
 package pt.rfsfernandes.viewmodels;
 
+import java.util.List;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import pt.rfsfernandes.data.remote.DataSource;
@@ -13,12 +15,12 @@ import static pt.rfsfernandes.custom.Constants.RESULT_LIMIT;
 
 public class MainViewModel extends ViewModel {
   private final Repository mRepository = new Repository(DataSource.getPokemonService());
-  private final MutableLiveData<PokemonListResponse> mPokemonListResponseMutableLiveData =
+  private final MutableLiveData<List<PokemonResult>> mPokemonListResponseMutableLiveData =
       new MutableLiveData<>();
   private final MutableLiveData<String> mFecthErrorLiveData = new MutableLiveData<>();
   private int currentOffset = 0;
 
-  public MutableLiveData<PokemonListResponse> getPokemonListResponseMutableLiveData() {
+  public MutableLiveData<List<PokemonResult>> getPokemonListResponseMutableLiveData() {
     return mPokemonListResponseMutableLiveData;
   }
 
@@ -34,7 +36,17 @@ public class MainViewModel extends ViewModel {
           PokemonResult pokemonResult = response.getResultList().get(i);
           pokemonResult.setListPosition(currentOffset + (i + 1));
         }
-        getPokemonListResponseMutableLiveData().setValue(response);
+        if(getPokemonListResponseMutableLiveData().getValue() != null) {
+          List<PokemonResult> tempPokemonList = getPokemonListResponseMutableLiveData().getValue();
+          tempPokemonList.remove(tempPokemonList.size() - 1);
+          tempPokemonList.addAll(response.getResultList());
+          tempPokemonList.add(null);
+          getPokemonListResponseMutableLiveData().setValue(tempPokemonList);
+        } else {
+          response.getResultList().add(null);
+          getPokemonListResponseMutableLiveData().setValue(response.getResultList());
+        }
+
         if (response.getNextPage() != null) {
           currentOffset += RESULT_LIMIT;
         }

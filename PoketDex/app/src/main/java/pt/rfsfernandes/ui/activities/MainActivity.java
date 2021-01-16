@@ -3,7 +3,6 @@ package pt.rfsfernandes.ui.activities;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
@@ -35,12 +34,10 @@ public class MainActivity extends FragmentActivity {
     mMainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
 
     mNavControllerList = Navigation.findNavController(this, R.id.displayPokemonList);
-    if(findViewById(R.id.displayPokemonDetails) != null){
+    if (findViewById(R.id.displayPokemonDetails) != null) {
       mNavControllerDetails =
           Navigation.findNavController(this, R.id.displayPokemonDetails);
     }
-
-
 
     initViewModel();
     mMainViewModel.loadResults();
@@ -48,8 +45,9 @@ public class MainActivity extends FragmentActivity {
 
   private void initViewModel() {
     mMainViewModel.getPokemonListResponseMutableLiveData().observe(this, pokemonListResponse -> {
-      Toast.makeText(this, "Success", Toast.LENGTH_SHORT).show();
-      Log.d("Info from db", pokemonListResponse.getResultList().get(0).getName());
+      if (pokemonListResponse.size() > 0) {
+        Log.d("Info from db", pokemonListResponse.get(0).getName());
+      }
     });
 
     mMainViewModel.getFecthErrorLiveData().observe(this, message -> {
