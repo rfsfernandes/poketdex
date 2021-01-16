@@ -1,11 +1,14 @@
 package pt.rfsfernandes.custom.adapters;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.facebook.drawee.drawable.ProgressBarDrawable;
+import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
@@ -22,9 +25,12 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
   private final int VIEW_TYPE_LOADING = 1;
   private List<PokemonResult> mPokemonResultList = new ArrayList<>();
   private ItemListClicked<PokemonResult> callback;
+  private Context mContext;
 
-  public PokemonResultAdapter(ItemListClicked<PokemonResult> pokemonResultItemListClicked) {
+  public PokemonResultAdapter(Context context,
+                              ItemListClicked<PokemonResult> pokemonResultItemListClicked) {
     this.callback = pokemonResultItemListClicked;
+    this.mContext = context;
   }
 
   @Override
@@ -57,11 +63,10 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
   private void populateItemRows(PokemonResultViewHolder holder, int position) {
 
     PokemonResult item = mPokemonResultList.get(position);
-    holder.mItem = mPokemonResultList.get(position);
-    holder.textViewPokemonName.setText(holder.mItem.getName());
-    holder.mSimpleDraweeView.setImageURI(holder.mItem.getPokemonImage());
-
-    holder.mView.setOnClickListener(e -> callback.onClick(holder.mItem));
+    holder.mItem = item;
+    holder.textViewPokemonName.setText(item.getName());
+    holder.mSimpleDraweeView.setImageURI(item.getPokemonImage());
+    holder.mView.setOnClickListener(e -> callback.onClick(item));
 
   }
 
@@ -81,6 +86,9 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
       mView = view;
       textViewPokemonName = (TextView) view.findViewById(R.id.textViewPokemonName);
       mSimpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.imageViewPokemonList);
+      mSimpleDraweeView.setHierarchy(new GenericDraweeHierarchyBuilder(mContext.getResources())
+          .setProgressBarImage(new ProgressBarDrawable())
+          .build());
     }
 
   }

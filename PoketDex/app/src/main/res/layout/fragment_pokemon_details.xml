@@ -1,21 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/frameLayout"
+<ScrollView android:id="@+id/frameLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fresco="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.PokemonDetailsFragment">
-
-  <!-- TODO: Update blank fragment layout -->
-  <TextView
-      android:id="@+id/textView"
-      android:layout_width="wrap_content"
+    fresco:context=".ui.fragments.PokemonDetailsFragment">
+  <LinearLayout
+      android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:text="@string/hello_blank_fragment"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent" />
+      android:gravity="center"
+      android:orientation="vertical"
+      >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/textViewPokemonNameTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/textViewDefault"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Default"
+        android:gravity="center"
+        android:layout_marginTop="16dp" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/imageViewPokemonDefault"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:scaleType="centerCrop"
+        fresco:placeholderImage="@drawable/pokemon_placeholder"
+        fresco:roundedCornerRadius="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Shiny"
+        android:gravity="center"
+        android:layout_marginTop="16dp" />
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/imageViewPokemonShiny"
+        android:layout_width="@dimen/_150sdp"
+        android:layout_height="@dimen/_150sdp"
+        android:scaleType="centerCrop"
+        fresco:placeholderImage="@drawable/pokemon_placeholder"
+        fresco:roundedCornerRadius="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"/>
+
+  </LinearLayout>
+</ScrollView>

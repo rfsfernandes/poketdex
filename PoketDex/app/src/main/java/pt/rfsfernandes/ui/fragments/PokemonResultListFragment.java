@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +18,7 @@ import pt.rfsfernandes.custom.adapters.ItemListClicked;
 import pt.rfsfernandes.custom.adapters.PokemonResultAdapter;
 import pt.rfsfernandes.databinding.FragmentPokemonResultListBinding;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
+import pt.rfsfernandes.ui.activities.MainActivity;
 import pt.rfsfernandes.viewmodels.MainViewModel;
 
 /**
@@ -32,10 +32,6 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
   private List<PokemonResult> mPokemonResultList = new ArrayList<>();
   private boolean isLoading = false;
 
-  /**
-   * Mandatory empty constructor for the fragment manager to instantiate the
-   * fragment (e.g. upon screen orientation changes).
-   */
   public PokemonResultListFragment() {
   }
 
@@ -46,7 +42,7 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
     binding = FragmentPokemonResultListBinding.inflate(inflater, container, false);
     View view = binding.getRoot();
     mMainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-    mPokemonResultAdapter = new PokemonResultAdapter(this);
+    mPokemonResultAdapter = new PokemonResultAdapter(requireContext(), this);
 
     binding.list.setLayoutManager(new LinearLayoutManager(requireContext()));
     binding.list.setAdapter(mPokemonResultAdapter);
@@ -59,10 +55,6 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
     super.onViewCreated(view, savedInstanceState);
     initViewModel();
 
-//    if (((LinearLayoutManager) binding.list.getLayoutManager()).findLastCompletelyVisibleItemPosition() == mPokemonResultList.size() - 1) {
-//      //bottom of list!
-//      mMainViewModel.loadResults();
-//    }
 
     binding.list.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -76,14 +68,13 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
         super.onScrolled(recyclerView, dx, dy);
         LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
-//        if (!isLoading) {
         if (!isLoading && linearLayoutManager != null && linearLayoutManager.findLastVisibleItemPosition() == mPokemonResultList.size() - 1) {
-          //bottom of list!
+
           mMainViewModel.loadResults();
           isLoading = true;
-//            isLoading = true;
+
         }
-//        }
+
       }
     });
 
@@ -106,6 +97,8 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
 
   @Override
   public void onClick(PokemonResult object) {
-    Toast.makeText(requireContext(), object.getName(), Toast.LENGTH_SHORT).show();
+    if (getActivity() != null && getActivity() instanceof MainActivity) {
+      ((MainActivity) getActivity()).onItemClick(object.getListPosition());
+    }
   }
 }

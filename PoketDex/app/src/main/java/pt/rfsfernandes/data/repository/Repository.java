@@ -1,6 +1,9 @@
 package pt.rfsfernandes.data.repository;
 
+import android.util.Log;
+
 import pt.rfsfernandes.data.remote.PokemonService;
+import pt.rfsfernandes.model.pokemon.Pokemon;
 import pt.rfsfernandes.model.service_responses.PokemonListResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,7 +29,7 @@ public class Repository {
             PokemonListResponse pokemonListResponse = response.body();
             callBack.onSuccess(pokemonListResponse);
           } else {
-            callBack.onFailure("");
+            callBack.onFailure(response.message());
           }
         } else {
           callBack.onFailure(response.message());
@@ -36,9 +39,38 @@ public class Repository {
       @Override
       public void onFailure(Call<PokemonListResponse> call, Throwable t) {
         callBack.onFailure(t.getLocalizedMessage());
+        Log.e("PokemonListError", t.getLocalizedMessage());
       }
     });
 
   }
+
+  public void getPokemonById(int id, ResponseCallBack<Pokemon> callBack) {
+    Call<Pokemon> call = this.mPokemonService.getPokemonById(id);
+
+    call.enqueue(new Callback<Pokemon>() {
+      @Override
+      public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
+        if(response.isSuccessful()) {
+          if(response.body() != null) {
+            Pokemon pokemon = response.body();
+            callBack.onSuccess(pokemon);
+          } else {
+            callBack.onFailure(response.message());
+          }
+        } else {
+          callBack.onFailure(response.message());
+        }
+      }
+
+      @Override
+      public void onFailure(Call<Pokemon> call, Throwable t) {
+        callBack.onFailure(t.getLocalizedMessage());
+        Log.e("PokemonByIdError", t.getLocalizedMessage());
+      }
+    });
+
+  }
+
 
 }
