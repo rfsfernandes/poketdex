@@ -1,0 +1,5 @@
+<resources>
+  <string name="app_name">PoketDex</string>
+<!--  Error handling -->
+  <string name="error_on_request">Some kind of error occurred. Please try again!</string>
+</resources>
