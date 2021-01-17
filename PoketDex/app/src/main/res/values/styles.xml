@@ -1,11 +1,37 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-    </style>
+  <!-- Base application theme. -->
+  <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <!-- Customize your theme here. -->
+    <item name="colorPrimary">@color/colorPrimary</item>
+    <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    <item name="colorAccent">@color/colorAccent</item>
+  </style>
+
+  <style name="stat_titles" parent="Widget.AppCompat.TextView">
+    <item name="android:textStyle">bold</item>
+    <item name="android:textSize">@dimen/_14sdp</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:layout_weight">1</item>
+    <item name="background">@drawable/cell_stroke</item>
+  </style>
+
+  <style name="details_titles" parent="Widget.AppCompat.TextView">
+    <item name="android:textStyle">bold</item>
+    <item name="android:textSize">@dimen/_16sdp</item>
+    <item name="android:textColor">@color/colorAccent</item>
+    <item name="android:gravity">center</item>
+    <item name="android:textAllCaps">true</item>
+    <item name="android:layout_weight">1</item>
+  </style>
+
+  <style name="stat_values" parent="Widget.AppCompat.TextView">
+    <item name="android:textSize">@dimen/_12sdp</item>
+    <item name="android:textColor">@color/colorAccent</item>
+    <item name="android:gravity">center</item>
+    <item name="android:layout_weight">1</item>
+    <item name="background">@drawable/cell_stroke</item>
+  </style>
 
 </resources>

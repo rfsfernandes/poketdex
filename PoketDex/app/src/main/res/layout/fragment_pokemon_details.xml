@@ -1,61 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:id="@+id/frameLayout"
+<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/frameLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     fresco:context=".ui.fragments.PokemonDetailsFragment">
-  <LinearLayout
+
+  <ScrollView
+      android:id="@+id/content"
       android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      fresco:context=".ui.fragments.PokemonDetailsFragment">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:baselineAligned="false"
+          android:divider="@drawable/invisible_divider"
+          android:orientation="horizontal"
+          android:paddingEnd="8dp"
+          android:paddingStart="8dp"
+          android:showDividers="middle"
+          android:gravity="center">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+          <TextView
+              android:id="@+id/textViewDefault"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="16dp"
+              style="@style/details_titles"
+              android:textAllCaps="false"/>
+
+          <RelativeLayout
+              android:layout_width="@dimen/_150sdp"
+              android:layout_height="@dimen/_150sdp"
+              android:layout_marginBottom="16dp"
+              android:layout_marginTop="16dp">
+            <View
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_150sdp"
+                android:background="@drawable/cell_stroke_round"/>
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/imageViewPokemonDefault"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_150sdp"
+
+                fresco:placeholderImage="@drawable/pokemon_placeholder"
+                fresco:roundedCornerRadius="8dp" />
+          </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center">
+
+          <TextView
+              android:id="@+id/textViewShiny"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="16dp"
+              style="@style/details_titles"
+              android:textAllCaps="false" />
+          <RelativeLayout
+              android:layout_width="@dimen/_150sdp"
+              android:layout_height="@dimen/_150sdp"
+              android:layout_marginBottom="16dp"
+              android:layout_marginTop="16dp">
+            <View
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_150sdp"
+                android:background="@drawable/cell_stroke_round"/>
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/imageViewPokemonShiny"
+                android:layout_width="@dimen/_150sdp"
+                android:layout_height="@dimen/_150sdp"
+
+                fresco:placeholderImage="@drawable/pokemon_placeholder"
+                fresco:roundedCornerRadius="8dp" />
+
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"
+                android:src="@drawable/shiny" />
+
+          </RelativeLayout>
+
+        </LinearLayout>
+
+      </LinearLayout>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          style="@style/details_titles"
+
+          android:text="@string/type" />
+      <LinearLayout
+          android:id="@+id/linearLayoutTypeContainer"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal"
+          android:divider="@drawable/invisible_divider"
+          android:showDividers="middle"
+          android:gravity="center">
+      </LinearLayout>
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          style="@style/details_titles"
+          android:text="@string/stats" />
+
+      <LinearLayout
+          android:id="@+id/linearLayoutStatsContainer"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginEnd="8dp"
+          android:layout_marginStart="8dp"
+          android:layout_marginTop="5dp"
+          android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+          <TextView
+              style="@style/stat_titles"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke"
+              android:text="@string/hp" />
+
+          <TextView
+              style="@style/stat_titles"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke"
+              android:text="@string/attack" />
+
+          <TextView
+              style="@style/stat_titles"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke"
+              android:text="@string/defense" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+          <TextView
+              android:id="@+id/textViewStatHp"
+              style="@style/stat_values"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke" />
+
+          <TextView
+              android:id="@+id/textViewStatAttack"
+              style="@style/stat_values"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke" />
+
+          <TextView
+              android:id="@+id/textViewStatDefense"
+              style="@style/stat_values"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+          <TextView
+              style="@style/stat_titles"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke"
+              android:text="@string/special_attack" />
+
+          <TextView
+              style="@style/stat_titles"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke"
+              android:text="@string/special_defense" />
+
+          <TextView
+              style="@style/stat_titles"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke"
+              android:text="@string/speed" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/cell_stroke"
+            android:orientation="horizontal">
+
+          <TextView
+              android:id="@+id/textViewStatSpecialAttack"
+              style="@style/stat_values"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke" />
+
+          <TextView
+              android:id="@+id/textViewStatSpecialDefense"
+              style="@style/stat_values"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke" />
+
+          <TextView
+              android:id="@+id/textViewStatSpeed"
+              style="@style/stat_values"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke" />
+        </LinearLayout>
+      </LinearLayout>
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          style="@style/details_titles"
+          android:text="@string/attacks" />
+    </LinearLayout>
+  </ScrollView>
+
+  <ProgressBar
+      android:id="@+id/progressBar"
+      style="?android:attr/progressBarStyle"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:gravity="center"
-      android:orientation="vertical"
-      >
-
-    <TextView
-        android:id="@+id/textViewPokemonNameTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:id="@+id/textViewDefault"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Default"
-        android:gravity="center"
-        android:layout_marginTop="16dp" />
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/imageViewPokemonDefault"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:scaleType="centerCrop"
-        fresco:placeholderImage="@drawable/pokemon_placeholder"
-        fresco:roundedCornerRadius="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Shiny"
-        android:gravity="center"
-        android:layout_marginTop="16dp" />
-
-    <com.facebook.drawee.view.SimpleDraweeView
-        android:id="@+id/imageViewPokemonShiny"
-        android:layout_width="@dimen/_150sdp"
-        android:layout_height="@dimen/_150sdp"
-        android:scaleType="centerCrop"
-        fresco:placeholderImage="@drawable/pokemon_placeholder"
-        fresco:roundedCornerRadius="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"/>
-
-  </LinearLayout>
-</ScrollView>
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent"
+      android:indeterminate="true"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

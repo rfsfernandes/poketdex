@@ -9,12 +9,9 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
-import androidx.navigation.NavDirections;
 import androidx.navigation.Navigation;
 import pt.rfsfernandes.R;
 import pt.rfsfernandes.databinding.ActivityMainBinding;
-import pt.rfsfernandes.ui.fragments.PokemonDetailsFragment;
-import pt.rfsfernandes.ui.fragments.PokemonResultListFragment;
 import pt.rfsfernandes.viewmodels.MainViewModel;
 
 public class MainActivity extends FragmentActivity {
@@ -45,15 +42,21 @@ public class MainActivity extends FragmentActivity {
     }
 
     initViewModel();
-    mMainViewModel.loadResults();
+    if(savedInstanceState == null) {
+      mMainViewModel.loadResults();
+    }
 
   }
 
   public void onItemClick(int pokemonId) {
-    if(!isLandscape) {
+    if (!isLandscape) {
       mNavControllerList.navigate(R.id.pokemonDetailsFragment);
+    } else {
+      if (mActivityMainBinding.linearLaoutDetailsContainer != null) {
+        mActivityMainBinding.linearLaoutDetailsContainer.setVisibility(View.VISIBLE);
+      }
     }
-
+    mMainViewModel.isLoading(true);
     mMainViewModel.pokemonById(pokemonId);
 
   }

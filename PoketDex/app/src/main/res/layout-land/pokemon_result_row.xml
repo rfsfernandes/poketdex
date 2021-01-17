@@ -9,12 +9,12 @@
     android:layout_marginStart="10dp"
     android:layout_marginTop="5dp"
     android:orientation="horizontal"
-    app:cardCornerRadius="8dp">
+    app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="?android:attr/colorBackground">
 
-  <LinearLayout
+  <RelativeLayout
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:orientation="horizontal">
+      android:layout_height="@dimen/_50sdp">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageViewPokemonList"
@@ -23,12 +23,46 @@
         android:scaleType="centerCrop"
         fresco:placeholderImage="@drawable/pokemon_placeholder" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginStart="0dp"
+        android:layout_toEndOf="@+id/imageViewPokemonList">
+
+      <View
+          android:id="@+id/viewSelect"
+          android:layout_width="175dp"
+          android:layout_height="0dp"
+          android:layout_centerInParent="true"
+          android:background="@drawable/selected_rectangle"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+      <TextView
+          android:id="@+id/textViewPokemonNumber"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="16dp"
+          android:text=""
+          android:textStyle="bold"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:id="@+id/textViewPokemonName"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="" />
+        android:text=""
+        android:layout_centerInParent="true"/>
 
-  </LinearLayout>
+  </RelativeLayout>
 </androidx.cardview.widget.CardView>

@@ -17,6 +17,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import pt.rfsfernandes.R;
+import pt.rfsfernandes.custom.utils.UtilsClass;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
 
 
@@ -64,9 +65,14 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     PokemonResult item = mPokemonResultList.get(position);
     holder.mItem = item;
-    holder.textViewPokemonName.setText(item.getName());
+    holder.textViewPokemonName.setText(UtilsClass.toCamelCase(item.getName()));
     holder.mSimpleDraweeView.setImageURI(item.getPokemonImage());
-    holder.mView.setOnClickListener(e -> callback.onClick(item));
+    holder.textViewPokemonNumber.setText(String.valueOf(item.getListPosition()));
+    holder.mView.setOnClickListener(e -> {
+      callback.onClick(item);
+    });
+
+    holder.selectedView.setVisibility(item.isSelected() ? View.VISIBLE : View.GONE);
 
   }
 
@@ -79,12 +85,16 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
     public final View mView;
     public final TextView textViewPokemonName;
     public final SimpleDraweeView mSimpleDraweeView;
+    public final TextView textViewPokemonNumber;
+    public final View selectedView;
     public PokemonResult mItem;
 
     public PokemonResultViewHolder(View view) {
       super(view);
       mView = view;
       textViewPokemonName = (TextView) view.findViewById(R.id.textViewPokemonName);
+      textViewPokemonNumber = (TextView) view.findViewById(R.id.textViewPokemonNumber);
+      selectedView = (View) view.findViewById(R.id.viewSelect);
       mSimpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.imageViewPokemonList);
       mSimpleDraweeView.setHierarchy(new GenericDraweeHierarchyBuilder(mContext.getResources())
           .setProgressBarImage(new ProgressBarDrawable())

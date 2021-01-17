@@ -2,6 +2,26 @@
 <resources>
   <color name="colorPrimary">#005691</color>
   <color name="colorPrimaryDark">#004a7c</color>
-  <color name="colorAccent">#00adb5</color>
+  <color name="colorAccent">#F04037</color>
   <color name="white">#fafafa</color>
+  <color name="black">#000000</color>
+<!--  Pokemon types colors -->
+  <color name="bug">#AABB1F</color>
+  <color name="dark">#543D31</color>
+  <color name="dragon">#7961E4</color>
+  <color name="electric">#FCBE1B</color>
+  <color name="fairy">#F7BAF7</color>
+  <color name="fighting">#853821</color>
+  <color name="fire">#F45424</color>
+  <color name="flying">#9BACF6</color>
+  <color name="ghost">#6160B3</color>
+  <color name="grass">#76C538</color>
+  <color name="ground">#D6B75D</color>
+  <color name="ice">#AEEBFF</color>
+  <color name="normal">#CAC4BD</color>
+  <color name="poison">#984A99</color>
+  <color name="psychic">#EE5289</color>
+  <color name="rock">#BDA55A</color>
+  <color name="steel">#C3C3CE</color>
+  <color name="water">#379AFC</color>
 </resources>

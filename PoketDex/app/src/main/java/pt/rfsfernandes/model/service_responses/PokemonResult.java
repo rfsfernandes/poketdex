@@ -10,6 +10,7 @@ import pt.rfsfernandes.model.SimpleModelData;
 public class PokemonResult extends SimpleModelData {
   private int listPosition;
   private String pokemonImage;
+  private boolean selected = false;
 
   public PokemonResult(String name) {
     super(name);
@@ -22,6 +23,14 @@ public class PokemonResult extends SimpleModelData {
 
   public String getPokemonImage() {
     return pokemonImage;
+  }
+
+  public boolean isSelected() {
+    return selected;
+  }
+
+  public void setSelected(boolean selected) {
+    this.selected = selected;
   }
 
   public void setListPosition(int listPosition) {

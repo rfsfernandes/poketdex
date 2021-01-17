@@ -22,6 +22,8 @@ public class MainViewModel extends ViewModel {
 
   private final MutableLiveData<Pokemon> mPokemonMutableLiveData = new MutableLiveData<>();
 
+  private final MutableLiveData<Boolean> isLoadingMutableLiveData = new MutableLiveData<>();
+
   private int currentOffset = 0;
 
   public MutableLiveData<List<PokemonResult>> getPokemonListResponseMutableLiveData() {
@@ -34,6 +36,10 @@ public class MainViewModel extends ViewModel {
 
   public MutableLiveData<Pokemon> getPokemonMutableLiveData() {
     return mPokemonMutableLiveData;
+  }
+
+  public MutableLiveData<Boolean> getIsLoadingMutableLiveData() {
+    return isLoadingMutableLiveData;
   }
 
   public void loadResults() {
@@ -79,6 +85,10 @@ public class MainViewModel extends ViewModel {
         getFecthErrorLiveData().setValue(errorMessage);
       }
     });
+  }
+
+  public void isLoading(boolean isLoading) {
+    getIsLoadingMutableLiveData().setValue(isLoading);
   }
 
 }
