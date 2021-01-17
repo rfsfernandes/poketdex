@@ -57,7 +57,7 @@ public class MainViewModel extends ViewModel {
           PokemonResult pokemonResult = response.getResultList().get(i);
           pokemonResult.setListPosition(currentOffset + (i + 1));
         }
-        if(getPokemonListResponseMutableLiveData().getValue() != null) {
+        if (getPokemonListResponseMutableLiveData().getValue() != null) {
           List<PokemonResult> tempPokemonList = getPokemonListResponseMutableLiveData().getValue();
           tempPokemonList.remove(tempPokemonList.size() - 1);
           tempPokemonList.addAll(response.getResultList());
@@ -99,7 +99,7 @@ public class MainViewModel extends ViewModel {
     this.mRepository.getPokemonSpecies(pokemonId, new ResponseCallBack<PokemonSpecies>() {
       @Override
       public void onSuccess(PokemonSpecies response) {
-        if(response != null) {
+        if (response != null) {
           getPokemonDescriptionLiveData().setValue(response.getFlavourEntriesList().get(0).getFlavourText());
         }
       }
@@ -118,10 +118,10 @@ public class MainViewModel extends ViewModel {
   public void setSelected(int listId) {
     List<PokemonResult> pokemonResults = getPokemonListResponseMutableLiveData().getValue();
 
-    if(pokemonResults != null) {
+    if (pokemonResults != null) {
       for (PokemonResult results :
-      pokemonResults) {
-        if(results != null) {
+          pokemonResults) {
+        if (results != null) {
           results.setSelected(results.getListPosition() == listId);
         }
       }

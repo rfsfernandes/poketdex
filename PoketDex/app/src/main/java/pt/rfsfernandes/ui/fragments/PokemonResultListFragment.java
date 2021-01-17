@@ -106,7 +106,7 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
 
   @Override
   public void onClick(PokemonResult object) {
-    if(mMediaPlayer != null) {
+    if (mMediaPlayer != null) {
       mMediaPlayer.start();
     }
     mMainViewModel.setSelected(object.getListPosition());

@@ -1,9 +1,6 @@
 package pt.rfsfernandes.custom.adapters;
 
 import android.content.Context;
-import android.graphics.BlendMode;
-import android.graphics.BlendModeColorFilter;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,8 +27,8 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
   private final int VIEW_TYPE_ITEM = 0;
   private final int VIEW_TYPE_LOADING = 1;
   private List<PokemonResult> mPokemonResultList = new ArrayList<>();
-  private ItemListClicked<PokemonResult> callback;
-  private Context mContext;
+  private final ItemListClicked<PokemonResult> callback;
+  private final Context mContext;
 
   public PokemonResultAdapter(Context context,
                               ItemListClicked<PokemonResult> pokemonResultItemListClicked) {
@@ -60,7 +57,7 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
 
   @Override
   public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-    if(holder instanceof PokemonResultViewHolder) {
+    if (holder instanceof PokemonResultViewHolder) {
       populateItemRows((PokemonResultViewHolder) holder, position);
     } else {
       dealWithLoading((LoadingViewHolder) holder);
@@ -94,6 +91,11 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
     return mPokemonResultList.size();
   }
 
+  public void refreshList(List<PokemonResult> pokemonResults) {
+    this.mPokemonResultList = pokemonResults;
+    notifyDataSetChanged();
+  }
+
   public class PokemonResultViewHolder extends RecyclerView.ViewHolder {
     public final View mView;
     public final TextView textViewPokemonName;
@@ -106,15 +108,15 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
     public PokemonResultViewHolder(View view) {
       super(view);
       mView = view;
-      textViewPokemonName = (TextView) view.findViewById(R.id.textViewPokemonName);
-      textViewPokemonNumber = (TextView) view.findViewById(R.id.textViewPokemonNumber);
-      selectedView = (View) view.findViewById(R.id.viewSelect);
-      mSimpleDraweeView = (SimpleDraweeView) view.findViewById(R.id.imageViewPokemonList);
+      textViewPokemonName = view.findViewById(R.id.textViewPokemonName);
+      textViewPokemonNumber = view.findViewById(R.id.textViewPokemonNumber);
+      selectedView = view.findViewById(R.id.viewSelect);
+      mSimpleDraweeView = view.findViewById(R.id.imageViewPokemonList);
       mSimpleDraweeView.setHierarchy(new GenericDraweeHierarchyBuilder(mContext.getResources())
           .setProgressBarImage(new ProgressBarDrawable())
           .build());
 
-      imageViewIconPokeball = (ImageView) view.findViewById(R.id.imageViewIconPokeball);
+      imageViewIconPokeball = view.findViewById(R.id.imageViewIconPokeball);
     }
 
   }
@@ -128,10 +130,5 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
       progressBar = itemView.findViewById(R.id.progressBar);
 
     }
-  }
-
-  public void refreshList(List<PokemonResult> pokemonResults) {
-    this.mPokemonResultList = pokemonResults;
-    notifyDataSetChanged();
   }
 }

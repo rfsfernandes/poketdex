@@ -21,6 +21,12 @@ public class PokemonResult extends SimpleModelData {
     return listPosition;
   }
 
+  public void setListPosition(int listPosition) {
+    this.listPosition = listPosition;
+    this.pokemonImage = Constants.ARTWORK_URL.replace("{pokemonId}",
+        String.valueOf(this.listPosition));
+  }
+
   public String getPokemonImage() {
     return pokemonImage;
   }
@@ -31,12 +37,6 @@ public class PokemonResult extends SimpleModelData {
 
   public void setSelected(boolean selected) {
     this.selected = selected;
-  }
-
-  public void setListPosition(int listPosition) {
-    this.listPosition = listPosition;
-    this.pokemonImage = Constants.ARTWORK_URL.replace("{pokemonId}",
-        String.valueOf(this.listPosition));
   }
 
   @Override

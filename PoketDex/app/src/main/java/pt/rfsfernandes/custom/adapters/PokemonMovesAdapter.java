@@ -1,6 +1,5 @@
 package pt.rfsfernandes.custom.adapters;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +10,6 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import pt.rfsfernandes.R;
-import pt.rfsfernandes.custom.utils.UtilsClass;
 import pt.rfsfernandes.model.pokemon.moves.Moves;
 
 
@@ -50,6 +48,11 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
     return mPokemonMoves.size();
   }
 
+  public void refreshList(List<Moves> moves) {
+    this.mPokemonMoves = moves;
+    notifyDataSetChanged();
+  }
+
   public class MovesViewHolder extends RecyclerView.ViewHolder {
     public final View mView;
     public final TextView textViewPokemonName;
@@ -59,14 +62,9 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
     public MovesViewHolder(View view) {
       super(view);
       mView = view;
-      textViewPokemonName = (TextView) view.findViewById(R.id.textViewMoves);
-      selectedView = (View) view.findViewById(R.id.viewSelect);
+      textViewPokemonName = view.findViewById(R.id.textViewMoves);
+      selectedView = view.findViewById(R.id.viewSelect);
     }
 
-  }
-
-  public void refreshList(List<Moves> moves) {
-    this.mPokemonMoves = moves;
-    notifyDataSetChanged();
   }
 }

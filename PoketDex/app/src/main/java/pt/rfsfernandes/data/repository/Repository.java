@@ -52,8 +52,8 @@ public class Repository {
     call.enqueue(new Callback<Pokemon>() {
       @Override
       public void onResponse(Call<Pokemon> call, Response<Pokemon> response) {
-        if(response.isSuccessful()) {
-          if(response.body() != null) {
+        if (response.isSuccessful()) {
+          if (response.body() != null) {
             Pokemon pokemon = response.body();
             callBack.onSuccess(pokemon);
           } else {
@@ -73,13 +73,13 @@ public class Repository {
 
   }
 
-  public void getPokemonSpecies(int pokemonId, ResponseCallBack<PokemonSpecies> callBack){
+  public void getPokemonSpecies(int pokemonId, ResponseCallBack<PokemonSpecies> callBack) {
     Call<PokemonSpecies> call = this.mPokemonService.getPokemonSpeciesById(pokemonId);
     call.enqueue(new Callback<PokemonSpecies>() {
       @Override
       public void onResponse(Call<PokemonSpecies> call, Response<PokemonSpecies> response) {
-        if(response.isSuccessful()) {
-          if(response.body() != null) {
+        if (response.isSuccessful()) {
+          if (response.body() != null) {
             PokemonSpecies pokemonSpecies = response.body();
             callBack.onSuccess(pokemonSpecies);
           } else {

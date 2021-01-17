@@ -1,7 +1,5 @@
 package pt.rfsfernandes.ui.fragments;
 
-import android.graphics.BlendMode;
-import android.graphics.BlendModeColorFilter;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -9,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.drawee.drawable.ProgressBarDrawable;
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder;
@@ -42,6 +39,7 @@ public class PokemonDetailsFragment extends Fragment {
   private MainViewModel mMainViewModel;
   private PokemonMovesAdapter mPokemonMovesAdapter;
   private MyApplication mMyApplication;
+
   public PokemonDetailsFragment() {
     // Required empty public constructor
   }
@@ -54,7 +52,7 @@ public class PokemonDetailsFragment extends Fragment {
     binding = FragmentPokemonDetailsBinding.inflate(inflater, container, false);
     View view = binding.getRoot();
     mMainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-    mMyApplication = (MyApplication)requireActivity().getApplication();
+    mMyApplication = (MyApplication) requireActivity().getApplication();
     setupViews();
     return view;
   }
@@ -69,7 +67,7 @@ public class PokemonDetailsFragment extends Fragment {
     binding.imageViewPokemonDefault.setHierarchy(new GenericDraweeHierarchyBuilder(getResources())
         .setProgressBarImage(new ProgressBarDrawable())
         .build());
-    if(mMyApplication.isLandscape()) {
+    if (mMyApplication.isLandscape()) {
       binding.frameLayout.setVisibility(View.GONE);
     }
     mPokemonMovesAdapter = new PokemonMovesAdapter();
@@ -164,7 +162,7 @@ public class PokemonDetailsFragment extends Fragment {
           binding.linearLayoutTypeContainer, false);
       int color = UtilsClass.returnColorId(requireContext(), type.getType().getName());
       LinearLayout linearLayoutType =
-          (LinearLayout) view.findViewById(R.id.linearLayoutType);
+          view.findViewById(R.id.linearLayoutType);
       Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.type_background,
           null);
       if (drawable != null) {
@@ -172,7 +170,7 @@ public class PokemonDetailsFragment extends Fragment {
       }
       linearLayoutType.setBackground(drawable);
       TextView textView =
-          (TextView) view.findViewById(R.id.textViewType);
+          view.findViewById(R.id.textViewType);
       textView.setText(type.getType().getName());
 
       binding.linearLayoutTypeContainer.addView(view);
@@ -238,13 +236,13 @@ public class PokemonDetailsFragment extends Fragment {
           binding.linearLayoutAbilitiesContainer, false);
 
       TextView textViewAbilityName =
-          (TextView) view.findViewById(R.id.textViewAbilityName);
+          view.findViewById(R.id.textViewAbilityName);
       textViewAbilityName.setText(UtilsClass.toCamelCase(ability.getAbility().getName()));
 
       TextView textViewAbilitySlot =
-          (TextView) view.findViewById(R.id.textViewAbilitySlot);
+          view.findViewById(R.id.textViewAbilitySlot);
 
-      ((TextView) view.findViewById(R.id.textViewAbilityHidden)).setVisibility(ability.isHidden() ? View.INVISIBLE : View.VISIBLE);
+      view.findViewById(R.id.textViewAbilityHidden).setVisibility(ability.isHidden() ? View.INVISIBLE : View.VISIBLE);
 
       textViewAbilitySlot.setText(String.format("%s %s", getString(R.string.slot_n), ability.getSlot()));
 

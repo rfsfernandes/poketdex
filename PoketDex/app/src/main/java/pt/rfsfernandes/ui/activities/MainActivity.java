@@ -36,7 +36,7 @@ public class MainActivity extends FragmentActivity {
     setContentView(view);
     mMyApplication = (MyApplication) getApplication();
     mMainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-    if(mMediaPlayerWalkingMusic != null) {
+    if (mMediaPlayerWalkingMusic != null) {
       mMediaPlayerWalkingMusic.start();
       mMediaPlayerWalkingMusic.setLooping(true);
     }
@@ -77,7 +77,7 @@ public class MainActivity extends FragmentActivity {
   @Override
   protected void onResume() {
     super.onResume();
-    if(mMediaPlayerWalkingMusic != null && !mMediaPlayerWalkingMusic.isPlaying()) {
+    if (mMediaPlayerWalkingMusic != null && !mMediaPlayerWalkingMusic.isPlaying()) {
       mMediaPlayerWalkingMusic.start();
     }
   }

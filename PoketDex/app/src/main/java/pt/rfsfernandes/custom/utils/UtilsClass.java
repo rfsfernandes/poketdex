@@ -8,6 +8,7 @@ public class UtilsClass {
 
   /**
    * A method to turn pokemon names with hifen (-) into camel cased name
+   *
    * @param word to camel case
    * @return String in camel case
    */
@@ -33,6 +34,7 @@ public class UtilsClass {
 
   /**
    * Returns the color matching the name
+   *
    * @param typeName Pokemon Type
    * @return Color of corresponding pokemon type
    */
