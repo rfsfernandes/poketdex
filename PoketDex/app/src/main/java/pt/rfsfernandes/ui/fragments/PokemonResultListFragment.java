@@ -97,26 +97,21 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
 
   @Override
   public void onClick(PokemonResult object) {
+    mMainViewModel.setSelected(object.getListPosition());
+    if (getActivity() != null && getActivity() instanceof MainActivity) {
+      ((MainActivity) getActivity()).onItemClick(object.getListPosition());
+    }
     new Thread(new Runnable() {
       @Override
       public void run() {
         if(mMainViewModel.getPokemonListResponseMutableLiveData().getValue() != null) {
-          for (PokemonResult results :
-              mMainViewModel.getPokemonListResponseMutableLiveData().getValue()) {
-            if(results != null) {
 
-              results.setSelected(results.getListPosition() == object.getListPosition());
-            }
-
-          }
 
           getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
               mPokemonResultAdapter.notifyDataSetChanged();
-              if (getActivity() != null && getActivity() instanceof MainActivity) {
-                ((MainActivity) getActivity()).onItemClick(object.getListPosition());
-              }
+
             }
           });
         }
