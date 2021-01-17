@@ -4,6 +4,7 @@ import android.util.Log;
 
 import pt.rfsfernandes.data.remote.PokemonService;
 import pt.rfsfernandes.model.pokemon.Pokemon;
+import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonListResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -65,6 +66,32 @@ public class Repository {
 
       @Override
       public void onFailure(Call<Pokemon> call, Throwable t) {
+        callBack.onFailure(t.getLocalizedMessage());
+        Log.e("PokemonByIdError", t.getLocalizedMessage());
+      }
+    });
+
+  }
+
+  public void getPokemonSpecies(int pokemonId, ResponseCallBack<PokemonSpecies> callBack){
+    Call<PokemonSpecies> call = this.mPokemonService.getPokemonSpeciesById(pokemonId);
+    call.enqueue(new Callback<PokemonSpecies>() {
+      @Override
+      public void onResponse(Call<PokemonSpecies> call, Response<PokemonSpecies> response) {
+        if(response.isSuccessful()) {
+          if(response.body() != null) {
+            PokemonSpecies pokemonSpecies = response.body();
+            callBack.onSuccess(pokemonSpecies);
+          } else {
+            callBack.onFailure(response.message());
+          }
+        } else {
+          callBack.onFailure(response.message());
+        }
+      }
+
+      @Override
+      public void onFailure(Call<PokemonSpecies> call, Throwable t) {
         callBack.onFailure(t.getLocalizedMessage());
         Log.e("PokemonByIdError", t.getLocalizedMessage());
       }

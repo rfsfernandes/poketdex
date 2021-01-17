@@ -50,10 +50,7 @@
               android:layout_height="@dimen/_150sdp"
               android:layout_marginBottom="16dp"
               android:layout_marginTop="16dp">
-            <View
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_150sdp"
-                android:background="@drawable/cell_stroke_round"/>
+
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/imageViewPokemonDefault"
                 android:layout_width="@dimen/_150sdp"
@@ -84,10 +81,7 @@
               android:layout_height="@dimen/_150sdp"
               android:layout_marginBottom="16dp"
               android:layout_marginTop="16dp">
-            <View
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_150sdp"
-                android:background="@drawable/cell_stroke_round"/>
+
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/imageViewPokemonShiny"
                 android:layout_width="@dimen/_150sdp"
@@ -114,7 +108,6 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="16dp"
           style="@style/details_titles"
-
           android:text="@string/type" />
       <LinearLayout
           android:id="@+id/linearLayoutTypeContainer"
@@ -125,7 +118,22 @@
           android:showDividers="middle"
           android:gravity="center">
       </LinearLayout>
-
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          style="@style/details_titles"
+          android:text="@string/description" />
+      <TextView
+          android:id="@+id/textViewDescription"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="5dp"
+          android:layout_marginStart="@dimen/_32sdp"
+          android:layout_marginEnd="@dimen/_32sdp"
+          android:gravity="center"
+          android:textSize="@dimen/_14sdp"
+          android:text="" />
       <TextView
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
@@ -146,111 +154,195 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:divider="@drawable/invisible_divider"
+            android:orientation="horizontal"
+            android:showDividers="middle">
 
           <TextView
               style="@style/stat_titles"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke"
+              android:background="@drawable/cell_stroke_rounded_top"
               android:text="@string/hp" />
 
           <TextView
               style="@style/stat_titles"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke"
+              android:background="@drawable/cell_stroke_rounded_top"
               android:text="@string/attack" />
 
           <TextView
               style="@style/stat_titles"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke"
+              android:background="@drawable/cell_stroke_rounded_top"
               android:text="@string/defense" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:divider="@drawable/invisible_divider"
+            android:orientation="horizontal"
+            android:showDividers="middle">
 
           <TextView
               android:id="@+id/textViewStatHp"
               style="@style/stat_values"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke" />
+              android:background="@drawable/cell_stroke_rounded_bottom" />
 
           <TextView
               android:id="@+id/textViewStatAttack"
               style="@style/stat_values"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke" />
+              android:background="@drawable/cell_stroke_rounded_bottom" />
 
           <TextView
               android:id="@+id/textViewStatDefense"
               style="@style/stat_values"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke" />
+              android:background="@drawable/cell_stroke_rounded_bottom" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
-            android:orientation="horizontal">
+            android:divider="@drawable/invisible_divider"
+            android:orientation="horizontal"
+            android:showDividers="middle">
 
           <TextView
               style="@style/stat_titles"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke"
+              android:background="@drawable/cell_stroke_rounded_top"
               android:text="@string/special_attack" />
 
           <TextView
               style="@style/stat_titles"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke"
+              android:background="@drawable/cell_stroke_rounded_top"
               android:text="@string/special_defense" />
 
-          <TextView
-              style="@style/stat_titles"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke"
-              android:text="@string/speed" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/cell_stroke"
-            android:orientation="horizontal">
+            android:divider="@drawable/invisible_divider"
+            android:orientation="horizontal"
+            android:paddingBottom="8dp"
+            android:showDividers="middle">
 
           <TextView
               android:id="@+id/textViewStatSpecialAttack"
               style="@style/stat_values"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke" />
+              android:background="@drawable/cell_stroke_rounded_bottom" />
 
           <TextView
               android:id="@+id/textViewStatSpecialDefense"
               style="@style/stat_values"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke" />
+              android:background="@drawable/cell_stroke_rounded_bottom" />
 
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:divider="@drawable/invisible_divider"
+            android:showDividers="middle">
+
+          <TextView
+              style="@style/stat_titles"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke_rounded_top"
+              android:text="@string/speed" />
+          <TextView
+              style="@style/stat_titles"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke_rounded_top"
+              android:text="@string/base_experience" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:divider="@drawable/invisible_divider"
+            android:showDividers="middle">
           <TextView
               android:id="@+id/textViewStatSpeed"
               style="@style/stat_values"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke" />
+              android:background="@drawable/cell_stroke_rounded_bottom" />
+          <TextView
+              android:id="@+id/textViewBaseExperience"
+              style="@style/stat_values"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke_rounded_bottom" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:divider="@drawable/invisible_divider"
+            android:orientation="horizontal"
+            android:showDividers="middle">
+
+          <TextView
+              style="@style/stat_titles"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke_rounded_top"
+              android:text="@string/weight" />
+
+          <TextView
+              style="@style/stat_titles"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke_rounded_top"
+              android:text="@string/height" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@drawable/invisible_divider"
+            android:orientation="horizontal"
+            android:paddingBottom="15dp"
+            android:showDividers="middle">
+
+          <TextView
+              android:id="@+id/textViewStatWeight"
+              style="@style/stat_values"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke_rounded_bottom" />
+
+          <TextView
+              android:id="@+id/textViewStatHeight"
+              style="@style/stat_values"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@drawable/cell_stroke_rounded_bottom" />
+
         </LinearLayout>
       </LinearLayout>
       <TextView
@@ -258,7 +350,34 @@
           android:layout_height="wrap_content"
           android:layout_marginTop="16dp"
           style="@style/details_titles"
-          android:text="@string/attacks" />
+          android:text="@string/abilities" />
+
+      <LinearLayout
+          android:id="@+id/linearLayoutAbilitiesContainer"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:divider="@drawable/invisible_divider"
+          android:orientation="horizontal"
+          android:showDividers="middle" />
+
+      <TextView
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="16dp"
+          style="@style/details_titles"
+          android:text="@string/moves" />
+
+      <androidx.recyclerview.widget.RecyclerView
+          android:id="@+id/recyclerViewMoves"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_margin="10dp"
+          android:background="@drawable/list_outline"
+          android:clipToPadding="false"
+          android:paddingEnd="@dimen/_8sdp"
+          android:paddingStart="@dimen/_8sdp" />
+
     </LinearLayout>
   </ScrollView>
 

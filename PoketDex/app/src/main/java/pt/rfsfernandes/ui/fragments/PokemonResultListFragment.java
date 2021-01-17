@@ -1,5 +1,6 @@
 package pt.rfsfernandes.ui.fragments;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import pt.rfsfernandes.MyApplication;
 import pt.rfsfernandes.custom.adapters.ItemListClicked;
 import pt.rfsfernandes.custom.adapters.PokemonResultAdapter;
 import pt.rfsfernandes.databinding.FragmentPokemonResultListBinding;
@@ -31,6 +33,7 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
   private FragmentPokemonResultListBinding binding;
   private List<PokemonResult> mPokemonResultList = new ArrayList<>();
   private boolean isLoading = false;
+  private MediaPlayer mMediaPlayer;
 
   public PokemonResultListFragment() {
   }
@@ -46,6 +49,9 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
 
     binding.list.setLayoutManager(new LinearLayoutManager(requireContext()));
     binding.list.setAdapter(mPokemonResultAdapter);
+    if (getActivity() != null) {
+      mMediaPlayer = ((MyApplication) getActivity().getApplication()).getMediaPlayerMenuSound();
+    }
 
     return view;
   }
@@ -53,8 +59,10 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
-    initViewModel();
 
+    binding.progressBarResultList.setVisibility(View.VISIBLE);
+
+    initViewModel();
 
     binding.list.addOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -83,6 +91,7 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
   private void initViewModel() {
     mMainViewModel.getPokemonListResponseMutableLiveData().observe(getViewLifecycleOwner(),
         results -> {
+          binding.progressBarResultList.setVisibility(View.GONE);
           isLoading = false;
           mPokemonResultList = results;
           mPokemonResultAdapter.refreshList(results);
@@ -97,26 +106,14 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
 
   @Override
   public void onClick(PokemonResult object) {
+    if(mMediaPlayer != null) {
+      mMediaPlayer.start();
+    }
     mMainViewModel.setSelected(object.getListPosition());
     if (getActivity() != null && getActivity() instanceof MainActivity) {
       ((MainActivity) getActivity()).onItemClick(object.getListPosition());
     }
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-        if(mMainViewModel.getPokemonListResponseMutableLiveData().getValue() != null) {
-
-
-          getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-              mPokemonResultAdapter.notifyDataSetChanged();
-
-            }
-          });
-        }
-      }
-    }).start();
+    mPokemonResultAdapter.notifyDataSetChanged();
 
   }
 }

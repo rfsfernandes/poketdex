@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <color name="colorPrimary">#005691</color>
-  <color name="colorPrimaryDark">#004a7c</color>
-  <color name="colorAccent">#F04037</color>
+  <color name="colorPrimaryDark">#FF770701</color>
+  <color name="colorAccent">#000</color>
+  <color name="pokemon_red">#F04037</color>
+  <color name="colorAccent_transp">#EA5F58</color>
   <color name="white">#fafafa</color>
   <color name="black">#000000</color>
 <!--  Pokemon types colors -->

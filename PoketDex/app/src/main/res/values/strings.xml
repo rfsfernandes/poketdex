@@ -12,5 +12,14 @@
   <string name="special_attack">Special Attack</string>
   <string name="special_defense">Special Defense</string>
   <string name="speed">Speed</string>
-  <string name="attacks">attacks</string>
+  <string name="moves">moves</string>
+  <string name="abilities">abilities</string>
+  <string name="weight">weight</string>
+  <string name="kilograms">Kg</string>
+  <string name="meters">m</string>
+  <string name="height">height</string>
+  <string name="base_experience">base experience</string>
+  <string name="slot_n">Slot nº</string>
+  <string name="hidden_ability">Hidden Ability</string>
+  <string name="description">description</string>
 </resources>

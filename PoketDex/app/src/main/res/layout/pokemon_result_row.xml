@@ -13,13 +13,13 @@ app:cardCornerRadius="8dp"
 
 <RelativeLayout
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_50sdp">
+    android:layout_height="@dimen/_70sdp">
 
   <com.facebook.drawee.view.SimpleDraweeView
       android:id="@+id/imageViewPokemonList"
-      android:layout_width="@dimen/_100sdp"
-      android:layout_height="@dimen/_100sdp"
-      android:scaleType="centerCrop"
+      android:layout_width="@dimen/_70sdp"
+      android:layout_height="@dimen/_70sdp"
+      android:scaleType="fitCenter"
       fresco:placeholderImage="@drawable/pokemon_placeholder" />
 
   <androidx.constraintlayout.widget.ConstraintLayout
@@ -30,11 +30,11 @@ app:cardCornerRadius="8dp"
 
     <View
         android:id="@+id/viewSelect"
-        android:layout_width="170dp"
+        android:layout_width="150dp"
         android:layout_height="0dp"
         android:layout_centerInParent="true"
         android:background="@drawable/selected_rectangle"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -56,11 +56,22 @@ app:cardCornerRadius="8dp"
 
   <TextView
       android:id="@+id/textViewPokemonName"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:gravity="center"
       android:text=""
+      android:textStyle="bold"
       android:layout_centerInParent="true"/>
+
+  <ImageView
+      android:id="@+id/imageViewIconPokeball"
+      android:layout_width="@dimen/_24sdp"
+      android:layout_height="@dimen/_24sdp"
+      android:layout_alignBottom="@id/textViewPokemonName"
+      android:layout_alignTop="@id/textViewPokemonName"
+      android:layout_marginStart="@dimen/_8sdp"
+      android:layout_toEndOf="@+id/textViewPokemonName"
+      android:src="@drawable/close" />
 
 </RelativeLayout>
 </androidx.cardview.widget.CardView>

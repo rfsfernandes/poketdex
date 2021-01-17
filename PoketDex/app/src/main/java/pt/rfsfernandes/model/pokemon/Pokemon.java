@@ -25,6 +25,9 @@ public class Pokemon {
   @SerializedName("height")
   private int height;
 
+  @SerializedName("weight")
+  private int weight;
+
   @SerializedName("moves")
   private List<Moves> moveslist;
 
@@ -46,10 +49,11 @@ public class Pokemon {
   @SerializedName("sprites")
   private PokemonSprites sprites;
 
-  public Pokemon(List<Ability> abilitiesList, int baseExperience, int height, List<Moves> moveslist, String name, int id, SimpleModelData speciesInfo, List<Stats> statsList, List<PokemonType> typeList, PokemonSprites sprites) {
+  public Pokemon(List<Ability> abilitiesList, int baseExperience, int height, int weight, List<Moves> moveslist, String name, int id, SimpleModelData speciesInfo, List<Stats> statsList, List<PokemonType> typeList, PokemonSprites sprites) {
     this.abilitiesList = abilitiesList;
     this.baseExperience = baseExperience;
     this.height = height;
+    this.weight = weight;
     this.moveslist = moveslist;
     this.name = name;
     this.id = id;
@@ -139,12 +143,21 @@ public class Pokemon {
     this.sprites = sprites;
   }
 
+  public int getWeight() {
+    return weight;
+  }
+
+  public void setWeight(int weight) {
+    this.weight = weight;
+  }
+
   @Override
   public String toString() {
     return "Pokemon{" +
         "abilitiesList=" + abilitiesList +
         ", baseExperience=" + baseExperience +
         ", height=" + height +
+        ", weight=" + weight +
         ", moveslist=" + moveslist +
         ", name='" + name + '\'' +
         ", id=" + id +

@@ -1,9 +1,13 @@
 package pt.rfsfernandes.custom.adapters;
 
 import android.content.Context;
+import android.graphics.BlendMode;
+import android.graphics.BlendModeColorFilter;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import pt.rfsfernandes.R;
 import pt.rfsfernandes.custom.utils.UtilsClass;
@@ -57,6 +62,8 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
   public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
     if(holder instanceof PokemonResultViewHolder) {
       populateItemRows((PokemonResultViewHolder) holder, position);
+    } else {
+      dealWithLoading((LoadingViewHolder) holder);
     }
 
   }
@@ -73,6 +80,12 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
     });
 
     holder.selectedView.setVisibility(item.isSelected() ? View.VISIBLE : View.GONE);
+    holder.imageViewIconPokeball.setImageDrawable(item.isSelected() ?
+        ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.open, null) :
+        ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.close, null));
+  }
+
+  private void dealWithLoading(LoadingViewHolder holder) {
 
   }
 
@@ -87,6 +100,7 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
     public final SimpleDraweeView mSimpleDraweeView;
     public final TextView textViewPokemonNumber;
     public final View selectedView;
+    public final ImageView imageViewIconPokeball;
     public PokemonResult mItem;
 
     public PokemonResultViewHolder(View view) {
@@ -99,17 +113,20 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
       mSimpleDraweeView.setHierarchy(new GenericDraweeHierarchyBuilder(mContext.getResources())
           .setProgressBarImage(new ProgressBarDrawable())
           .build());
+
+      imageViewIconPokeball = (ImageView) view.findViewById(R.id.imageViewIconPokeball);
     }
 
   }
 
   private class LoadingViewHolder extends RecyclerView.ViewHolder {
 
-    ProgressBar progressBar;
+    public final ProgressBar progressBar;
 
     public LoadingViewHolder(@NonNull View itemView) {
       super(itemView);
       progressBar = itemView.findViewById(R.id.progressBar);
+
     }
   }
 

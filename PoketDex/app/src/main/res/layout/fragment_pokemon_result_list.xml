@@ -1,11 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.recyclerview.widget.RecyclerView android:id="@+id/list"
-    android:name="pt.rfsfernandes.ui.fragments.PokemonResultListFragment"
+<androidx.constraintlayout.widget.ConstraintLayout android:name="pt.rfsfernandes.ui.fragments.PokemonResultListFragment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layoutManager="LinearLayoutManager"
-    tools:context=".ui.fragments.PokemonResultListFragment"
-    tools:listitem="@layout/pokemon_result_row" />
+    android:layout_height="match_parent">
+  <androidx.recyclerview.widget.RecyclerView android:id="@+id/list"
+
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      app:layoutManager="LinearLayoutManager"
+      tools:context=".ui.fragments.PokemonResultListFragment"
+      tools:listitem="@layout/pokemon_result_row"
+      android:background="@color/colorPrimaryDark"/>
+
+  <ProgressBar
+      android:id="@+id/progressBarResultList"
+      style="?android:attr/progressBarStyle"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,6 +8,7 @@ import pt.rfsfernandes.data.remote.DataSource;
 import pt.rfsfernandes.data.repository.Repository;
 import pt.rfsfernandes.data.repository.ResponseCallBack;
 import pt.rfsfernandes.model.pokemon.Pokemon;
+import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonListResponse;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
 
@@ -23,6 +24,8 @@ public class MainViewModel extends ViewModel {
   private final MutableLiveData<Pokemon> mPokemonMutableLiveData = new MutableLiveData<>();
 
   private final MutableLiveData<Boolean> isLoadingMutableLiveData = new MutableLiveData<>();
+
+  private final MutableLiveData<String> pokemonDescriptionLiveData = new MutableLiveData<>();
 
   private int currentOffset = 0;
 
@@ -40,6 +43,10 @@ public class MainViewModel extends ViewModel {
 
   public MutableLiveData<Boolean> getIsLoadingMutableLiveData() {
     return isLoadingMutableLiveData;
+  }
+
+  public MutableLiveData<String> getPokemonDescriptionLiveData() {
+    return pokemonDescriptionLiveData;
   }
 
   public void loadResults() {
@@ -74,10 +81,27 @@ public class MainViewModel extends ViewModel {
   }
 
   public void pokemonById(int pokemonId) {
+    pokemonSpeciesById(pokemonId);
     this.mRepository.getPokemonById(pokemonId, new ResponseCallBack<Pokemon>() {
       @Override
       public void onSuccess(Pokemon response) {
         getPokemonMutableLiveData().setValue(response);
+      }
+
+      @Override
+      public void onFailure(String errorMessage) {
+        getFecthErrorLiveData().setValue(errorMessage);
+      }
+    });
+  }
+
+  public void pokemonSpeciesById(int pokemonId) {
+    this.mRepository.getPokemonSpecies(pokemonId, new ResponseCallBack<PokemonSpecies>() {
+      @Override
+      public void onSuccess(PokemonSpecies response) {
+        if(response != null) {
+          getPokemonDescriptionLiveData().setValue(response.getFlavourEntriesList().get(0).getFlavourText());
+        }
       }
 
       @Override
