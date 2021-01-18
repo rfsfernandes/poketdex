@@ -5,44 +5,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"
+    android:background="@color/colorPrimaryDark"
     tools:context="pt.rfsfernandes.ui.activities.MainActivity">
-
-  <fragment
-      android:name="androidx.navigation.fragment.NavHostFragment"
-      android:id="@+id/displayPokemonList"
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      android:layout_weight="2"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:navGraph="@navigation/navigation_list"
-      app:defaultNavHost="true"
-     />
-
   <LinearLayout
-      android:id="@+id/linearLaoutDetailsContainer"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:layout_marginEnd="@dimen/_15sdp">
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+
+    <ImageButton
+        android:id="@+id/imageButtonSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/volume_on" />
+
+  </LinearLayout>
+  <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
-      android:layout_weight="1"
-      android:visibility="gone">
+      android:orientation="horizontal">
     <fragment
         android:name="androidx.navigation.fragment.NavHostFragment"
-        android:id="@+id/displayPokemonDetails"
+        android:id="@+id/displayPokemonList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/navigation_details"
-        app:defaultNavHost="true"/>
+        app:navGraph="@navigation/navigation_list"
+        app:defaultNavHost="true"
+        />
+
+    <LinearLayout
+        android:id="@+id/linearLaoutDetailsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:visibility="gone">
+      <fragment
+          android:name="androidx.navigation.fragment.NavHostFragment"
+          android:id="@+id/displayPokemonDetails"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          app:navGraph="@navigation/navigation_details"
+          app:defaultNavHost="true"/>
+    </LinearLayout>
+
   </LinearLayout>
 
 

@@ -115,6 +115,23 @@ public class MainViewModel extends ViewModel {
     getIsLoadingMutableLiveData().setValue(isLoading);
   }
 
+  public void deselectAll() {
+    if(getPokemonListResponseMutableLiveData().getValue() != null) {
+      List<PokemonResult> pokemonResults = getPokemonListResponseMutableLiveData().getValue();
+
+      if (pokemonResults != null) {
+        for (PokemonResult results :
+            pokemonResults) {
+          if (results != null) {
+            results.setSelected(false);
+          }
+        }
+      }
+      getPokemonListResponseMutableLiveData().setValue(pokemonResults);
+    }
+
+  }
+
   public void setSelected(int listId) {
     List<PokemonResult> pokemonResults = getPokemonListResponseMutableLiveData().getValue();
 

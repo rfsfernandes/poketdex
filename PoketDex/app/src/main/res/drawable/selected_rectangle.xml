@@ -2,15 +2,6 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
   <!-- Colored rectangle-->
-<!--  <item>-->
-<!--    <shape android:shape="rectangle">-->
-<!--      <size-->
-<!--          android:width="100dp"-->
-<!--          android:height="40dp" />-->
-<!--      <solid android:color="@color/colorAccent" />-->
-<!--    </shape>-->
-<!--  </item>-->
-  <!-- Colored rectangle-->
   <item>
     <shape android:shape="rectangle">
       <size

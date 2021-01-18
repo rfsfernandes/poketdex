@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import pt.rfsfernandes.MyApplication;
 import pt.rfsfernandes.custom.adapters.ItemListClicked;
 import pt.rfsfernandes.custom.adapters.PokemonResultAdapter;
+import pt.rfsfernandes.data.local.SharedPreferencesManager;
 import pt.rfsfernandes.databinding.FragmentPokemonResultListBinding;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
 import pt.rfsfernandes.ui.activities.MainActivity;
@@ -34,6 +35,7 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
   private List<PokemonResult> mPokemonResultList = new ArrayList<>();
   private boolean isLoading = false;
   private MediaPlayer mMediaPlayer;
+  private MyApplication mMyApplication;
 
   public PokemonResultListFragment() {
   }
@@ -47,13 +49,23 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
     mMainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
     mPokemonResultAdapter = new PokemonResultAdapter(requireContext(), this);
 
+    mMyApplication = ((MyApplication) requireActivity().getApplication());
     binding.list.setLayoutManager(new LinearLayoutManager(requireContext()));
     binding.list.setAdapter(mPokemonResultAdapter);
-    if (getActivity() != null) {
-      mMediaPlayer = ((MyApplication) getActivity().getApplication()).getMediaPlayerMenuSound();
+    if (mMyApplication != null) {
+      mMediaPlayer = mMyApplication.getMediaPlayerMenuSound();
     }
 
     return view;
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+
+    if(!mMyApplication.isLandscape()) {
+      mMainViewModel.deselectAll();
+    }
   }
 
   @Override
@@ -106,7 +118,7 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
 
   @Override
   public void onClick(PokemonResult object) {
-    if (mMediaPlayer != null) {
+    if (mMediaPlayer != null && SharedPreferencesManager.getInstance(mMyApplication).getSongState()) {
       mMediaPlayer.start();
     }
     mMainViewModel.setSelected(object.getListPosition());

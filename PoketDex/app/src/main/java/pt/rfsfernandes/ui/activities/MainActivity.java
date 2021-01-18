@@ -7,6 +7,7 @@ import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -36,10 +37,7 @@ public class MainActivity extends FragmentActivity {
     setContentView(view);
     mMyApplication = (MyApplication) getApplication();
     mMainViewModel = new ViewModelProvider(this).get(MainViewModel.class);
-    if (mMediaPlayerWalkingMusic != null) {
-      mMediaPlayerWalkingMusic.start();
-      mMediaPlayerWalkingMusic.setLooping(true);
-    }
+
     mNavControllerList = Navigation.findNavController(this, R.id.displayPokemonList);
     mMyApplication.setLandscape(findViewById(R.id.displayPokemonDetails) != null);
     if (mMyApplication.isLandscape()) {
@@ -48,10 +46,49 @@ public class MainActivity extends FragmentActivity {
     }
 
     initViewModel();
+
     if (savedInstanceState == null) {
       mMainViewModel.loadResults();
     }
+
     mMainViewModel.isLoading(true);
+
+    mActivityMainBinding.imageButtonSound.setOnClickListener(e -> {
+      handleMusic(true);
+    });
+
+  }
+
+  private void handleMusic(boolean fromClick) {
+
+    if (mMyApplication.isCanPlaySounds()) {
+      if (fromClick) {
+        mMyApplication.setCanPlaySounds(false);
+        if (mMediaPlayerWalkingMusic != null && mMediaPlayerWalkingMusic.isPlaying()) {
+          mMediaPlayerWalkingMusic.pause();
+        }
+      } else {
+        if (mMediaPlayerWalkingMusic != null && !mMediaPlayerWalkingMusic.isPlaying()) {
+          mMediaPlayerWalkingMusic.start();
+          mMediaPlayerWalkingMusic.setLooping(true);
+        }
+      }
+
+    } else {
+      if (fromClick) {
+        mMyApplication.setCanPlaySounds(true);
+        if (mMediaPlayerWalkingMusic != null && !mMediaPlayerWalkingMusic.isPlaying()) {
+          mMediaPlayerWalkingMusic.start();
+          mMediaPlayerWalkingMusic.setLooping(true);
+        }
+      } else {
+        if (mMediaPlayerWalkingMusic != null && mMediaPlayerWalkingMusic.isPlaying()) {
+          mMediaPlayerWalkingMusic.pause();
+        }
+      }
+    }
+
+    handleVolumeButton();
 
   }
 
@@ -70,21 +107,33 @@ public class MainActivity extends FragmentActivity {
 
   @Override
   public void onBackPressed() {
-    mMediaPlayerMenuSound.start();
+    if (mMyApplication.isCanPlaySounds()) {
+      mMediaPlayerMenuSound.start();
+    }
     super.onBackPressed();
   }
 
   @Override
   protected void onResume() {
     super.onResume();
-    if (mMediaPlayerWalkingMusic != null && !mMediaPlayerWalkingMusic.isPlaying()) {
-      mMediaPlayerWalkingMusic.start();
-    }
+
+    handleMusic(false);
+  }
+
+  private void handleVolumeButton() {
+
+    mActivityMainBinding.imageButtonSound.setImageDrawable(
+        mMyApplication.isCanPlaySounds() ?
+            ResourcesCompat.getDrawable(getResources(), R.drawable.volume_on, getTheme())
+            :
+            ResourcesCompat.getDrawable(getResources(), R.drawable.volume_off, getTheme())
+    );
+
   }
 
   private void initViewModel() {
     mMainViewModel.getPokemonListResponseMutableLiveData().observe(this, pokemonListResponse -> {
-      if (pokemonListResponse.size() > 0) {
+      if (pokemonListResponse != null && pokemonListResponse.size() > 0) {
         Log.d("Info from db", "Success");
       }
     });

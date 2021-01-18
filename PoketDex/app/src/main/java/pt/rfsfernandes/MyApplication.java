@@ -6,6 +6,8 @@ import android.media.MediaPlayer;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 
+import pt.rfsfernandes.data.local.SharedPreferencesManager;
+
 /**
  * Class MyApplication created at 1/16/21 19:36 for the project PoketDex
  * By: rodrigofernandes
@@ -14,6 +16,7 @@ public class MyApplication extends Application {
   private MediaPlayer mMediaPlayerMenuSound;
   private MediaPlayer mMediaPlayerWalkingMusic;
   private boolean isLandscape;
+  private boolean canPlaySounds;
 
   public MediaPlayer getMediaPlayerMenuSound() {
     return mMediaPlayerMenuSound;
@@ -29,6 +32,14 @@ public class MyApplication extends Application {
 
   public void setLandscape(boolean landscape) {
     isLandscape = landscape;
+  }
+
+  public boolean isCanPlaySounds() {
+    return SharedPreferencesManager.getInstance(this).getSongState();
+  }
+
+  public void setCanPlaySounds(boolean canPlaySounds) {
+    SharedPreferencesManager.getInstance(this).setSongState(canPlaySounds);
   }
 
   @Override

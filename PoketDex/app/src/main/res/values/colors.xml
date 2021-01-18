@@ -6,7 +6,7 @@
   <color name="pokemon_red">#F04037</color>
   <color name="colorAccent_transp">#EA5F58</color>
   <color name="white">#fafafa</color>
-  <color name="black">#000000</color>
+  <color name="black">#292929</color>
 <!--  Pokemon types colors -->
   <color name="bug">#AABB1F</color>
   <color name="dark">#543D31</color>
