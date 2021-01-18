@@ -2,6 +2,8 @@ package pt.rfsfernandes.model.pokemon.stats;
 
 import com.google.gson.annotations.SerializedName;
 
+import androidx.room.TypeConverters;
+import pt.rfsfernandes.data.local.PokemonTypeConverters;
 import pt.rfsfernandes.model.SimpleModelData;
 
 /**
@@ -13,6 +15,7 @@ public class Stats {
   private int baseStat;
 
   @SerializedName("stat")
+  @TypeConverters(PokemonTypeConverters.class)
   private SimpleModelData stat;
 
   public Stats(int baseStat, SimpleModelData stat) {

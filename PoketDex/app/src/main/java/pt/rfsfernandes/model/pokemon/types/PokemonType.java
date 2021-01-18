@@ -2,6 +2,8 @@ package pt.rfsfernandes.model.pokemon.types;
 
 import com.google.gson.annotations.SerializedName;
 
+import androidx.room.TypeConverters;
+import pt.rfsfernandes.data.local.PokemonTypeConverters;
 import pt.rfsfernandes.model.SimpleModelData;
 
 /**
@@ -13,6 +15,7 @@ public class PokemonType {
   private int slot;
 
   @SerializedName("type")
+  @TypeConverters(PokemonTypeConverters.class)
   private SimpleModelData type;
 
   public PokemonType(int slot, SimpleModelData type) {

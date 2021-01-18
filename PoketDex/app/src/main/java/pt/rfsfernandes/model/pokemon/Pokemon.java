@@ -4,6 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+import pt.rfsfernandes.data.local.PokemonTypeConverters;
 import pt.rfsfernandes.model.SimpleModelData;
 import pt.rfsfernandes.model.pokemon.abilities.Ability;
 import pt.rfsfernandes.model.pokemon.moves.Moves;
@@ -15,6 +19,8 @@ import pt.rfsfernandes.model.pokemon.types.PokemonType;
  * Class Pokemon created at 1/16/21 14:45 for the project PoketDex
  * By: rodrigofernandes
  */
+@Entity
+@TypeConverters(PokemonTypeConverters.class)
 public class Pokemon {
   @SerializedName("abilities")
   private List<Ability> abilitiesList;
@@ -29,12 +35,14 @@ public class Pokemon {
   private int weight;
 
   @SerializedName("moves")
+
   private List<Moves> moveslist;
 
   @SerializedName("name")
   private String name;
 
   @SerializedName("id")
+  @PrimaryKey
   private int id;
 
   @SerializedName("species")

@@ -2,6 +2,8 @@ package pt.rfsfernandes.model.pokemon.moves;
 
 import com.google.gson.annotations.SerializedName;
 
+import androidx.room.TypeConverters;
+import pt.rfsfernandes.data.local.PokemonTypeConverters;
 import pt.rfsfernandes.model.SimpleModelData;
 
 /**
@@ -10,6 +12,7 @@ import pt.rfsfernandes.model.SimpleModelData;
  */
 public class Moves {
   @SerializedName("move")
+  @TypeConverters(PokemonTypeConverters.class)
   private SimpleModelData move;
 
   public Moves(SimpleModelData move) {

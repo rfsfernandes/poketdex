@@ -2,6 +2,9 @@ package pt.rfsfernandes.model.pokemon.sprites;
 
 import com.google.gson.annotations.SerializedName;
 
+import androidx.room.TypeConverters;
+import pt.rfsfernandes.data.local.PokemonTypeConverters;
+
 /**
  * Class PokemonSprites created at 1/16/21 15:21 for the project PoketDex
  * By: rodrigofernandes
@@ -14,6 +17,7 @@ public class PokemonSprites {
   private String frontShiny;
 
   @SerializedName("other")
+  @TypeConverters(PokemonTypeConverters.class)
   private OtherSpriteInfo otherInfo;
 
   public PokemonSprites(String frontDefault, String frontShiny, OtherSpriteInfo otherInfo) {
