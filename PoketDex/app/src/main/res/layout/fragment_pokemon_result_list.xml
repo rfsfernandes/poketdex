@@ -7,11 +7,6 @@
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
 
-  <!--  <ImageView-->
-  <!--      android:layout_width="match_parent"-->
-  <!--      android:layout_height="match_parent"-->
-  <!--      android:scaleType="centerCrop"-->
-  <!--      android:src="@drawable/background_portrait_list" />-->
   <ProgressBar
       android:id="@+id/progressBarResultList"
       style="?android:attr/progressBarStyle"
@@ -24,7 +19,7 @@
 
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/list"
-
+      android:overScrollMode="never"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@android:color/transparent"
