@@ -5,391 +5,84 @@
     xmlns:fresco="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    fresco:context=".ui.fragments.PokemonDetailsFragment"
-    android:background="@color/white">
+    android:background="@android:color/transparent"
+    fresco:context=".ui.fragments.PokemonDetailsFragment">
 
-  <ScrollView
-      android:id="@+id/content"
+
+  <LinearLayout
+      android:id="@+id/linearLayout3"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      fresco:context=".ui.fragments.PokemonDetailsFragment">
+      android:layout_height="wrap_content"
+      android:layout_marginTop="8dp"
+      android:orientation="horizontal"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
+      app:layout_constraintTop_toTopOf="parent">
+
+    <ImageButton
+        android:id="@+id/imageButtonLeft"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/arrow_left" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/black_selector_bar"
         android:gravity="center"
-        android:orientation="vertical"
-        >
+        android:orientation="horizontal">
 
-      <LinearLayout
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:baselineAligned="false"
-          android:divider="@drawable/invisible_divider"
-          android:orientation="horizontal"
-          android:paddingEnd="8dp"
-          android:paddingStart="8dp"
-          android:showDividers="middle"
-          android:gravity="center">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-          <TextView
-              android:id="@+id/textViewDefault"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="16dp"
-              style="@style/details_titles"
-              android:textAllCaps="false"/>
-
-          <RelativeLayout
-              android:layout_width="@dimen/_150sdp"
-              android:layout_height="@dimen/_150sdp"
-              android:layout_marginBottom="16dp"
-              android:layout_marginTop="16dp">
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/imageViewPokemonDefault"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_150sdp"
-
-                fresco:placeholderImage="@drawable/pokemon_placeholder"
-                fresco:roundedCornerRadius="8dp" />
-          </RelativeLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-
-          <TextView
-              android:id="@+id/textViewShiny"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:layout_marginTop="16dp"
-              style="@style/details_titles"
-              android:textAllCaps="false" />
-          <RelativeLayout
-              android:layout_width="@dimen/_150sdp"
-              android:layout_height="@dimen/_150sdp"
-              android:layout_marginBottom="16dp"
-              android:layout_marginTop="16dp">
-
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/imageViewPokemonShiny"
-                android:layout_width="@dimen/_150sdp"
-                android:layout_height="@dimen/_150sdp"
-
-                fresco:placeholderImage="@drawable/pokemon_placeholder"
-                fresco:roundedCornerRadius="8dp" />
-
-            <ImageView
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="10dp"
-                android:id="@+id/imageView"
-                android:layout_width="@dimen/_25sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:src="@drawable/shiny" />
-
-          </RelativeLayout>
-
-        </LinearLayout>
-
-      </LinearLayout>
       <TextView
-          android:layout_width="match_parent"
+          android:id="@+id/textViewPokemonNumber"
+          android:layout_width="@dimen/_40sdp"
           android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
-          style="@style/details_titles"
-          android:text="@string/type" />
-      <LinearLayout
-          android:id="@+id/linearLayoutTypeContainer"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:orientation="horizontal"
-          android:divider="@drawable/invisible_divider"
-          android:showDividers="middle"
-          android:gravity="center">
-      </LinearLayout>
+          android:layout_marginStart="@dimen/_8sdp"
+          android:text="@string/no"
+          android:textColor="@color/white"/>
+
       <TextView
-          android:layout_width="match_parent"
+          android:id="@+id/textViewPagerTitle"
+          android:layout_width="0dp"
           android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
-          style="@style/details_titles"
-          android:text="@string/description" />
-      <TextView
-          android:id="@+id/textViewDescription"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="5dp"
-          android:layout_marginStart="@dimen/_32sdp"
-          android:layout_marginEnd="@dimen/_32sdp"
+          android:layout_weight="1"
           android:gravity="center"
-          android:textSize="@dimen/_14sdp"
-          android:text="" />
-      <TextView
-          android:layout_width="match_parent"
+          android:text="@string/general_info"
+          android:textColor="@color/white"
+          android:textSize="@dimen/_15sdp" />
+
+      <ImageView
+          android:layout_width="@dimen/_40sdp"
           android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
-          style="@style/details_titles"
-          android:text="@string/stats" />
-
-      <LinearLayout
-          android:id="@+id/linearLayoutStatsContainer"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_marginEnd="8dp"
-          android:layout_marginStart="8dp"
-          android:layout_marginTop="5dp"
-          android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@drawable/invisible_divider"
-            android:orientation="horizontal"
-            android:showDividers="middle">
-
-          <TextView
-              style="@style/stat_titles"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_top"
-              android:text="@string/hp" />
-
-          <TextView
-              style="@style/stat_titles"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_top"
-              android:text="@string/attack" />
-
-          <TextView
-              style="@style/stat_titles"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_top"
-              android:text="@string/defense" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@drawable/invisible_divider"
-            android:orientation="horizontal"
-            android:showDividers="middle">
-
-          <TextView
-              android:id="@+id/textViewStatHp"
-              style="@style/stat_values"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_bottom" />
-
-          <TextView
-              android:id="@+id/textViewStatAttack"
-              style="@style/stat_values"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_bottom" />
-
-          <TextView
-              android:id="@+id/textViewStatDefense"
-              style="@style/stat_values"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_bottom" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:divider="@drawable/invisible_divider"
-            android:orientation="horizontal"
-            android:showDividers="middle">
-
-          <TextView
-              style="@style/stat_titles"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_top"
-              android:text="@string/special_attack" />
-
-          <TextView
-              style="@style/stat_titles"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_top"
-              android:text="@string/special_defense" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@drawable/invisible_divider"
-            android:orientation="horizontal"
-            android:paddingBottom="8dp"
-            android:showDividers="middle">
-
-          <TextView
-              android:id="@+id/textViewStatSpecialAttack"
-              style="@style/stat_values"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_bottom" />
-
-          <TextView
-              android:id="@+id/textViewStatSpecialDefense"
-              style="@style/stat_values"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_bottom" />
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:divider="@drawable/invisible_divider"
-            android:showDividers="middle">
-
-          <TextView
-              style="@style/stat_titles"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_top"
-              android:text="@string/speed" />
-          <TextView
-              style="@style/stat_titles"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_top"
-              android:text="@string/base_experience" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:divider="@drawable/invisible_divider"
-            android:showDividers="middle">
-          <TextView
-              android:id="@+id/textViewStatSpeed"
-              style="@style/stat_values"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_bottom" />
-          <TextView
-              android:id="@+id/textViewBaseExperience"
-              style="@style/stat_values"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_bottom" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="8dp"
-            android:divider="@drawable/invisible_divider"
-            android:orientation="horizontal"
-            android:showDividers="middle">
-
-          <TextView
-              style="@style/stat_titles"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_top"
-              android:text="@string/weight" />
-
-          <TextView
-              style="@style/stat_titles"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_top"
-              android:text="@string/height" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@drawable/invisible_divider"
-            android:orientation="horizontal"
-            android:paddingBottom="15dp"
-            android:showDividers="middle">
-
-          <TextView
-              android:id="@+id/textViewStatWeight"
-              style="@style/stat_values"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_bottom" />
-
-          <TextView
-              android:id="@+id/textViewStatHeight"
-              style="@style/stat_values"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/cell_stroke_rounded_bottom" />
-
-        </LinearLayout>
-      </LinearLayout>
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
-          style="@style/details_titles"
-          android:text="@string/abilities" />
-
-      <LinearLayout
-          android:id="@+id/linearLayoutAbilitiesContainer"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="10dp"
-          android:divider="@drawable/invisible_divider"
-          android:orientation="horizontal"
-          android:showDividers="middle" />
-
-      <TextView
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="16dp"
-          style="@style/details_titles"
-          android:text="@string/moves" />
-
-      <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/recyclerViewMoves"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_margin="10dp"
-          android:background="@drawable/list_outline"
-          android:clipToPadding="false"
-          android:paddingEnd="@dimen/_8sdp"
-          android:paddingStart="@dimen/_8sdp" />
+          android:layout_marginEnd="@dimen/_8sdp"
+          android:src="@drawable/black_pokeball" />
 
     </LinearLayout>
-  </ScrollView>
+
+    <ImageButton
+        android:id="@+id/imageButtonRight"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
+        android:background="@android:color/transparent"
+        android:src="@drawable/arrow_right" />
+
+  </LinearLayout>
+
+  <androidx.viewpager.widget.ViewPager
+      android:id="@+id/viewPagerDetails"
+      android:layout_width="match_parent"
+      android:layout_height="0dp"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
   <ProgressBar
-      android:id="@+id/progressBar"
+      android:id="@+id/progressBarGeneral"
       style="?android:attr/progressBarStyle"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      android:indeterminate="true"/>
+      app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

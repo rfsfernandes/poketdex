@@ -4,16 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-  <androidx.recyclerview.widget.RecyclerView android:id="@+id/list"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
 
-      android:layout_width="match_parent"
-      android:layout_height="match_parent"
-      app:layoutManager="LinearLayoutManager"
-      tools:context=".ui.fragments.PokemonResultListFragment"
-      tools:listitem="@layout/pokemon_result_row"
-      android:background="@color/colorPrimaryDark"/>
-
+  <!--  <ImageView-->
+  <!--      android:layout_width="match_parent"-->
+  <!--      android:layout_height="match_parent"-->
+  <!--      android:scaleType="centerCrop"-->
+  <!--      android:src="@drawable/background_portrait_list" />-->
   <ProgressBar
       android:id="@+id/progressBarResultList"
       style="?android:attr/progressBarStyle"
@@ -23,5 +21,15 @@
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
+
+  <androidx.recyclerview.widget.RecyclerView
+      android:id="@+id/list"
+
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:background="@android:color/transparent"
+      app:layoutManager="LinearLayoutManager"
+      tools:context=".ui.fragments.PokemonResultListFragment"
+      tools:listitem="@layout/pokemon_result_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

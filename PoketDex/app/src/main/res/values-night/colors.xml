@@ -5,8 +5,10 @@
   <color name="colorAccent">#FFF</color>
   <color name="pokemon_red">#F04037</color>
   <color name="colorAccent_transp">#EA5F58</color>
-  <color name="white">#292929</color>
-  <color name="black">#fafafa</color>
+  <color name="white">#fafafa</color>
+  <color name="black">#343334</color>
+  <color name="darkish_gray">#DDDBDD</color>
+  <color name="slightly_light_gray">#E6E6E7</color>
   <!--  Pokemon types colors -->
   <color name="bug">#AABB1F</color>
   <color name="dark">#543D31</color>

@@ -26,9 +26,9 @@ import pt.rfsfernandes.model.service_responses.PokemonResult;
 public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
   private final int VIEW_TYPE_ITEM = 0;
   private final int VIEW_TYPE_LOADING = 1;
-  private List<PokemonResult> mPokemonResultList = new ArrayList<>();
   private final ItemListClicked<PokemonResult> callback;
   private final Context mContext;
+  private List<PokemonResult> mPokemonResultList = new ArrayList<>();
 
   public PokemonResultAdapter(Context context,
                               ItemListClicked<PokemonResult> pokemonResultItemListClicked) {

@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import pt.rfsfernandes.MyApplication;
 import pt.rfsfernandes.custom.adapters.ItemListClicked;
 import pt.rfsfernandes.custom.adapters.PokemonResultAdapter;
-import pt.rfsfernandes.data.local.SharedPreferencesManager;
 import pt.rfsfernandes.databinding.FragmentPokemonResultListBinding;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
 import pt.rfsfernandes.ui.activities.MainActivity;
@@ -63,7 +62,7 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
   public void onResume() {
     super.onResume();
 
-    if(!mMyApplication.isLandscape()) {
+    if (!mMyApplication.isLandscape()) {
       mMainViewModel.deselectAll();
     }
   }
@@ -118,9 +117,7 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
 
   @Override
   public void onClick(PokemonResult object) {
-    if (mMediaPlayer != null && SharedPreferencesManager.getInstance(mMyApplication).getSongState()) {
-      mMediaPlayer.start();
-    }
+    mMyApplication.playMenuSound();
     mMainViewModel.setSelected(object.getListPosition());
     if (getActivity() != null && getActivity() instanceof MainActivity) {
       ((MainActivity) getActivity()).onItemClick(object.getListPosition());

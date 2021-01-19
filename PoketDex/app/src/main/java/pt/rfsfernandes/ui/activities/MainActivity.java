@@ -107,9 +107,7 @@ public class MainActivity extends FragmentActivity {
 
   @Override
   public void onBackPressed() {
-    if (mMyApplication.isCanPlaySounds()) {
-      mMediaPlayerMenuSound.start();
-    }
+    mMyApplication.playMenuSound();
     super.onBackPressed();
   }
 

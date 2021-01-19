@@ -3,17 +3,19 @@ package pt.rfsfernandes.viewmodels;
 import android.app.Application;
 
 import java.util.List;
+import java.util.Locale;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
+import pt.rfsfernandes.R;
 import pt.rfsfernandes.data.local.AppDatabase;
 import pt.rfsfernandes.data.remote.DataSource;
 import pt.rfsfernandes.data.repository.Repository;
 import pt.rfsfernandes.data.repository.ResponseCallBack;
 import pt.rfsfernandes.model.pokemon.Pokemon;
+import pt.rfsfernandes.model.pokemon_species.FlavourEntries;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
-import pt.rfsfernandes.model.service_responses.PokemonListResponse;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
 
 import static pt.rfsfernandes.custom.Constants.RESULT_LIMIT;
@@ -30,6 +32,10 @@ public class MainViewModel extends AndroidViewModel {
   private final MutableLiveData<Boolean> isLoadingMutableLiveData = new MutableLiveData<>();
 
   private final MutableLiveData<String> pokemonDescriptionLiveData = new MutableLiveData<>();
+
+  private final MutableLiveData<Integer> detailsPagerLiveData = new MutableLiveData<>();
+
+  private final MutableLiveData<String> detailsTitleLiveData = new MutableLiveData<>();
 
   private int currentOffset = 0;
 
@@ -59,6 +65,14 @@ public class MainViewModel extends AndroidViewModel {
 
   public MutableLiveData<String> getPokemonDescriptionLiveData() {
     return pokemonDescriptionLiveData;
+  }
+
+  public MutableLiveData<Integer> getDetailsPagerLiveData() {
+    return detailsPagerLiveData;
+  }
+
+  public MutableLiveData<String> getDetailsTitleLiveData() {
+    return detailsTitleLiveData;
   }
 
   public void loadResults() {
@@ -109,7 +123,31 @@ public class MainViewModel extends AndroidViewModel {
       @Override
       public void onSuccess(PokemonSpecies response) {
         if (response != null) {
-          getPokemonDescriptionLiveData().postValue(response.getFlavourEntriesList().get(0).getFlavourText());
+          new Thread(() -> {
+            String chosenFlavour = "";
+            String country = Locale.getDefault().getLanguage().split("-")[0].toLowerCase();
+            for (FlavourEntries flavour :
+                response.getFlavourEntriesList()) {
+              if (flavour.getLanguage().getName().contains(country)) {
+                chosenFlavour = flavour.getFlavourText();
+
+                break;
+              }
+            }
+
+            if (chosenFlavour.isEmpty()) {
+              for (FlavourEntries flavour :
+                  response.getFlavourEntriesList()) {
+                if (flavour.getLanguage().getName().contains("en")) {
+                  chosenFlavour = flavour.getFlavourText();
+                  break;
+                }
+              }
+            }
+
+            getPokemonDescriptionLiveData().postValue(chosenFlavour);
+          }).start();
+
         }
       }
 
@@ -153,7 +191,18 @@ public class MainViewModel extends AndroidViewModel {
       }
     }
     getPokemonListResponseMutableLiveData().postValue(pokemonResults);
+  }
 
+  public void changePage(int page) {
+    switch (page) {
+      case 0:
+        getDetailsTitleLiveData().postValue(getApplication().getResources().getString(R.string.general_info));
+        break;
+      case 1:
+        getDetailsTitleLiveData().postValue(getApplication().getResources().getString(R.string.stats));
+        break;
+    }
+    getDetailsPagerLiveData().postValue(page);
   }
 
 }

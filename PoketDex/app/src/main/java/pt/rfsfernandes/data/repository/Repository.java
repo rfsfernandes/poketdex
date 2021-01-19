@@ -80,7 +80,7 @@ public class Repository {
   public void getPokemonById(int id, ResponseCallBack<Pokemon> callBack) {
     new Thread(() -> {
       Pokemon pokemon = mPokemonDAO.getPokemonById(id);
-      if(pokemon == null) {
+      if (pokemon == null) {
         Call<Pokemon> call = mPokemonService.getPokemonById(id);
 
         call.enqueue(new Callback<Pokemon>() {
@@ -116,7 +116,7 @@ public class Repository {
     new Thread(() -> {
       PokemonSpecies pokemonSpecies = mPokemonDAO.getSpeciesByPokemonId(pokemonId);
 
-      if(pokemonSpecies == null) {
+      if (pokemonSpecies == null) {
         Call<PokemonSpecies> call = mPokemonService.getPokemonSpeciesById(pokemonId);
         call.enqueue(new Callback<PokemonSpecies>() {
           @Override

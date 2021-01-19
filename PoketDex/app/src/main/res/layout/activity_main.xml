@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryDark"
+    android:background="@drawable/background_portrait_list"
     android:orientation="vertical"
     tools:context="pt.rfsfernandes.ui.activities.MainActivity">
 
@@ -13,7 +13,7 @@
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
-      android:layout_marginEnd="@dimen/_15sdp">
+      android:background="@drawable/topbar_portrait">
 
     <Space
         android:layout_width="0dp"

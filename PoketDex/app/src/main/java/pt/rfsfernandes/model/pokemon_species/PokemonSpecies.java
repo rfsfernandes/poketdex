@@ -8,7 +8,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import pt.rfsfernandes.data.local.PokemonSpeciesTypeConverters;
-import pt.rfsfernandes.data.local.PokemonTypeConverters;
 
 /**
  * Class PokemonSpecies created at 1/17/21 20:00 for the project PoketDex

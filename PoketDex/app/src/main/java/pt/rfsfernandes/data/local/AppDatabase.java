@@ -18,8 +18,6 @@ public abstract class AppDatabase extends RoomDatabase {
 
   private static AppDatabase INSTANCE;
 
-  public abstract PokemonDAO getPokemonDAO();
-
   public static AppDatabase getInstance(final Context context) {
     if (INSTANCE == null) {
       synchronized (AppDatabase.class) {
@@ -41,5 +39,7 @@ public abstract class AppDatabase extends RoomDatabase {
         })
         .build();
   }
+
+  public abstract PokemonDAO getPokemonDAO();
 
 }

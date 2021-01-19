@@ -34,12 +34,12 @@ public class PokemonResult extends SimpleModelData {
     this.listPosition = listPosition;
   }
 
-  public void setPokemonImage(String pokemonImage) {
-    this.pokemonImage = pokemonImage;
-  }
-
   public String getPokemonImage() {
     return pokemonImage;
+  }
+
+  public void setPokemonImage(String pokemonImage) {
+    this.pokemonImage = pokemonImage;
   }
 
   public boolean isSelected() {

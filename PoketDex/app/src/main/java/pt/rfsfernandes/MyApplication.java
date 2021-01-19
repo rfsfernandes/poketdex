@@ -46,6 +46,7 @@ public class MyApplication extends Application {
   public void onCreate() {
     super.onCreate();
     Fresco.initialize(this);
+
     try {
       AssetFileDescriptor afd = getAssets().openFd("menusound.mp3");
       mMediaPlayerMenuSound = new MediaPlayer();
@@ -66,5 +67,16 @@ public class MyApplication extends Application {
       e.printStackTrace();
     }
 
+  }
+
+  public void playMenuSound() {
+    if (isCanPlaySounds()) {
+
+      if (mMediaPlayerMenuSound.isPlaying()) {
+        mMediaPlayerMenuSound.stop();
+      }
+
+      mMediaPlayerMenuSound.start();
+    }
   }
 }

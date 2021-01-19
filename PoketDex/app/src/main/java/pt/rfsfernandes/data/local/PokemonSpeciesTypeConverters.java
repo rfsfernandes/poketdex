@@ -8,16 +8,7 @@ import java.util.Collections;
 import java.util.List;
 
 import androidx.room.TypeConverter;
-import pt.rfsfernandes.model.SimpleModelData;
-import pt.rfsfernandes.model.pokemon.abilities.Ability;
-import pt.rfsfernandes.model.pokemon.moves.Moves;
-import pt.rfsfernandes.model.pokemon.sprites.OfficialArtWork;
-import pt.rfsfernandes.model.pokemon.sprites.OtherSpriteInfo;
-import pt.rfsfernandes.model.pokemon.sprites.PokemonSprites;
-import pt.rfsfernandes.model.pokemon.stats.Stats;
-import pt.rfsfernandes.model.pokemon.types.PokemonType;
 import pt.rfsfernandes.model.pokemon_species.FlavourEntries;
-import pt.rfsfernandes.model.service_responses.PokemonResult;
 
 public class PokemonSpeciesTypeConverters {
   // FlavourEntries

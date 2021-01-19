@@ -15,6 +15,7 @@ public class SharedPreferencesManager {
   private static SharedPreferences.Editor sharedPrefsEditor;
 
   private static Application mApplication;
+
   /**
    * Creates the PreferencesManager singleton
    *
@@ -28,7 +29,14 @@ public class SharedPreferencesManager {
     return instance;
   }
 
-  public void setSongState(boolean toPlay){
+  public boolean getSongState() {
+    if (sharedPrefs == null) {
+      sharedPrefs = mApplication.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+    }
+    return sharedPrefs.getBoolean(SONG_VOLUME, true);
+  }
+
+  public void setSongState(boolean toPlay) {
     if (sharedPrefs == null || sharedPrefsEditor == null) {
       sharedPrefs = mApplication.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
       sharedPrefsEditor = sharedPrefs.edit();
@@ -36,13 +44,6 @@ public class SharedPreferencesManager {
     }
     sharedPrefsEditor.putBoolean(SONG_VOLUME, toPlay);
     sharedPrefsEditor.apply();
-  }
-
-  public boolean getSongState() {
-    if (sharedPrefs == null) {
-      sharedPrefs = mApplication.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-    }
-    return sharedPrefs.getBoolean(SONG_VOLUME, true);
   }
 
 }
