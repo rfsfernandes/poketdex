@@ -5,6 +5,7 @@ import java.util.List;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
+import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
@@ -33,5 +34,14 @@ public interface PokemonDAO {
 
   @Insert(onConflict = REPLACE)
   void insertSpecies(PokemonSpecies pokemonSpecies);
+
+  @Query("SELECT * FROM Moves WHERE id = :id")
+  Moves getMovesByMoveId(int id);
+
+  @Query("SELECT * FROM Moves WHERE id IN (:idsList)")
+  List<Moves> getMovesFromIdList(List<String> idsList);
+
+  @Insert(onConflict = REPLACE)
+  void insertMoves(Moves moves);
 
 }

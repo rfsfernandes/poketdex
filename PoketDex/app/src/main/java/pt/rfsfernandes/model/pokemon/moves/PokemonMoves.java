@@ -10,12 +10,12 @@ import pt.rfsfernandes.model.SimpleModelData;
  * Class Moves created at 1/16/21 15:18 for the project PoketDex
  * By: rodrigofernandes
  */
-public class Moves {
+public class PokemonMoves {
   @SerializedName("move")
   @TypeConverters(PokemonTypeConverters.class)
   private SimpleModelData move;
 
-  public Moves(SimpleModelData move) {
+  public PokemonMoves(SimpleModelData move) {
     this.move = move;
   }
 

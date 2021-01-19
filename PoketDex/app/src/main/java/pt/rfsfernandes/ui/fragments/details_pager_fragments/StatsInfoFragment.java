@@ -25,8 +25,7 @@ public class StatsInfoFragment extends Fragment {
 
   private FragmentStatsInfoBinding binding;
   private MainViewModel mMainViewModel;
-  private MyApplication mMyApplication;
-  private TypesAdapter mTypesAdapter;
+
 
   public StatsInfoFragment() {
     // Required empty public constructor
@@ -47,7 +46,6 @@ public class StatsInfoFragment extends Fragment {
     binding = FragmentStatsInfoBinding.inflate(inflater, container, false);
     View view = binding.getRoot();
     mMainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-    mMyApplication = (MyApplication) requireActivity().getApplication();
     return view;
   }
 
@@ -113,7 +111,6 @@ public class StatsInfoFragment extends Fragment {
       binding.textViewStatsHeight.setText(String.format(Locale.getDefault(), "%.1f%s", heightInMeters,
           getContext().getString(R.string.meters)));
     }
-
 
     binding.textViewStatsBaseExperience.setText(String.valueOf(pokemon.getBaseExperience()));
 

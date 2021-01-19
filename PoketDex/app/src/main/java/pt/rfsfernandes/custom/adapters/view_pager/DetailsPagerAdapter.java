@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import pt.rfsfernandes.ui.fragments.details_pager_fragments.GeneralInfoFragment;
+import pt.rfsfernandes.ui.fragments.details_pager_fragments.MovesInfoFragment;
 import pt.rfsfernandes.ui.fragments.details_pager_fragments.StatsInfoFragment;
 
 /**
@@ -29,7 +30,7 @@ public class DetailsPagerAdapter extends FragmentStatePagerAdapter {
     } else if (position == 1) {
       fragment = new StatsInfoFragment();
     } else {
-      fragment = new GeneralInfoFragment();
+      fragment = new MovesInfoFragment();
     }
 
     return fragment;

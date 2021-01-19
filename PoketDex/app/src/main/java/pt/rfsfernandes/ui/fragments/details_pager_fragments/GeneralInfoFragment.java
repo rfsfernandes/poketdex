@@ -57,7 +57,7 @@ public class GeneralInfoFragment extends Fragment {
    */
   private void initViewModel() {
 
-    mMainViewModel.getPokemonMutableLiveData().observe(getActivity(), pokemon -> {
+    mMainViewModel.getPokemonMutableLiveData().observe(getViewLifecycleOwner(), pokemon -> {
       if (pokemon != null) {
         populateGeneralViews(pokemon);
         inflatePokemonTypes(pokemon);

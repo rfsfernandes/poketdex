@@ -7,6 +7,7 @@ import java.util.List;
 
 import pt.rfsfernandes.data.local.PokemonDAO;
 import pt.rfsfernandes.data.remote.PokemonService;
+import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonListResponse;
@@ -14,6 +15,8 @@ import pt.rfsfernandes.model.service_responses.PokemonResult;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static pt.rfsfernandes.custom.Constants.ARTWORK_URL;
 
 public class Repository {
   private final PokemonService mPokemonService;
@@ -45,8 +48,9 @@ public class Repository {
                 List<PokemonResult> tempList = new ArrayList<>();
                 for (int i = 0; i < pokemonListResponse.getResultList().size(); i++) {
                   PokemonResult pokemonResult = pokemonListResponse.getResultList().get(i);
-                  tempList.add(new PokemonResult(pokemonResult.getName(), offset + (i + 1),
-                      pokemonResult.getPokemonImage(), false));
+                  tempList.add(new PokemonResult(pokemonResult.getName(), pokemonResult.getUrl(),
+                      offset + (i + 1),
+                      ARTWORK_URL.replace("{pokemonId}", String.valueOf(offset + (i + 1))), false));
                 }
                 new Thread(() -> {
                   mPokemonDAO.insertPokemonResults(tempList);
@@ -146,6 +150,58 @@ public class Repository {
       }
     }).start();
 
+  }
+
+  public void getMoveById(String moveId, ResponseCallBack<Moves> callBack) {
+    if(!moveId.isEmpty()) {
+      new Thread(() -> {
+        Moves pokemonSpecies = mPokemonDAO.getMovesByMoveId(Integer.parseInt(moveId));
+        if (pokemonSpecies == null) {
+          Call<Moves> call = mPokemonService.getMoveById(Integer.parseInt(moveId));
+          call.enqueue(new Callback<Moves>() {
+            @Override
+            public void onResponse(Call<Moves> call, Response<Moves> response) {
+              if (response.isSuccessful()) {
+                if (response.body() != null) {
+                  Moves moves = response.body();
+                  new Thread(() -> mPokemonDAO.insertMoves(moves)).start();
+                  callBack.onSuccess(moves);
+                } else {
+                  callBack.onFailure(response.message());
+                }
+              } else {
+                callBack.onFailure(response.message());
+              }
+            }
+
+            @Override
+            public void onFailure(Call<Moves> call, Throwable t) {
+              callBack.onFailure(t.getLocalizedMessage());
+              Log.e("PokemonMovesByIdError", t.getLocalizedMessage());
+            }
+          });
+        } else {
+          callBack.onSuccess(pokemonSpecies);
+        }
+      }).start();
+    }
+
+  }
+
+  public void getMovesFromIds(List<String> movesIds, ResponseCallBack<List<Moves>> callBack) {
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        List<Moves> movesList = mPokemonDAO.getMovesFromIdList(movesIds);
+
+        if(movesList != null && movesList.size() != 0) {
+          callBack.onSuccess(movesList);
+        } else {
+          callBack.onFailure("");
+        }
+
+      }
+    }).start();
   }
 
 

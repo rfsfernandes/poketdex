@@ -16,13 +16,10 @@ public class PokemonResult extends SimpleModelData {
   private String pokemonImage;
   private boolean selected = false;
 
-  public PokemonResult(String name, int listPosition, String pokemonImage, boolean selected) {
-    super(name);
+  public PokemonResult(String name, String url, int listPosition, String pokemonImage, boolean selected) {
+    super(name, url);
     this.listPosition = listPosition;
-
-    this.pokemonImage = Constants.ARTWORK_URL.replace("{pokemonId}",
-        String.valueOf(this.listPosition));
-
+    this.pokemonImage = pokemonImage;
     this.selected = selected;
   }
 

@@ -9,9 +9,20 @@ import com.google.gson.annotations.SerializedName;
 public class SimpleModelData {
   @SerializedName("name")
   private String name;
+  @SerializedName("url")
+  private String url;
 
-  public SimpleModelData(String name) {
+  public SimpleModelData(String name, String url) {
     this.name = name;
+    this.url = url;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
   }
 
   public String getName() {
@@ -20,6 +31,24 @@ public class SimpleModelData {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public String getUrlId(){
+    StringBuilder id = new StringBuilder();
+    int counter = 0;
+
+    for (int i = url.length() - 1; i < url.length(); i--) {
+      if(url.charAt(i) == '/'){
+        counter++;
+      } else {
+        id.append(url.charAt(i));
+      }
+
+      if(counter == 2) {
+        break;
+      }
+    }
+    return new StringBuilder(id.toString()).reverse().toString();
   }
 
   @Override

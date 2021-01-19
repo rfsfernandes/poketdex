@@ -10,7 +10,7 @@ import androidx.room.TypeConverters;
 import pt.rfsfernandes.data.local.PokemonTypeConverters;
 import pt.rfsfernandes.model.SimpleModelData;
 import pt.rfsfernandes.model.pokemon.abilities.Ability;
-import pt.rfsfernandes.model.pokemon.moves.Moves;
+import pt.rfsfernandes.model.pokemon.moves.PokemonMoves;
 import pt.rfsfernandes.model.pokemon.sprites.PokemonSprites;
 import pt.rfsfernandes.model.pokemon.stats.Stats;
 import pt.rfsfernandes.model.pokemon.types.PokemonType;
@@ -36,7 +36,7 @@ public class Pokemon {
 
   @SerializedName("moves")
 
-  private List<Moves> moveslist;
+  private List<PokemonMoves> mMoveslist;
 
   @SerializedName("name")
   private String name;
@@ -57,12 +57,12 @@ public class Pokemon {
   @SerializedName("sprites")
   private PokemonSprites sprites;
 
-  public Pokemon(List<Ability> abilitiesList, int baseExperience, int height, int weight, List<Moves> moveslist, String name, int id, SimpleModelData speciesInfo, List<Stats> statsList, List<PokemonType> typeList, PokemonSprites sprites) {
+  public Pokemon(List<Ability> abilitiesList, int baseExperience, int height, int weight, List<PokemonMoves> moveslist, String name, int id, SimpleModelData speciesInfo, List<Stats> statsList, List<PokemonType> typeList, PokemonSprites sprites) {
     this.abilitiesList = abilitiesList;
     this.baseExperience = baseExperience;
     this.height = height;
     this.weight = weight;
-    this.moveslist = moveslist;
+    this.mMoveslist = moveslist;
     this.name = name;
     this.id = id;
     this.speciesInfo = speciesInfo;
@@ -95,12 +95,12 @@ public class Pokemon {
     this.height = height;
   }
 
-  public List<Moves> getMoveslist() {
-    return moveslist;
+  public List<PokemonMoves> getMoveslist() {
+    return mMoveslist;
   }
 
-  public void setMoveslist(List<Moves> moveslist) {
-    this.moveslist = moveslist;
+  public void setMoveslist(List<PokemonMoves> moveslist) {
+    this.mMoveslist = moveslist;
   }
 
   public String getName() {
@@ -166,7 +166,7 @@ public class Pokemon {
         ", baseExperience=" + baseExperience +
         ", height=" + height +
         ", weight=" + weight +
-        ", moveslist=" + moveslist +
+        ", moveslist=" + mMoveslist +
         ", name='" + name + '\'' +
         ", id=" + id +
         ", speciesInfo=" + speciesInfo +

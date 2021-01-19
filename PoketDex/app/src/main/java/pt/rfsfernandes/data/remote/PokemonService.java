@@ -1,5 +1,6 @@
 package pt.rfsfernandes.data.remote;
 
+import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonListResponse;
@@ -19,4 +20,7 @@ public interface PokemonService {
 
   @GET("pokemon-species/{pokemonId}")
   Call<PokemonSpecies> getPokemonSpeciesById(@Path("pokemonId") int pokemonId);
+
+  @GET("move/{moveId}")
+  Call<Moves> getMoveById(@Path("moveId") int moveId);
 }

@@ -10,7 +10,7 @@ import java.util.List;
 import androidx.room.TypeConverter;
 import pt.rfsfernandes.model.SimpleModelData;
 import pt.rfsfernandes.model.pokemon.abilities.Ability;
-import pt.rfsfernandes.model.pokemon.moves.Moves;
+import pt.rfsfernandes.model.pokemon.moves.PokemonMoves;
 import pt.rfsfernandes.model.pokemon.sprites.OfficialArtWork;
 import pt.rfsfernandes.model.pokemon.sprites.OtherSpriteInfo;
 import pt.rfsfernandes.model.pokemon.sprites.PokemonSprites;
@@ -58,7 +58,7 @@ public class PokemonTypeConverters {
   @TypeConverter
   public static SimpleModelData stringToSimpleModelData(String data) {
     if (data == null) {
-      return new SimpleModelData("");
+      return new SimpleModelData("", "");
     }
 
     Type listType = new TypeToken<SimpleModelData>() {
@@ -92,19 +92,19 @@ public class PokemonTypeConverters {
 
   // Moves
   @TypeConverter
-  public static List<Moves> stringToMoves(String data) {
+  public static List<PokemonMoves> stringToMoves(String data) {
     if (data == null) {
       return Collections.emptyList();
     }
 
-    Type listType = new TypeToken<List<Moves>>() {
+    Type listType = new TypeToken<List<PokemonMoves>>() {
     }.getType();
 
     return new Gson().fromJson(data, listType);
   }
 
   @TypeConverter
-  public static String movesToString(List<Moves> someObjects) {
+  public static String movesToString(List<PokemonMoves> someObjects) {
     return new Gson().toJson(someObjects);
   }
 

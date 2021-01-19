@@ -12,7 +12,7 @@
   <string name="special_attack">Special Attack</string>
   <string name="special_defense">Special Defense</string>
   <string name="speed">Speed</string>
-  <string name="moves">moves</string>
+  <string name="moves">Moves</string>
   <string name="abilities">abilities</string>
   <string name="weight">weight</string>
   <string name="kilograms">Kg</string>
@@ -26,4 +26,7 @@
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="no">No. </string>
   <string name="general_info">General Info</string>
+  <string name="effect">Effect</string>
+  <string name="short_effect">Short Effect</string>
+  <string name="power">Power</string>
 </resources>

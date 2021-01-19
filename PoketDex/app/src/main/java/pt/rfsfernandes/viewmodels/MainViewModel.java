@@ -2,6 +2,7 @@ package pt.rfsfernandes.viewmodels;
 
 import android.app.Application;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -13,7 +14,9 @@ import pt.rfsfernandes.data.local.AppDatabase;
 import pt.rfsfernandes.data.remote.DataSource;
 import pt.rfsfernandes.data.repository.Repository;
 import pt.rfsfernandes.data.repository.ResponseCallBack;
+import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
+import pt.rfsfernandes.model.pokemon.moves.PokemonMoves;
 import pt.rfsfernandes.model.pokemon_species.FlavourEntries;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
@@ -38,6 +41,8 @@ public class MainViewModel extends AndroidViewModel {
   private final MutableLiveData<String> detailsTitleLiveData = new MutableLiveData<>();
 
   private final MutableLiveData<Integer> selectedPokemonId = new MutableLiveData<>();
+
+  private final MutableLiveData<List<Moves>> movesInfoLiveData = new MutableLiveData<>();
 
   private int currentOffset = 0;
 
@@ -79,6 +84,10 @@ public class MainViewModel extends AndroidViewModel {
 
   public MutableLiveData<Integer> getSelectedPokemonId() {
     return selectedPokemonId;
+  }
+
+  public MutableLiveData<List<Moves>> getMovesInfo() {
+    return movesInfoLiveData;
   }
 
   public void loadResults() {
@@ -202,15 +211,70 @@ public class MainViewModel extends AndroidViewModel {
   }
 
   public void changePage(int page) {
+    String title = "";
     switch (page) {
       case 0:
-        getDetailsTitleLiveData().postValue(getApplication().getResources().getString(R.string.general_info));
+        title = getApplication().getResources().getString(R.string.general_info);
         break;
       case 1:
-        getDetailsTitleLiveData().postValue(getApplication().getResources().getString(R.string.stats));
+        title = getApplication().getResources().getString(R.string.stats);
+        break;
+      case 2:
+        title = getApplication().getResources().getString(R.string.moves);
         break;
     }
+    getDetailsTitleLiveData().postValue(title);
     getDetailsPagerLiveData().postValue(page);
+  }
+
+  public void getMovesFromIds(List<PokemonMoves> pokemonMoves) {
+    new Thread(new Runnable() {
+      @Override
+      public void run() {
+        List<String> movesIds = new ArrayList<>();
+        for (PokemonMoves pokeMoves :
+            pokemonMoves) {
+          movesIds.add(pokeMoves.getMove().getUrlId());
+        }
+        mRepository.getMovesFromIds(movesIds, new ResponseCallBack<List<Moves>>() {
+          @Override
+          public void onSuccess(List<Moves> response) {
+            getMovesInfo().postValue(response);
+          }
+
+          @Override
+          public void onFailure(String errorMessage) {
+            getMovesFromIdsAPI(movesIds);
+          }
+        });
+      }
+    }).start();
+
+  }
+
+  private void getMovesFromIdsAPI(List<String> movesId) {
+    new Thread(() -> {
+      List<Moves> movesList = new ArrayList<>();
+      final int[] counter = {0};
+      for (String moveId :
+          movesId) {
+        this.mRepository.getMoveById(moveId, new ResponseCallBack<Moves>() {
+          @Override
+          public void onSuccess(Moves response) {
+            counter[0]++;
+            movesList.add(response);
+            if(movesList.size() == counter[0]) {
+              getMovesInfo().postValue(movesList);
+            }
+          }
+
+          @Override
+          public void onFailure(String errorMessage) {
+
+          }
+        });
+      }
+    }).start();
   }
 
 }
