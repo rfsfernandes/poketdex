@@ -7,17 +7,20 @@ import android.view.View;
 
 import com.google.android.material.snackbar.Snackbar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import pt.rfsfernandes.MyApplication;
 import pt.rfsfernandes.R;
 import pt.rfsfernandes.databinding.ActivityMainBinding;
 import pt.rfsfernandes.viewmodels.MainViewModel;
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements NavController.OnDestinationChangedListener {
   private MainViewModel mMainViewModel;
   private ActivityMainBinding mActivityMainBinding;
   private NavController mNavControllerList;
@@ -25,6 +28,7 @@ public class MainActivity extends FragmentActivity {
   private MediaPlayer mMediaPlayerMenuSound;
   private MediaPlayer mMediaPlayerWalkingMusic;
   private MyApplication mMyApplication;
+  private int pokemonId;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -41,21 +45,29 @@ public class MainActivity extends FragmentActivity {
     mNavControllerList = Navigation.findNavController(this, R.id.displayPokemonList);
     mMyApplication.setLandscape(findViewById(R.id.displayPokemonDetails) != null);
     if (mMyApplication.isLandscape()) {
+
       mNavControllerDetails =
           Navigation.findNavController(this, R.id.displayPokemonDetails);
+
     }
 
-    initViewModel();
-
-    if (savedInstanceState == null) {
-      mMainViewModel.loadResults();
-    }
+    mNavControllerList.addOnDestinationChangedListener(this);
+    initViewModel(savedInstanceState);
 
     mMainViewModel.isLoading(true);
 
     mActivityMainBinding.imageButtonSound.setOnClickListener(e -> {
       handleMusic(true);
     });
+
+    if (mActivityMainBinding.imageButtonBack != null) {
+      mActivityMainBinding.imageButtonBack.setVisibility(mMyApplication.isLandscape() ?
+          View.INVISIBLE : (pokemonId != 0 ? View.VISIBLE : View.INVISIBLE));
+
+      mActivityMainBinding.imageButtonBack.setOnClickListener(e -> {
+        mNavControllerList.popBackStack();
+      });
+    }
 
   }
 
@@ -108,7 +120,18 @@ public class MainActivity extends FragmentActivity {
   @Override
   public void onBackPressed() {
     mMyApplication.playMenuSound();
-    super.onBackPressed();
+
+    if (!mMyApplication.isLandscape()) {
+      if (mNavControllerList.getCurrentDestination() != null && mNavControllerList.getCurrentDestination().getId() == R.id.pokemonDetailsFragment) {
+        mMainViewModel.getSelectedPokemonId().postValue(0);
+        mNavControllerList.navigate(R.id.pokemonResultListFragment);
+      } else {
+        super.onBackPressed();
+      }
+    } else {
+      super.onBackPressed();
+    }
+
   }
 
   @Override
@@ -129,7 +152,8 @@ public class MainActivity extends FragmentActivity {
 
   }
 
-  private void initViewModel() {
+  private void initViewModel(Bundle savedState) {
+
     mMainViewModel.getPokemonListResponseMutableLiveData().observe(this, pokemonListResponse -> {
       if (pokemonListResponse != null && pokemonListResponse.size() > 0) {
         Log.d("Info from db", "Success");
@@ -140,6 +164,32 @@ public class MainActivity extends FragmentActivity {
       Snackbar.make(findViewById(android.R.id.content), message,
           Snackbar.LENGTH_LONG).show();
     });
+
+    mMainViewModel.getSelectedPokemonId().observe(this, pokemonId -> {
+      this.pokemonId = pokemonId;
+      if (savedState != null && !savedState.isEmpty()) {
+        if (pokemonId != 0) {
+
+          if (!mMyApplication.isLandscape()) {
+            mNavControllerList.navigate(R.id.pokemonDetailsFragment);
+          } else {
+            if (mActivityMainBinding.linearLaoutDetailsContainer != null) {
+              mActivityMainBinding.linearLaoutDetailsContainer.setVisibility(View.VISIBLE);
+            }
+            mNavControllerList.navigate(R.id.pokemonResultListFragment);
+          }
+
+        } else {
+          mNavControllerList.navigate(R.id.pokemonResultListFragment);
+        }
+        savedState.clear();
+      }
+    });
+
+    if (savedState == null) {
+      mMainViewModel.loadResults();
+    }
+
   }
 
   @Override
@@ -160,6 +210,26 @@ public class MainActivity extends FragmentActivity {
 
     if (mMediaPlayerWalkingMusic != null && mMediaPlayerMenuSound.isPlaying()) {
       mMediaPlayerMenuSound.stop();
+    }
+
+  }
+
+  @Override
+  public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+
+
+    if (destination.getId() == R.id.pokemonDetailsFragment && !mMyApplication.isLandscape()) {
+      if (mActivityMainBinding.imageButtonBack != null) {
+        mActivityMainBinding.imageButtonBack.setVisibility(View.VISIBLE);
+      }
+    } else if (destination.getId() == R.id.pokemonResultListFragment && !mMyApplication.isLandscape()) {
+      if (mActivityMainBinding.imageButtonBack != null) {
+        mActivityMainBinding.imageButtonBack.setVisibility(View.GONE);
+      }
+    } else {
+      if (mActivityMainBinding.imageButtonBack != null) {
+        mActivityMainBinding.imageButtonBack.setVisibility(View.GONE);
+      }
     }
 
   }

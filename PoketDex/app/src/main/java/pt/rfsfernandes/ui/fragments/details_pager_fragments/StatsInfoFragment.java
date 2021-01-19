@@ -104,13 +104,16 @@ public class StatsInfoFragment extends Fragment {
       binding.textViewStatsSpeed.setText(String.valueOf(statsList.get(5).getBaseStat()));
     }
 
-    float weightInKg = pokemon.getWeight() / 10f;
-    binding.textViewStatsWeight.setText(String.format(Locale.getDefault(), "%.1f%s", weightInKg,
-        getString(R.string.kilograms)));
+    if(getContext() != null) {
+      float weightInKg = pokemon.getWeight() / 10f;
+      binding.textViewStatsWeight.setText(String.format(Locale.getDefault(), "%.1f%s", weightInKg,
+          getContext().getString(R.string.kilograms)));
 
-    float heightInMeters = pokemon.getHeight() / 10f;
-    binding.textViewStatsHeight.setText(String.format(Locale.getDefault(), "%.1f%s", heightInMeters,
-        getString(R.string.meters)));
+      float heightInMeters = pokemon.getHeight() / 10f;
+      binding.textViewStatsHeight.setText(String.format(Locale.getDefault(), "%.1f%s", heightInMeters,
+          getContext().getString(R.string.meters)));
+    }
+
 
     binding.textViewStatsBaseExperience.setText(String.valueOf(pokemon.getBaseExperience()));
 

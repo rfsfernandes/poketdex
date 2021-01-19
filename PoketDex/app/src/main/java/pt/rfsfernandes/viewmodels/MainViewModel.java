@@ -37,6 +37,8 @@ public class MainViewModel extends AndroidViewModel {
 
   private final MutableLiveData<String> detailsTitleLiveData = new MutableLiveData<>();
 
+  private final MutableLiveData<Integer> selectedPokemonId = new MutableLiveData<>();
+
   private int currentOffset = 0;
 
   public MainViewModel(@NonNull Application application) {
@@ -75,6 +77,10 @@ public class MainViewModel extends AndroidViewModel {
     return detailsTitleLiveData;
   }
 
+  public MutableLiveData<Integer> getSelectedPokemonId() {
+    return selectedPokemonId;
+  }
+
   public void loadResults() {
     this.mRepository.getPokemonList(currentOffset, RESULT_LIMIT, new ResponseCallBack<List<PokemonResult>>() {
       @Override
@@ -104,6 +110,7 @@ public class MainViewModel extends AndroidViewModel {
   }
 
   public void pokemonById(int pokemonId) {
+    getSelectedPokemonId().postValue(pokemonId);
     pokemonSpeciesById(pokemonId);
     this.mRepository.getPokemonById(pokemonId, new ResponseCallBack<Pokemon>() {
       @Override
@@ -180,6 +187,7 @@ public class MainViewModel extends AndroidViewModel {
   }
 
   public void setSelected(int listId) {
+    getSelectedPokemonId().postValue(listId);
     List<PokemonResult> pokemonResults = getPokemonListResponseMutableLiveData().getValue();
 
     if (pokemonResults != null) {

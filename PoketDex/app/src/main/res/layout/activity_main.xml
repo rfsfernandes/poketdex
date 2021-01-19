@@ -15,6 +15,14 @@
       android:orientation="horizontal"
       android:background="@drawable/topbar_portrait">
 
+    <ImageButton
+        android:id="@+id/imageButtonBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@android:color/transparent"
+        android:src="@drawable/arrow_back"
+        android:visibility="invisible"/>
+
     <Space
         android:layout_width="0dp"
         android:layout_height="wrap_content"

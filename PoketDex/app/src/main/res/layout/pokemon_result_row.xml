@@ -15,6 +15,38 @@
       android:layout_width="match_parent"
       android:layout_height="@dimen/_40sdp">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="0dp">
+
+      <View
+          android:id="@+id/viewSelect"
+          android:layout_width="150dp"
+          android:layout_height="0dp"
+          android:layout_centerInParent="true"
+          android:background="@drawable/selected_rectangle"
+          android:visibility="visible"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent">
+
+      </View>
+
+      <TextView
+          android:id="@+id/textViewPokemonNumber"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginEnd="16dp"
+          android:text=""
+          android:textStyle="bold"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <ImageView
         android:id="@+id/imageViewIconPokeball"
         android:layout_width="@dimen/_24sdp"
@@ -33,38 +65,6 @@
         android:gravity="center"
         android:text=""
         android:textStyle="bold" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="0dp">
-
-      <TextView
-          android:id="@+id/textViewPokemonNumber"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_marginEnd="16dp"
-          android:text=""
-          android:textStyle="bold"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent" />
-
-      <View
-          android:id="@+id/viewSelect"
-          android:layout_width="150dp"
-          android:layout_height="0dp"
-          android:layout_centerInParent="true"
-          android:background="@drawable/selected_rectangle"
-          android:visibility="visible"
-          app:layout_constraintBottom_toBottomOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent">
-
-      </View>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/imageViewPokemonList"
