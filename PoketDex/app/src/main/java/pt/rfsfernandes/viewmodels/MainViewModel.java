@@ -210,7 +210,7 @@ public class MainViewModel extends AndroidViewModel {
     getPokemonListResponseMutableLiveData().postValue(pokemonResults);
   }
 
-  public void changePage(int page) {
+  public void changePage(int page, boolean wasTurn) {
     String title = "";
     switch (page) {
       case 0:
@@ -224,30 +224,29 @@ public class MainViewModel extends AndroidViewModel {
         break;
     }
     getDetailsTitleLiveData().postValue(title);
+
     getDetailsPagerLiveData().postValue(page);
+
   }
 
   public void getMovesFromIds(List<PokemonMoves> pokemonMoves) {
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-        List<String> movesIds = new ArrayList<>();
-        for (PokemonMoves pokeMoves :
-            pokemonMoves) {
-          movesIds.add(pokeMoves.getMove().getUrlId());
-        }
-        mRepository.getMovesFromIds(movesIds, new ResponseCallBack<List<Moves>>() {
-          @Override
-          public void onSuccess(List<Moves> response) {
-            getMovesInfo().postValue(response);
-          }
-
-          @Override
-          public void onFailure(String errorMessage) {
-            getMovesFromIdsAPI(movesIds);
-          }
-        });
+    new Thread(() -> {
+      List<String> movesIds = new ArrayList<>();
+      for (PokemonMoves pokeMoves :
+          pokemonMoves) {
+        movesIds.add(pokeMoves.getMove().getUrlId());
       }
+      mRepository.getMovesFromIds(movesIds, new ResponseCallBack<List<Moves>>() {
+        @Override
+        public void onSuccess(List<Moves> response) {
+          getMovesInfo().postValue(response);
+        }
+
+        @Override
+        public void onFailure(String errorMessage) {
+          getMovesFromIdsAPI(movesIds);
+        }
+      });
     }).start();
 
   }
@@ -263,7 +262,7 @@ public class MainViewModel extends AndroidViewModel {
           public void onSuccess(Moves response) {
             counter[0]++;
             movesList.add(response);
-            if(movesList.size() == counter[0]) {
+            if (movesList.size() == counter[0]) {
               getMovesInfo().postValue(movesList);
             }
           }

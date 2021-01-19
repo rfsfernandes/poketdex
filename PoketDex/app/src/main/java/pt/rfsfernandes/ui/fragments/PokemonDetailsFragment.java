@@ -9,12 +9,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager.widget.ViewPager;
 import pt.rfsfernandes.MyApplication;
 import pt.rfsfernandes.R;
 import pt.rfsfernandes.custom.adapters.PokemonMovesAdapter;
 import pt.rfsfernandes.custom.adapters.view_pager.DetailsPagerAdapter;
 import pt.rfsfernandes.databinding.FragmentPokemonDetailsBinding;
-import pt.rfsfernandes.model.pokemon.Pokemon;
 import pt.rfsfernandes.viewmodels.MainViewModel;
 
 import static androidx.fragment.app.FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT;
@@ -49,9 +49,32 @@ public class PokemonDetailsFragment extends Fragment {
    * Sets up views
    */
   private void setupViews() {
-    mDetailsPagerAdapter = new DetailsPagerAdapter(getChildFragmentManager(), BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+    mDetailsPagerAdapter = new DetailsPagerAdapter(getChildFragmentManager(),
+        BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, getContext());
     binding.viewPagerDetails.setAdapter(mDetailsPagerAdapter);
     maxPage = mDetailsPagerAdapter.getCount();
+    binding.viewPagerDetails.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+      @Override
+      public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        if (positionOffset == 0) {
+          binding.textViewPagerTitle.setText(mDetailsPagerAdapter.getPageTitle(position));
+        }
+
+      }
+
+      @Override
+      public void onPageSelected(int position) {
+
+        binding.textViewPagerTitle.setText(mDetailsPagerAdapter.getPageTitle(position));
+
+      }
+
+      @Override
+      public void onPageScrollStateChanged(int state) {
+
+      }
+    });
   }
 
   @Override
@@ -62,11 +85,14 @@ public class PokemonDetailsFragment extends Fragment {
       if (mMyApplication.isCanPlaySounds()) {
         mMyApplication.getMediaPlayerMenuSound().start();
       }
+      int position;
       if (binding.viewPagerDetails.getCurrentItem() == 0) {
-        mMainViewModel.changePage(mDetailsPagerAdapter.getCount());
+        position = mDetailsPagerAdapter.getCount();
       } else {
-        mMainViewModel.changePage(binding.viewPagerDetails.getCurrentItem() - 1);
+        position = binding.viewPagerDetails.getCurrentItem() - 1;
       }
+
+      mMainViewModel.changePage(position, false);
 
     });
 
@@ -74,11 +100,14 @@ public class PokemonDetailsFragment extends Fragment {
       if (mMyApplication.isCanPlaySounds()) {
         mMyApplication.getMediaPlayerMenuSound().start();
       }
+      int position;
       if (binding.viewPagerDetails.getCurrentItem() == maxPage - 1) {
-        mMainViewModel.changePage(0);
+        position = 0;
       } else {
-        mMainViewModel.changePage(binding.viewPagerDetails.getCurrentItem() + 1);
+        position = binding.viewPagerDetails.getCurrentItem() + 1;
       }
+      
+      mMainViewModel.changePage(position, false);
 
     });
 
@@ -118,39 +147,9 @@ public class PokemonDetailsFragment extends Fragment {
     });
 
     mMainViewModel.getDetailsTitleLiveData().observe(getViewLifecycleOwner(), title -> {
-      binding.textViewPagerTitle.setText(title);
+//      binding.textViewPagerTitle.setText(title);
     });
 
-  }
-
-  /**
-   * inflates dynamically linearLayoutAbilitiesContainer with each ability and refreshes the
-   * moves adapter with the selected pokemon moves
-   *
-   * @param pokemon selected pokemon
-   */
-  private void fillMovesAndAbilities(Pokemon pokemon) {
-//    binding.linearLayoutAbilitiesContainer.removeAllViews();
-//    mPokemonMovesAdapter.refreshList(pokemon.getMoveslist());
-//    for (Ability ability :
-//        pokemon.getAbilitiesList()) {
-//      View view = getLayoutInflater().inflate(R.layout.ability_row,
-//          binding.linearLayoutAbilitiesContainer, false);
-//
-//      TextView textViewAbilityName =
-//          view.findViewById(R.id.textViewAbilityName);
-//      textViewAbilityName.setText(UtilsClass.toCamelCase(ability.getAbility().getName()));
-//
-//      TextView textViewAbilitySlot =
-//          view.findViewById(R.id.textViewAbilitySlot);
-//
-//      view.findViewById(R.id.textViewAbilityHidden).setVisibility(ability.isHidden() ? View.INVISIBLE : View.VISIBLE);
-//
-//      textViewAbilitySlot.setText(String.format("%s %s", getString(R.string.slot_n), ability.getSlot()));
-//
-//      binding.linearLayoutAbilitiesContainer.addView(view);
-//
-//    }
   }
 
 }
