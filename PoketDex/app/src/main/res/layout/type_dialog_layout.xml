@@ -62,7 +62,7 @@
           android:layout_height="wrap_content"
           android:background="@color/darkish_gray"
           android:text="@string/double_dmg_to"
-          android:textSize="@dimen/_13sdp"
+          android:textSize="@dimen/_13ssp"
           android:paddingTop="5dp"
           android:paddingBottom="5dp"
           android:layout_weight="1"/>
@@ -73,7 +73,7 @@
           android:layout_height="wrap_content"
           android:background="@color/darkish_gray"
           android:text="@string/half_dmg_to"
-          android:textSize="@dimen/_13sdp"
+          android:textSize="@dimen/_13ssp"
           android:paddingTop="5dp"
           android:paddingBottom="5dp"
           android:layout_weight="1"/>
@@ -84,7 +84,7 @@
           android:layout_height="wrap_content"
           android:background="@color/darkish_gray"
           android:text="@string/no_dmg_to"
-          android:textSize="@dimen/_13sdp"
+          android:textSize="@dimen/_13ssp"
           android:paddingTop="5dp"
           android:paddingBottom="5dp"
           android:layout_weight="1"/>

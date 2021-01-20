@@ -10,7 +10,7 @@
 
   <style name="stat_titles" parent="Widget.AppCompat.TextView">
     <item name="android:textStyle">bold</item>
-    <item name="android:textSize">@dimen/_14sdp</item>
+    <item name="android:textSize">@dimen/_14ssp</item>
     <item name="android:gravity">center</item>
     <item name="android:textAllCaps">true</item>
     <item name="android:layout_weight">1</item>
@@ -18,7 +18,7 @@
 
   <style name="details_titles" parent="Widget.AppCompat.TextView">
     <item name="android:textStyle">bold</item>
-    <item name="android:textSize">@dimen/_16sdp</item>
+    <item name="android:textSize">@dimen/_16ssp</item>
     <item name="android:textColor">@color/pokemon_red</item>
     <item name="android:gravity">center</item>
     <item name="android:textAllCaps">true</item>
@@ -37,7 +37,7 @@
   <style name="details_small_titles" parent="Widget.AppCompat.TextView">
     <item name="android:textAllCaps">true</item>
     <item name="android:textColor">@color/black</item>
-    <item name="android:textSize">@dimen/_13sdp</item>
+    <item name="android:textSize">@dimen/_13ssp</item>
     <item name="android:textStyle">bold</item>
     <item name="android:gravity">center</item>
     <item name="height">@dimen/_35sdp</item>
@@ -45,7 +45,7 @@
 
   <style name="move_titles" parent="Widget.AppCompat.TextView">
     <item name="android:textColor">@color/black</item>
-    <item name="android:textSize">@dimen/_8sdp</item>
+    <item name="android:textSize">@dimen/_8ssp</item>
     <item name="android:gravity">center</item>
     <item name="android:textStyle">bold</item>
   </style>

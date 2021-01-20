@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:background="@color/darkish_gray"
         android:text=""
-        android:textSize="@dimen/_13sdp" />
+        android:textSize="@dimen/_13ssp" />
 
     <TextView
         android:id="@+id/textViewSimpleText"
@@ -29,7 +29,7 @@
         android:gravity="start"
         android:padding="@dimen/_6sdp"
         android:text=""
-        android:textSize="@dimen/_11sdp" />
+        android:textSize="@dimen/_11ssp" />
 
     <Button
         android:id="@+id/buttonClose"
