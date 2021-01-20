@@ -137,7 +137,7 @@ public class Repository {
    * @param pokemonId Pokemon ID
    * @param callBack Used when data is ready to be delivered
    */
-  public void getPokemonSpecies(int pokemonId, ResponseCallBack<PokemonSpecies> callBack) {
+  public void getPokemonSpeciesById(int pokemonId, ResponseCallBack<PokemonSpecies> callBack) {
     new Thread(() -> {
       PokemonSpecies pokemonSpecies = mPokemonDAO.getSpeciesByPokemonId(pokemonId);
 

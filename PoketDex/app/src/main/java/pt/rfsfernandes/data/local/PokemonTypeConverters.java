@@ -10,7 +10,6 @@ import java.util.List;
 
 import androidx.room.TypeConverter;
 import pt.rfsfernandes.model.SimpleModelData;
-import pt.rfsfernandes.model.pokemon.abilities.Ability;
 import pt.rfsfernandes.model.pokemon.moves.PokemonMoves;
 import pt.rfsfernandes.model.pokemon.sprites.OfficialArtWork;
 import pt.rfsfernandes.model.pokemon.sprites.OtherSpriteInfo;
@@ -71,24 +70,6 @@ public class PokemonTypeConverters {
 
   @TypeConverter
   public static String simpleModelDataToString(SimpleModelData someObjects) {
-    return new Gson().toJson(someObjects);
-  }
-
-  // Ability
-  @TypeConverter
-  public static List<Ability> stringToAbility(String data) {
-    if (data == null) {
-      return Collections.emptyList();
-    }
-
-    Type listType = new TypeToken<List<Ability>>() {
-    }.getType();
-
-    return new Gson().fromJson(data, listType);
-  }
-
-  @TypeConverter
-  public static String abilityToString(List<Ability> someObjects) {
     return new Gson().toJson(someObjects);
   }
 

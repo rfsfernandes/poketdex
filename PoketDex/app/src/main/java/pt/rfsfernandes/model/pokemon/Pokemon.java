@@ -9,7 +9,6 @@ import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import pt.rfsfernandes.data.local.PokemonTypeConverters;
 import pt.rfsfernandes.model.SimpleModelData;
-import pt.rfsfernandes.model.pokemon.abilities.Ability;
 import pt.rfsfernandes.model.pokemon.moves.PokemonMoves;
 import pt.rfsfernandes.model.pokemon.sprites.PokemonSprites;
 import pt.rfsfernandes.model.pokemon.stats.Stats;
@@ -22,8 +21,6 @@ import pt.rfsfernandes.model.pokemon.types.PokemonType;
 @Entity
 @TypeConverters(PokemonTypeConverters.class)
 public class Pokemon {
-  @SerializedName("abilities")
-  private List<Ability> abilitiesList;
 
   @SerializedName("base_experience")
   private int baseExperience;
@@ -57,8 +54,7 @@ public class Pokemon {
   @SerializedName("sprites")
   private PokemonSprites sprites;
 
-  public Pokemon(List<Ability> abilitiesList, int baseExperience, int height, int weight, List<PokemonMoves> moveslist, String name, int id, SimpleModelData speciesInfo, List<Stats> statsList, List<PokemonType> typeList, PokemonSprites sprites) {
-    this.abilitiesList = abilitiesList;
+  public Pokemon(int baseExperience, int height, int weight, List<PokemonMoves> moveslist, String name, int id, SimpleModelData speciesInfo, List<Stats> statsList, List<PokemonType> typeList, PokemonSprites sprites) {
     this.baseExperience = baseExperience;
     this.height = height;
     this.weight = weight;
@@ -69,14 +65,6 @@ public class Pokemon {
     this.statsList = statsList;
     this.typeList = typeList;
     this.sprites = sprites;
-  }
-
-  public List<Ability> getAbilitiesList() {
-    return abilitiesList;
-  }
-
-  public void setAbilitiesList(List<Ability> abilitiesList) {
-    this.abilitiesList = abilitiesList;
   }
 
   public int getBaseExperience() {
@@ -162,8 +150,7 @@ public class Pokemon {
   @Override
   public String toString() {
     return "Pokemon{" +
-        "abilitiesList=" + abilitiesList +
-        ", baseExperience=" + baseExperience +
+        "baseExperience=" + baseExperience +
         ", height=" + height +
         ", weight=" + weight +
         ", moveslist=" + mMoveslist +

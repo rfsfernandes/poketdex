@@ -160,7 +160,7 @@ public class MainViewModel extends AndroidViewModel {
    * @param pokemonId Pokemon ID
    */
   public void pokemonSpeciesById(int pokemonId) {
-    this.mRepository.getPokemonSpecies(pokemonId, new ResponseCallBack<PokemonSpecies>() {
+    this.mRepository.getPokemonSpeciesById(pokemonId, new ResponseCallBack<PokemonSpecies>() {
       @Override
       public void onSuccess(PokemonSpecies response) {
         if (response != null) {
