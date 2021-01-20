@@ -70,6 +70,10 @@ public class PokemonTypesAdapter extends BaseAdapter {
     return convertView;
   }
 
+  /**
+   * Assigns a value to the global List of PokemonType and notifies the adapter of that change
+   * @param pokemonTypes New list
+   */
   public void refreshList(List<PokemonType> pokemonTypes) {
     this.mPokemonTypes = pokemonTypes;
     notifyDataSetChanged();

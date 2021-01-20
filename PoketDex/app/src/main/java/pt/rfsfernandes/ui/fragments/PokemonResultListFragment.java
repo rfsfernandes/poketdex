@@ -89,7 +89,7 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
 
         if (!isLoading && linearLayoutManager != null && linearLayoutManager.findLastVisibleItemPosition() == mPokemonResultList.size() - 1) {
 
-          mMainViewModel.loadResults();
+          mMainViewModel.getPokemonList();
           isLoading = true;
 
         }
@@ -99,6 +99,9 @@ public class PokemonResultListFragment extends Fragment implements ItemListClick
 
   }
 
+  /**
+   * Initiates viewModel observers
+   */
   private void initViewModel() {
     mMainViewModel.getPokemonListResponseMutableLiveData().observe(getViewLifecycleOwner(),
         results -> {

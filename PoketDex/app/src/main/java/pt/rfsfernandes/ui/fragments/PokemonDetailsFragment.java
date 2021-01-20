@@ -129,13 +129,11 @@ public class PokemonDetailsFragment extends Fragment {
    */
   private void initViewModel() {
     mMainViewModel.getIsLoadingMutableLiveData().observe(getViewLifecycleOwner(), isLoading -> {
-//      binding.content.setVisibility(isLoading ? View.GONE : View.VISIBLE);
       binding.progressBarGeneral.setVisibility(isLoading ? View.VISIBLE : View.GONE);
     });
 
     mMainViewModel.getPokemonMutableLiveData().observe(getViewLifecycleOwner(), pokemon -> {
       if (pokemon != null) {
-//        binding.textViewPagerTitle.setText("");
         binding.textViewPokemonNumber.setText(String.format("%s%s",
             getResources().getString(R.string.no), pokemon.getId()));
 
@@ -144,10 +142,6 @@ public class PokemonDetailsFragment extends Fragment {
 
     mMainViewModel.getDetailsPagerLiveData().observe(getViewLifecycleOwner(), page -> {
       binding.viewPagerDetails.setCurrentItem(page, true);
-    });
-
-    mMainViewModel.getDetailsTitleLiveData().observe(getViewLifecycleOwner(), title -> {
-//      binding.textViewPagerTitle.setText(title);
     });
 
   }

@@ -104,7 +104,7 @@ public class MainActivity extends FragmentActivity implements NavController.OnDe
       }
     }
 
-    handleVolumeButton();
+    handleMuteButton();
 
   }
 
@@ -145,17 +145,21 @@ public class MainActivity extends FragmentActivity implements NavController.OnDe
     handleMusic(false);
   }
 
-  private void handleVolumeButton() {
-
+  /**
+   * Handles behaviour of the mute button
+   */
+  private void handleMuteButton() {
     mActivityMainBinding.imageButtonSound.setImageDrawable(
         mMyApplication.isCanPlaySounds() ?
             ResourcesCompat.getDrawable(getResources(), R.drawable.volume_on, getTheme())
             :
             ResourcesCompat.getDrawable(getResources(), R.drawable.volume_off, getTheme())
     );
-
   }
 
+  /**
+   * Initiates viewModel observers
+   */
   private void initViewModel(Bundle savedState) {
 
     mMainViewModel.getPokemonListResponseMutableLiveData().observe(this, pokemonListResponse -> {
@@ -202,11 +206,16 @@ public class MainActivity extends FragmentActivity implements NavController.OnDe
     });
 
     if (savedState == null) {
-      mMainViewModel.loadResults();
+      mMainViewModel.getPokemonList();
     }
 
   }
 
+  /**
+   * Shows a dialog containing the picked move/pokemon type and it's counters/weaknesses
+   * @param type Type of the move/pokemon
+   * @param show_type If it's a move or a pokemon
+   */
   private void showTypeInfoDialog(Type type, Constants.SHOW_TYPE show_type){
     TypeCustomDialog typeCustomDialog = new TypeCustomDialog(this);
     typeCustomDialog.show();

@@ -51,6 +51,9 @@ public class MovesInfoFragment extends Fragment implements MovesItemClick {
     initViewModel();
   }
 
+  /**
+   * Initiates the viewModel observers
+   */
   private void initViewModel(){
     mMainViewModel.getPokemonMutableLiveData().observe(getViewLifecycleOwner(), pokemon -> {
       mMainViewModel.isLoading(true);
@@ -80,6 +83,11 @@ public class MovesInfoFragment extends Fragment implements MovesItemClick {
     }
   }
 
+  /**
+   * Shows a simple custom dialog with a title and a content
+   * @param title Title of the dialog
+   * @param content Content of the dialog
+   */
   private void showSimpleDialogContent(String title, String content){
     SimpleCustomDialog simpleCustomDialog = new SimpleCustomDialog(getActivity());
     simpleCustomDialog.show();

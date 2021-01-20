@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -24,6 +23,8 @@ public class GeneralInfoFragment extends Fragment {
   private MainViewModel mMainViewModel;
   private MyApplication mMyApplication;
   private PokemonTypesAdapter mPokemonTypesAdapter;
+  private boolean isGeneralInfoLoaded = false;
+  private boolean isDescriptionLoaded = false;
 
   public GeneralInfoFragment() {
     // Required empty public constructor
@@ -49,8 +50,8 @@ public class GeneralInfoFragment extends Fragment {
 
     binding.pokemonTypeGridView.setOnItemClickListener((parent, view1, position, id) -> {
       mMainViewModel.isLoading(true);
-      if(getActivity() != null) {
-        ((MainActivity)getActivity()).setShowTypeInfo(true);
+      if (getActivity() != null) {
+        ((MainActivity) getActivity()).setShowTypeInfo(true);
         mMainViewModel.getTypeAndCounters((int) id, Constants.SHOW_TYPE.POKEMON);
       }
     });
@@ -64,16 +65,35 @@ public class GeneralInfoFragment extends Fragment {
 
     mMainViewModel.getPokemonMutableLiveData().observe(getViewLifecycleOwner(), pokemon -> {
       if (pokemon != null) {
+
         populateGeneralViews(pokemon);
         inflatePokemonTypes(pokemon);
-        mMainViewModel.isLoading(false);
+
+        isGeneralInfoLoaded = true;
+        stopLoading();
+
       }
     });
 
     mMainViewModel.getPokemonDescriptionLiveData().observe(getViewLifecycleOwner(),
         description -> {
           binding.textViewDescription.setText(description);
+          isDescriptionLoaded = true;
+          stopLoading();
         });
+
+  }
+
+  /**
+   * Stops the progressBar loading
+   */
+  private void stopLoading() {
+
+    if (isDescriptionLoaded && isGeneralInfoLoaded) {
+      mMainViewModel.isLoading(false);
+      isDescriptionLoaded = false;
+      isGeneralInfoLoaded = false;
+    }
 
   }
 

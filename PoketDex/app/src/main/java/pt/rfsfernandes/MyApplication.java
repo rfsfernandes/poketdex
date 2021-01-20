@@ -69,6 +69,9 @@ public class MyApplication extends Application {
 
   }
 
+  /**
+   * Plays pokemon menu sound
+   */
   public void playMenuSound() {
     if (isCanPlaySounds()) {
 

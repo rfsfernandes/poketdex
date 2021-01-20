@@ -49,6 +49,11 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
     populateItemRows(holder, position);
   }
 
+  /**
+   * Populates each row with the content of the current item
+   * @param holder Holder used to populate
+   * @param position Position of the item
+   */
   private void populateItemRows(MovesViewHolder holder, int position) {
 
     Moves item = mPokemonMoves.get(position);
@@ -121,10 +126,7 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
     return mPokemonMoves.size();
   }
 
-  public void refreshList(List<Moves> moves) {
-    this.mPokemonMoves = moves;
-    notifyDataSetChanged();
-  }
+
 
   public class MovesViewHolder extends RecyclerView.ViewHolder {
     public final View mView;
@@ -149,5 +151,14 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
       selectedView = view.findViewById(R.id.viewSelect);
     }
 
+  }
+
+  /**
+   * Assigns a value to the global List of Moves and notifies the adapter of that change
+   * @param moves New list
+   */
+  public void refreshList(List<Moves> moves) {
+    this.mPokemonMoves = moves;
+    notifyDataSetChanged();
   }
 }

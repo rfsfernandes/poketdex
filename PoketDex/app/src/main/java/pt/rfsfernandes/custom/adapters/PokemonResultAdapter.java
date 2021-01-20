@@ -60,12 +60,15 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
   public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
     if (holder instanceof PokemonResultViewHolder) {
       populateItemRows((PokemonResultViewHolder) holder, position);
-    } else {
-      dealWithLoading((LoadingViewHolder) holder);
     }
 
   }
 
+  /**
+   * Populates each row with the content of the current item
+   * @param holder Holder used to populate
+   * @param position Position of the item
+   */
   private void populateItemRows(PokemonResultViewHolder holder, int position) {
 
     PokemonResult item = mPokemonResultList.get(position);
@@ -83,18 +86,9 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
         ResourcesCompat.getDrawable(mContext.getResources(), R.drawable.close, null));
   }
 
-  private void dealWithLoading(LoadingViewHolder holder) {
-
-  }
-
   @Override
   public int getItemCount() {
     return mPokemonResultList.size();
-  }
-
-  public void refreshList(List<PokemonResult> pokemonResults) {
-    this.mPokemonResultList = pokemonResults;
-    notifyDataSetChanged();
   }
 
   public class PokemonResultViewHolder extends RecyclerView.ViewHolder {
@@ -132,4 +126,14 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     }
   }
+
+  /**
+   * Assigns a value to the global List of PokemonResult and notifies the adapter of that change
+   * @param pokemonResults New list
+   */
+  public void refreshList(List<PokemonResult> pokemonResults) {
+    this.mPokemonResultList = pokemonResults;
+    notifyDataSetChanged();
+  }
+
 }

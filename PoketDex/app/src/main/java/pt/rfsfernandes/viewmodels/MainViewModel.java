@@ -104,7 +104,10 @@ public class MainViewModel extends AndroidViewModel {
     return mSHOW_typeMutableLiveData;
   }
 
-  public void loadResults() {
+  /**
+   * Fetches a list of Pokemons with an offset and a limit
+   */
+  public void getPokemonList() {
     this.mRepository.getPokemonList(currentOffset, RESULT_LIMIT, new ResponseCallBack<List<PokemonResult>>() {
       @Override
       public void onSuccess(List<PokemonResult> response) {
@@ -132,6 +135,10 @@ public class MainViewModel extends AndroidViewModel {
     });
   }
 
+  /**
+   * Fetches a Pokemon by it's ID
+   * @param pokemonId Pokemon ID
+   */
   public void pokemonById(int pokemonId) {
     getSelectedPokemonId().postValue(pokemonId);
     pokemonSpeciesById(pokemonId);
@@ -148,6 +155,10 @@ public class MainViewModel extends AndroidViewModel {
     });
   }
 
+  /**
+   * Fetches a Species of a Pokemon by it's ID
+   * @param pokemonId Pokemon ID
+   */
   public void pokemonSpeciesById(int pokemonId) {
     this.mRepository.getPokemonSpecies(pokemonId, new ResponseCallBack<PokemonSpecies>() {
       @Override
@@ -188,10 +199,17 @@ public class MainViewModel extends AndroidViewModel {
     });
   }
 
+  /**
+   * Notifies that a view should be loading
+   * @param isLoading If it's loading or not
+   */
   public void isLoading(boolean isLoading) {
     getIsLoadingMutableLiveData().postValue(isLoading);
   }
 
+  /**
+   * Deselect all PokemonResults from a list
+   */
   public void deselectAll() {
     if (getPokemonListResponseMutableLiveData().getValue() != null) {
       List<PokemonResult> pokemonResults = getPokemonListResponseMutableLiveData().getValue();
@@ -209,6 +227,10 @@ public class MainViewModel extends AndroidViewModel {
 
   }
 
+  /**
+   * Selects an item from a list
+   * @param listId Item ID to select
+   */
   public void setSelected(int listId) {
     getSelectedPokemonId().postValue(listId);
     List<PokemonResult> pokemonResults = getPokemonListResponseMutableLiveData().getValue();
@@ -224,6 +246,11 @@ public class MainViewModel extends AndroidViewModel {
     getPokemonListResponseMutableLiveData().postValue(pokemonResults);
   }
 
+  /**
+   * Notifies that a ViewPager has changed his page
+   * @param page Page to change to
+   * @param wasTurn If the Page was scrolled or forced to change
+   */
   public void changePage(int page, boolean wasTurn) {
     String title = "";
     switch (page) {
@@ -243,6 +270,10 @@ public class MainViewModel extends AndroidViewModel {
 
   }
 
+  /**
+   * Fetches a list of Moves
+   * @param pokemonMoves List of PokemonMoves to get their ID's
+   */
   public void getMovesFromIds(List<PokemonMoves> pokemonMoves) {
     new Thread(() -> {
       List<String> movesIds = new ArrayList<>();
@@ -265,6 +296,10 @@ public class MainViewModel extends AndroidViewModel {
 
   }
 
+  /**
+   * Fetches a list of Moves from the endpoint
+   * @param movesId List of move ID's
+   */
   private void getMovesFromIdsAPI(List<String> movesId) {
     new Thread(() -> {
       List<Moves> movesList = new ArrayList<>();
@@ -290,6 +325,11 @@ public class MainViewModel extends AndroidViewModel {
     }).start();
   }
 
+  /**
+   * Get's counters and weaknesses from a type
+   * @param typeId Type to get counters and weaknesses
+   * @param show_type If the method was called in order to get counters or weaknesses
+   */
   public void getTypeAndCounters(int typeId, Constants.SHOW_TYPE show_type) {
     new Thread(() -> {
       this.mRepository.getTypeInfoById(typeId, new ResponseCallBack<Type>() {

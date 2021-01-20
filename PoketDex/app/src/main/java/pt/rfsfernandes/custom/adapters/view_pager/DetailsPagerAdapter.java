@@ -64,13 +64,7 @@ public class DetailsPagerAdapter extends FragmentStatePagerAdapter {
           title = mContext.getResources().getString(R.string.moves);
           break;
       }
-//      if(position == 0) {
-//        title = mContext.getString(R.string.general_info);
-//      } else if(position == 1) {
-//        title = mContext.getResources().getString(R.string.stats);
-//      }if(position == 2) {
-//        title = mContext.getResources().getString(R.string.moves);
-//      }
+
     }
     return title;
   }
