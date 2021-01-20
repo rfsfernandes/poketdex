@@ -106,7 +106,7 @@ public class PokemonDetailsFragment extends Fragment {
       } else {
         position = binding.viewPagerDetails.getCurrentItem() + 1;
       }
-      
+
       mMainViewModel.changePage(position, false);
 
     });

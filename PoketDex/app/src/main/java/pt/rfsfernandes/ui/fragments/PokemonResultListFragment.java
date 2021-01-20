@@ -16,7 +16,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import pt.rfsfernandes.MyApplication;
-import pt.rfsfernandes.custom.adapters.ItemListClicked;
+import pt.rfsfernandes.custom.callbacks.ItemListClicked;
 import pt.rfsfernandes.custom.adapters.PokemonResultAdapter;
 import pt.rfsfernandes.databinding.FragmentPokemonResultListBinding;
 import pt.rfsfernandes.model.service_responses.PokemonResult;

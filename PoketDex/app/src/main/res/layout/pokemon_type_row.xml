@@ -17,6 +17,7 @@
         android:background="@android:color/transparent"
         android:textAllCaps="true"
         android:textSize="@dimen/_10sdp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/white"/>
   </LinearLayout>
 </LinearLayout>

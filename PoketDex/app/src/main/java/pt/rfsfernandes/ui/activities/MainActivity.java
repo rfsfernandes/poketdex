@@ -17,7 +17,10 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import pt.rfsfernandes.MyApplication;
 import pt.rfsfernandes.R;
+import pt.rfsfernandes.custom.Constants;
+import pt.rfsfernandes.custom.dialogs.TypeCustomDialog;
 import pt.rfsfernandes.databinding.ActivityMainBinding;
+import pt.rfsfernandes.model.type.Type;
 import pt.rfsfernandes.viewmodels.MainViewModel;
 
 public class MainActivity extends FragmentActivity implements NavController.OnDestinationChangedListener {
@@ -28,6 +31,7 @@ public class MainActivity extends FragmentActivity implements NavController.OnDe
   private MediaPlayer mMediaPlayerMenuSound;
   private MediaPlayer mMediaPlayerWalkingMusic;
   private MyApplication mMyApplication;
+  private boolean showTypeInfo;
   private int pokemonId;
 
   @Override
@@ -186,10 +190,49 @@ public class MainActivity extends FragmentActivity implements NavController.OnDe
       }
     });
 
+    mMainViewModel.getTypeMutableLiveData().observe(this, type -> {
+      mMainViewModel.getSHOW_typeMutableLiveData().observe(this, show_type -> {
+
+        if (showTypeInfo) {
+          showTypeInfoDialog(type, show_type);
+        }
+        showTypeInfo = false;
+        mMainViewModel.isLoading(false);
+      });
+    });
+
     if (savedState == null) {
       mMainViewModel.loadResults();
     }
 
+  }
+
+  private void showTypeInfoDialog(Type type, Constants.SHOW_TYPE show_type){
+    TypeCustomDialog typeCustomDialog = new TypeCustomDialog(this);
+    typeCustomDialog.show();
+
+    switch (show_type) {
+      case MOVE:
+        typeCustomDialog.getPokemonTypesAdapterDoubleDamage().refreshList(type.getDamageRelations().getDoubleDamageTo());
+        typeCustomDialog.getPokemonTypesAdapterHalfDamage().refreshList(type.getDamageRelations().getHalfDamageTo());
+        typeCustomDialog.getPokemonTypesAdapterNoDamage().refreshList(type.getDamageRelations().getNoDamageTo());
+        typeCustomDialog.getTextViewComparisonType().setText("TO");
+        break;
+      case POKEMON:
+        typeCustomDialog.getPokemonTypesAdapterDoubleDamage().refreshList(type.getDamageRelations().getDoubleDamageFrom());
+        typeCustomDialog.getPokemonTypesAdapterHalfDamage().refreshList(type.getDamageRelations().getHalfDamageFrom());
+        typeCustomDialog.getPokemonTypesAdapterNoDamage().refreshList(type.getDamageRelations().getNoDamageFrom());
+        typeCustomDialog.getTextViewComparisonType().setText("FROM");
+
+        break;
+    }
+
+    typeCustomDialog.setType(type.getName());
+  }
+
+
+  public void setShowTypeInfo(boolean showTypeInfo) {
+    this.showTypeInfo = showTypeInfo;
   }
 
   @Override
@@ -233,4 +276,5 @@ public class MainActivity extends FragmentActivity implements NavController.OnDe
     }
 
   }
+
 }

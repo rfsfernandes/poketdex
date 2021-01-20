@@ -2,6 +2,7 @@ package pt.rfsfernandes.data.remote;
 
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
+import pt.rfsfernandes.model.type.Type;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonListResponse;
 import retrofit2.Call;
@@ -23,4 +24,7 @@ public interface PokemonService {
 
   @GET("move/{moveId}")
   Call<Moves> getMoveById(@Path("moveId") int moveId);
+
+  @GET("type/{typeId}")
+  Call<Type> getTypeInfoById(@Path("typeId") int typeId);
 }

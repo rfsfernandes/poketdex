@@ -1,27 +1,26 @@
 package pt.rfsfernandes.ui.fragments.details_pager_fragments;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import pt.rfsfernandes.R;
+import pt.rfsfernandes.MyApplication;
+import pt.rfsfernandes.custom.Constants;
 import pt.rfsfernandes.custom.adapters.PokemonMovesAdapter;
+import pt.rfsfernandes.custom.callbacks.MovesItemClick;
+import pt.rfsfernandes.custom.dialogs.SimpleCustomDialog;
 import pt.rfsfernandes.databinding.FragmentMovesInfoBinding;
-import pt.rfsfernandes.databinding.FragmentStatsInfoBinding;
-import pt.rfsfernandes.model.service_responses.PokemonResult;
+import pt.rfsfernandes.ui.activities.MainActivity;
 import pt.rfsfernandes.viewmodels.MainViewModel;
 
-public class MovesInfoFragment extends Fragment {
+public class MovesInfoFragment extends Fragment implements MovesItemClick {
 
   private FragmentMovesInfoBinding binding;
   private MainViewModel mMainViewModel;
@@ -37,7 +36,8 @@ public class MovesInfoFragment extends Fragment {
     binding = FragmentMovesInfoBinding.inflate(inflater, container, false);
     View view = binding.getRoot();
     mMainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
-    mPokemonMovesAdapter = new PokemonMovesAdapter(getContext());
+    mPokemonMovesAdapter = new PokemonMovesAdapter(getContext(), this);
+
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
     linearLayoutManager.setOrientation(RecyclerView.HORIZONTAL);
     binding.recyclerViewMovesInfo.setLayoutManager(linearLayoutManager);
@@ -60,4 +60,28 @@ public class MovesInfoFragment extends Fragment {
       mPokemonMovesAdapter.refreshList(moves);
     });
   }
+
+  @Override
+  public void clickedMovesItem(String title, String text, Constants.MOVES_ITEM moves_item) {
+    mMainViewModel.isLoading(true);
+    switch (moves_item) {
+      case TYPE:
+        if(getActivity() != null) {
+          ((MainActivity)getActivity()).setShowTypeInfo(true);
+          mMainViewModel.getTypeAndCounters(Integer.parseInt(text), Constants.SHOW_TYPE.MOVE);
+        }
+        break;
+      case SIMPLE:
+        showSimpleDialogContent(title, text);
+        break;
+    }
+  }
+
+  private void showSimpleDialogContent(String title, String content){
+    SimpleCustomDialog simpleCustomDialog = new SimpleCustomDialog(getActivity());
+    simpleCustomDialog.show();
+    simpleCustomDialog.getTextViewSimpleTitle().setText(title);
+    simpleCustomDialog.getTextViewSimpleText().setText(content);
+  }
+
 }

@@ -17,6 +17,8 @@ import java.util.Locale;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import pt.rfsfernandes.R;
+import pt.rfsfernandes.custom.Constants;
+import pt.rfsfernandes.custom.callbacks.MovesItemClick;
 import pt.rfsfernandes.custom.utils.UtilsClass;
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon_species.FlavourEntries;
@@ -26,9 +28,10 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
 
   private List<Moves> mPokemonMoves = new ArrayList<>();
   private Context context;
-
-  public PokemonMovesAdapter(Context context) {
+  private MovesItemClick mMovesItemClick;
+  public PokemonMovesAdapter(Context context, MovesItemClick movesItemClick) {
     this.context = context;
+    this.mMovesItemClick = movesItemClick;
   }
 
   @Override
@@ -51,8 +54,6 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
     Moves item = mPokemonMoves.get(position);
     holder.mItem = item;
     holder.textViewMoveTitle.setText(item.getName().replace("-", " "));
-
-//    holder.textViewMoveType.setText(item.getType().getName());
 
     int color = UtilsClass.returnColorId(context, item.getType().getName());
 
@@ -93,6 +94,26 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
     holder.textViewMoveShortEffect.setText(item.getEffectEntry().getShortEffect().replace("  ",
         " ").replace("$effect_chance%", String.valueOf(item.getEffectChance())));
     holder.textViewMovePower.setText(String.valueOf(item.getPower()));
+
+    holder.textViewMovePower.setOnClickListener(e -> {
+      mMovesItemClick.clickedMovesItem("", item.getType().getUrlId(), Constants.MOVES_ITEM.TYPE);
+    });
+
+    holder.textViewMoveDescription.setOnClickListener(e -> mMovesItemClick.clickedMovesItem(
+        context.getResources().getString(R.string.description),
+        holder.textViewMoveDescription.getText().toString(),
+        Constants.MOVES_ITEM.SIMPLE));
+
+    holder.textViewMoveEffect.setOnClickListener(e -> mMovesItemClick.clickedMovesItem(
+        context.getResources().getString(R.string.effect),
+        holder.textViewMoveEffect.getText().toString(),
+        Constants.MOVES_ITEM.SIMPLE));
+
+    holder.textViewMoveShortEffect.setOnClickListener(e -> mMovesItemClick.clickedMovesItem(
+        context.getResources().getString(R.string.short_effect),
+        holder.textViewMoveShortEffect.getText().toString(),
+        Constants.MOVES_ITEM.SIMPLE));
+
   }
 
   @Override

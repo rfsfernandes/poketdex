@@ -9,10 +9,12 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
+import pt.rfsfernandes.model.type.Type;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
 
-@Database(entities = {PokemonResult.class, Pokemon.class, PokemonSpecies.class, Moves.class},
+@Database(entities = {PokemonResult.class, Pokemon.class, PokemonSpecies.class, Moves.class,
+    Type.class},
     version = DBContract.DATABASE_VERSION,
     exportSchema = false)
 public abstract class AppDatabase extends RoomDatabase {

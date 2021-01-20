@@ -10,13 +10,15 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import pt.rfsfernandes.R;
+import pt.rfsfernandes.custom.Constants;
 import pt.rfsfernandes.data.local.AppDatabase;
 import pt.rfsfernandes.data.remote.DataSource;
 import pt.rfsfernandes.data.repository.Repository;
-import pt.rfsfernandes.data.repository.ResponseCallBack;
+import pt.rfsfernandes.custom.callbacks.ResponseCallBack;
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
 import pt.rfsfernandes.model.pokemon.moves.PokemonMoves;
+import pt.rfsfernandes.model.type.Type;
 import pt.rfsfernandes.model.pokemon_species.FlavourEntries;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
@@ -43,6 +45,10 @@ public class MainViewModel extends AndroidViewModel {
   private final MutableLiveData<Integer> selectedPokemonId = new MutableLiveData<>();
 
   private final MutableLiveData<List<Moves>> movesInfoLiveData = new MutableLiveData<>();
+
+  private final MutableLiveData<Type> mTypeMutableLiveData = new MutableLiveData<>();
+
+  private final MutableLiveData<Constants.SHOW_TYPE> mSHOW_typeMutableLiveData = new MutableLiveData<>();
 
   private int currentOffset = 0;
 
@@ -88,6 +94,14 @@ public class MainViewModel extends AndroidViewModel {
 
   public MutableLiveData<List<Moves>> getMovesInfo() {
     return movesInfoLiveData;
+  }
+
+  public MutableLiveData<Type> getTypeMutableLiveData() {
+    return mTypeMutableLiveData;
+  }
+
+  public MutableLiveData<Constants.SHOW_TYPE> getSHOW_typeMutableLiveData() {
+    return mSHOW_typeMutableLiveData;
   }
 
   public void loadResults() {
@@ -273,6 +287,23 @@ public class MainViewModel extends AndroidViewModel {
           }
         });
       }
+    }).start();
+  }
+
+  public void getTypeAndCounters(int typeId, Constants.SHOW_TYPE show_type) {
+    new Thread(() -> {
+      this.mRepository.getTypeInfoById(typeId, new ResponseCallBack<Type>() {
+        @Override
+        public void onSuccess(Type response) {
+          getTypeMutableLiveData().postValue(response);
+          getSHOW_typeMutableLiveData().postValue(show_type);
+        }
+
+        @Override
+        public void onFailure(String errorMessage) {
+          getFecthErrorLiveData().postValue(errorMessage);
+        }
+      });
     }).start();
   }
 

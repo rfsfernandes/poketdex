@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import pt.rfsfernandes.R;
+import pt.rfsfernandes.custom.callbacks.ItemListClicked;
 import pt.rfsfernandes.custom.utils.UtilsClass;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
 

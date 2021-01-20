@@ -29,4 +29,8 @@
   <string name="effect">Effect</string>
   <string name="short_effect">Short Effect</string>
   <string name="power">Power</string>
+  <string name="double_dmg_to">Double\nDamage</string>
+  <string name="half_dmg_to">Half\nDamage</string>
+  <string name="no_dmg_to">No\nDamage</string>
+  <string name="picked_type">picked type</string>
 </resources>

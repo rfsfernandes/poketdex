@@ -7,6 +7,7 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
+import pt.rfsfernandes.model.type.Type;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
 
@@ -43,5 +44,11 @@ public interface PokemonDAO {
 
   @Insert(onConflict = REPLACE)
   void insertMoves(Moves moves);
+
+  @Query("SELECT * FROM Type WHERE id = :id")
+  Type getTypeById(int id);
+
+  @Insert(onConflict = REPLACE)
+  void insertType(Type type);
 
 }

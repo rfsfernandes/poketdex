@@ -5,10 +5,12 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import pt.rfsfernandes.custom.callbacks.ResponseCallBack;
 import pt.rfsfernandes.data.local.PokemonDAO;
 import pt.rfsfernandes.data.remote.PokemonService;
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
+import pt.rfsfernandes.model.type.Type;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonListResponse;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
@@ -189,20 +191,49 @@ public class Repository {
   }
 
   public void getMovesFromIds(List<String> movesIds, ResponseCallBack<List<Moves>> callBack) {
-    new Thread(new Runnable() {
-      @Override
-      public void run() {
-        List<Moves> movesList = mPokemonDAO.getMovesFromIdList(movesIds);
+    new Thread(() -> {
+      List<Moves> movesList = mPokemonDAO.getMovesFromIdList(movesIds);
 
-        if(movesList != null && movesList.size() != 0) {
-          callBack.onSuccess(movesList);
-        } else {
-          callBack.onFailure("");
-        }
-
+      if(movesList != null && movesList.size() != 0) {
+        callBack.onSuccess(movesList);
+      } else {
+        callBack.onFailure("");
       }
+
     }).start();
   }
 
+  public void getTypeInfoById(int typeId, ResponseCallBack<Type> callBack){
+    new Thread(() -> {
+      Type type = mPokemonDAO.getTypeById(typeId);
+      if(type == null) {
+        Call<Type> call = mPokemonService.getTypeInfoById(typeId);
+        call.enqueue(new Callback<Type>() {
+          @Override
+          public void onResponse(Call<Type> call, Response<Type> response) {
+            if (response.isSuccessful()) {
+              if (response.body() != null) {
+                Type typeCall = response.body();
+                new Thread(() -> mPokemonDAO.insertType(typeCall)).start();
+                callBack.onSuccess(typeCall);
+              } else {
+                callBack.onFailure(response.message());
+              }
+            } else {
+              callBack.onFailure(response.message());
+            }
+          }
+
+          @Override
+          public void onFailure(Call<Type> call, Throwable t) {
+            callBack.onFailure(t.getLocalizedMessage());
+            Log.e("PokemonTypeByIdError", t.getLocalizedMessage());
+          }
+        });
+      } else {
+        callBack.onSuccess(type);
+      }
+    }).start();
+  }
 
 }

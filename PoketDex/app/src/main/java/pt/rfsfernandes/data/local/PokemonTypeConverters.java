@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,6 +18,7 @@ import pt.rfsfernandes.model.pokemon.sprites.PokemonSprites;
 import pt.rfsfernandes.model.pokemon.stats.Stats;
 import pt.rfsfernandes.model.pokemon.types.PokemonType;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
+import pt.rfsfernandes.model.type.DamageRelations;
 
 public class PokemonTypeConverters {
   // Pokemon Result
@@ -198,5 +200,25 @@ public class PokemonTypeConverters {
     return new Gson().toJson(someObjects);
   }
 
+
+
+  // PokemonSprites
+  @TypeConverter
+  public static DamageRelations stringToDamageRelations(String data) {
+    if (data == null) {
+      return new DamageRelations(new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),
+          new ArrayList<>(),new ArrayList<>(),new ArrayList<>());
+    }
+
+    Type listType = new TypeToken<DamageRelations>() {
+    }.getType();
+
+    return new Gson().fromJson(data, listType);
+  }
+
+  @TypeConverter
+  public static String damageRelationsToString(DamageRelations someObjects) {
+    return new Gson().toJson(someObjects);
+  }
 
 }
