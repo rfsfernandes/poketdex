@@ -9,6 +9,7 @@
   <color name="black">#343334</color>
   <color name="darkish_gray">#DDDBDD</color>
   <color name="slightly_light_gray">#E6E6E7</color>
+  <color name="transparent">#00FFFFFF</color>
 <!--  Pokemon types colors -->
   <color name="bug">#AABB1F</color>
   <color name="dark">#543D31</color>

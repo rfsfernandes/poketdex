@@ -16,6 +16,7 @@ import pt.rfsfernandes.R;
 import pt.rfsfernandes.custom.adapters.PokemonTypesAdapter;
 import pt.rfsfernandes.custom.adapters.TypesAdapter;
 import pt.rfsfernandes.custom.utils.UtilsClass;
+import pt.rfsfernandes.databinding.TypeDialogLayoutBinding;
 
 /**
  * Class CustomDialogClass created at 1/20/21 00:22 for the project PoketDex
@@ -24,6 +25,7 @@ import pt.rfsfernandes.custom.utils.UtilsClass;
 public class TypeCustomDialog extends Dialog implements
     View.OnClickListener {
 
+  private TypeDialogLayoutBinding binding;
   private Activity c;
   private GridView gridViewDoubleDamage;
   private GridView gridViewHalfDamage;
@@ -66,16 +68,20 @@ public class TypeCustomDialog extends Dialog implements
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    binding = TypeDialogLayoutBinding.inflate(getLayoutInflater());
+
+    View view = binding.getRoot();
     requestWindowFeature(Window.FEATURE_NO_TITLE);
-    setContentView(R.layout.type_dialog_layout);
-    Button close = (Button) findViewById(R.id.buttonClose);
+    setContentView(view);
 
-    gridViewDoubleDamage = (GridView) findViewById(R.id.gridViewDoubleDamage);
-    gridViewHalfDamage = (GridView) findViewById(R.id.gridViewHalfDamage);
-    gridViewNoDamage = (GridView) findViewById(R.id.gridViewNoDamage);
-    includeTypeRow = (View) findViewById(R.id.includeTypeRow);
+    Button close = binding.buttonClose;
+    this.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+    gridViewDoubleDamage = binding.gridViewDoubleDamage;
+    gridViewHalfDamage = binding.gridViewHalfDamage;
+    gridViewNoDamage = binding.gridViewNoDamage;
+    includeTypeRow = (View) view.findViewById(R.id.includeTypeRow);
 
-    textViewComparisonType = (TextView) findViewById(R.id.textViewComparisonType);
+    textViewComparisonType = binding.textViewComparisonType;
 
     mPokemonTypesAdapterDoubleDamage = new TypesAdapter(getContext());
     mPokemonTypesAdapterHalfDamage = new TypesAdapter(getContext());

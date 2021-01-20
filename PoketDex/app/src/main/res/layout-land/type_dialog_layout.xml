@@ -1,39 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="@dimen/_8sdp"
-    app:cardElevation="@dimen/_8sdp">
+    android:padding="@dimen/_8sdp"
+    android:clipToPadding="false"
+    android:background="@color/transparent">
 
-  <LinearLayout
+  <androidx.cardview.widget.CardView
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:orientation="vertical"
-      android:padding="@dimen/_8sdp"
-      android:gravity="center">
-
+      app:cardCornerRadius="@dimen/_8sdp"
+      app:cardElevation="@dimen/_8sdp">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginBottom="@dimen/_2sdp"
+        android:padding="@dimen/_8sdp"
         android:gravity="center">
+
+
       <LinearLayout
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:divider="@drawable/invisible_divider_8dp"
-          android:showDividers="middle"
-          android:orientation="horizontal">
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="vertical"
+          android:layout_marginTop="@dimen/_2sdp"
+          android:layout_marginBottom="@dimen/_2sdp"
+          android:gravity="center">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:divider="@drawable/invisible_divider_8dp"
+            android:showDividers="middle"
+            android:orientation="horizontal">
+          <TextView
+              android:layout_width="0dp"
+              android:layout_height="match_parent"
+              android:layout_weight="1"
+              style="@style/move_titles"
+              android:background="@color/darkish_gray"
+              android:text="@string/picked_type"
+              android:textSize="@dimen/_12sdp"
+              android:paddingTop="5dp"
+              android:paddingBottom="5dp"
+              android:paddingStart="8dp"
+              android:paddingEnd="8dp"
+              android:textAllCaps="true"/>
+
+          <include
+              android:id="@+id/includeTypeRow"
+              layout="@layout/pokemon_type_row"/>
+        </LinearLayout>
+
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          android:layout_marginTop="@dimen/_2sdp"
+          android:layout_marginBottom="@dimen/_2sdp"
+          android:gravity="center">
         <TextView
+            android:id="@+id/textViewDoubleDamageTitle"
+            style="@style/move_titles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkish_gray"
+            android:text="@string/double_dmg_to"
+            android:textSize="@dimen/_13ssp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/textViewHalfDamageTitle"
+            style="@style/move_titles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkish_gray"
+            android:text="@string/half_dmg_to"
+            android:textSize="@dimen/_13ssp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_weight="1"/>
+        <TextView
+            android:id="@+id/textViewNoDamageTitle"
+            style="@style/move_titles"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/darkish_gray"
+            android:text="@string/no_dmg_to"
+            android:textSize="@dimen/_13ssp"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:layout_weight="1"/>
+      </LinearLayout>
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:orientation="horizontal"
+          android:layout_marginTop="@dimen/_2sdp"
+          android:layout_marginBottom="@dimen/_2sdp"
+          android:gravity="center">
+
+        <TextView
+            android:id="@+id/textViewComparisonType"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             style="@style/move_titles"
-            android:background="@color/darkish_gray"
-            android:text="@string/picked_type"
+            android:background="@color/slightly_light_gray"
+            android:text=""
             android:textSize="@dimen/_12sdp"
             android:paddingTop="5dp"
             android:paddingBottom="5dp"
@@ -41,139 +120,69 @@
             android:paddingEnd="8dp"
             android:textAllCaps="true"/>
 
-        <include
-            android:id="@+id/includeTypeRow"
-            layout="@layout/pokemon_type_row"/>
-      </LinearLayout>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginBottom="@dimen/_2sdp"
-        android:gravity="center">
-      <TextView
-          android:id="@+id/textViewDoubleDamageTitle"
-          style="@style/move_titles"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/darkish_gray"
-          android:text="@string/double_dmg_to"
-          android:textSize="@dimen/_13ssp"
-          android:paddingTop="5dp"
-          android:paddingBottom="5dp"
-          android:layout_weight="1"/>
-      <TextView
-          android:id="@+id/textViewHalfDamageTitle"
-          style="@style/move_titles"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/darkish_gray"
-          android:text="@string/half_dmg_to"
-          android:textSize="@dimen/_13ssp"
-          android:paddingTop="5dp"
-          android:paddingBottom="5dp"
-          android:layout_weight="1"/>
-      <TextView
-          android:id="@+id/textViewNoDamageTitle"
-          style="@style/move_titles"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:background="@color/darkish_gray"
-          android:text="@string/no_dmg_to"
-          android:textSize="@dimen/_13ssp"
-          android:paddingTop="5dp"
-          android:paddingBottom="5dp"
-          android:layout_weight="1"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/_2sdp"
-        android:layout_marginBottom="@dimen/_2sdp"
-        android:gravity="center">
-
-      <TextView
-          android:id="@+id/textViewComparisonType"
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          style="@style/move_titles"
-          android:background="@color/slightly_light_gray"
-          android:text=""
-          android:textSize="@dimen/_12sdp"
-          android:paddingTop="5dp"
-          android:paddingBottom="5dp"
-          android:paddingStart="8dp"
-          android:paddingEnd="8dp"
-          android:textAllCaps="true"/>
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
-        android:layout_weight="1"
-        android:divider="@drawable/gray_divider_2dp"
-        android:showDividers="middle">
-
-      <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:orientation="vertical">
-
-        <GridView
-            android:id="@+id/gridViewDoubleDamage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:numColumns="2" />
-
       </LinearLayout>
 
       <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
+          android:layout_width="match_parent"
+          android:layout_height="0dp"
+          android:orientation="horizontal"
           android:layout_weight="1"
-          android:orientation="vertical">
+          android:divider="@drawable/gray_divider_2dp"
+          android:showDividers="middle">
 
-        <GridView
-            android:id="@+id/gridViewHalfDamage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:numColumns="2" />
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
+          <GridView
+              android:id="@+id/gridViewDoubleDamage"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:numColumns="2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+          <GridView
+              android:id="@+id/gridViewHalfDamage"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:numColumns="2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+          <GridView
+              android:id="@+id/gridViewNoDamage"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:numColumns="2" />
+
+        </LinearLayout>
       </LinearLayout>
 
-      <LinearLayout
-          android:layout_width="0dp"
-          android:layout_height="match_parent"
-          android:layout_weight="1"
-          android:orientation="vertical">
+      <Button
+          android:id="@+id/buttonClose"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:background="@android:color/transparent"
+          android:backgroundTint="@android:color/transparent"
+          android:text="@android:string/ok"
+          android:textColor="@color/pokemon_red" />
 
-        <GridView
-            android:id="@+id/gridViewNoDamage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:numColumns="2" />
-
-      </LinearLayout>
     </LinearLayout>
+  </androidx.cardview.widget.CardView>
 
-    <Button
-        android:id="@+id/buttonClose"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:backgroundTint="@android:color/transparent"
-        android:text="@android:string/ok"
-        android:textColor="@color/pokemon_red" />
-
-  </LinearLayout>
-</androidx.cardview.widget.CardView>
+</LinearLayout>

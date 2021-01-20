@@ -58,8 +58,9 @@ public class StatsInfoFragment extends Fragment {
    */
   private void initViewModel() {
 
-    mMainViewModel.getPokemonMutableLiveData().observe(getActivity(), pokemon -> {
+    mMainViewModel.getPokemonMutableLiveData().observe(getViewLifecycleOwner(), pokemon -> {
       if (pokemon != null) {
+        mMainViewModel.isLoading(true);
         setStatViews(pokemon);
         mMainViewModel.isLoading(false);
       }

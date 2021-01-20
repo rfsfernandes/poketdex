@@ -228,6 +228,7 @@ public class MainActivity extends FragmentActivity implements NavController.OnDe
     }
 
     typeCustomDialog.setType(type.getName());
+    mMainViewModel.isLoading(false);
   }
 
 

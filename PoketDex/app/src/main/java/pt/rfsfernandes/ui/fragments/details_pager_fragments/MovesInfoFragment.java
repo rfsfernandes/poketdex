@@ -53,11 +53,13 @@ public class MovesInfoFragment extends Fragment implements MovesItemClick {
 
   private void initViewModel(){
     mMainViewModel.getPokemonMutableLiveData().observe(getViewLifecycleOwner(), pokemon -> {
+      mMainViewModel.isLoading(true);
       mMainViewModel.getMovesFromIds(pokemon.getMoveslist());
     });
 
     mMainViewModel.getMovesInfo().observe(getViewLifecycleOwner(), moves -> {
       mPokemonMovesAdapter.refreshList(moves);
+      mMainViewModel.isLoading(false);
     });
   }
 
@@ -67,6 +69,7 @@ public class MovesInfoFragment extends Fragment implements MovesItemClick {
     switch (moves_item) {
       case TYPE:
         if(getActivity() != null) {
+          mMainViewModel.isLoading(true);
           ((MainActivity)getActivity()).setShowTypeInfo(true);
           mMainViewModel.getTypeAndCounters(Integer.parseInt(text), Constants.SHOW_TYPE.MOVE);
         }
@@ -82,6 +85,7 @@ public class MovesInfoFragment extends Fragment implements MovesItemClick {
     simpleCustomDialog.show();
     simpleCustomDialog.getTextViewSimpleTitle().setText(title);
     simpleCustomDialog.getTextViewSimpleText().setText(content);
+    mMainViewModel.isLoading(false);
   }
 
 }
