@@ -15,6 +15,7 @@ import pt.rfsfernandes.data.local.SharedPreferencesManager;
 public class MyApplication extends Application {
   private MediaPlayer mMediaPlayerMenuSound;
   private MediaPlayer mMediaPlayerWalkingMusic;
+  private MediaPlayer mMediaPlayerPokeball;
   private boolean isLandscape;
   private boolean canPlaySounds;
 
@@ -67,6 +68,17 @@ public class MyApplication extends Application {
       e.printStackTrace();
     }
 
+    try {
+      AssetFileDescriptor afd = getAssets().openFd("pokeball.mp3");
+      mMediaPlayerPokeball = new MediaPlayer();
+      mMediaPlayerPokeball.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
+      mMediaPlayerPokeball.prepare();
+
+    } catch (Exception e) {
+      mMediaPlayerPokeball = null;
+      e.printStackTrace();
+    }
+
   }
 
   /**
@@ -82,4 +94,16 @@ public class MyApplication extends Application {
       mMediaPlayerMenuSound.start();
     }
   }
+
+  public void playPokeballSound(){
+    if (isCanPlaySounds()) {
+
+      if (mMediaPlayerPokeball.isPlaying()) {
+        mMediaPlayerPokeball.stop();
+      }
+
+      mMediaPlayerPokeball.start();
+    }
+  }
+
 }

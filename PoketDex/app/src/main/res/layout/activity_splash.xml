@@ -4,15 +4,60 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/splash_background"
     tools:context=".ui.activities.SplashActivity">
 
-  <ImageView
-      android:id="@+id/imageView2"
+  <LinearLayout
+      android:id="@+id/linearLayoutSplash"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:gravity="center"
+      android:orientation="vertical"
+      app:layout_constraintTop_toTopOf="@+id/guideline11">
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+      <ImageView
+          android:id="@+id/imageViewClose"
+          android:layout_width="@dimen/_150sdp"
+          android:layout_height="@dimen/_150sdp"
+          android:src="@drawable/pokeball_splash_closed" />
+
+      <ImageView
+          android:id="@+id/imageViewCloseBlink"
+          android:layout_width="@dimen/_150sdp"
+          android:layout_height="@dimen/_150sdp"
+          android:src="@drawable/pokeball_splash_closed_blinking" />
+
+      <ImageView
+          android:id="@+id/imageViewOpen"
+          android:layout_width="@dimen/_150sdp"
+          android:layout_height="@dimen/_150sdp"
+          android:src="@drawable/pokeball_splash_opened"
+          android:visibility="invisible" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_weight="1"
+        app:srcCompat="@drawable/poketdex_splashscreen" />
+
+  </LinearLayout>
+
+  <androidx.constraintlayout.widget.Guideline
+      android:id="@+id/guideline11"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent"
-      app:layout_constraintTop_toTopOf="parent"
-      app:srcCompat="@drawable/close" />
+      android:orientation="horizontal"
+      app:layout_constraintGuide_percent="0.3" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
