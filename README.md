@@ -3,7 +3,7 @@
 A repository to complete the Android Challenge using the [PokeAPI](https://pokeapi.co/).
 
 # Aproach
-I developed this app in order to make it look and act like a Pokédex from the game and series Pokémon.
+I developed this app in order to make it look and function like a Pokédex from the game and series Pokémon.
 
 Since Pokémon is a very famous GameBoy game, the app was developed to be fully prepared to work in landscape mode and, since it's a mobile app, it's also suitable for portrait mode.
 
