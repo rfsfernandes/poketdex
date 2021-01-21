@@ -23,4 +23,4 @@ This behaviour is also available on the landscape mode, but the description will
 
 All the calls to [PokeAPI](https://pokeapi.co/) are made using [Retrofit](https://square.github.io/retrofit/).
 
-To ensure there isn't much load on the [PokeAPI](https://pokeapi.co/), I implemented a simple cache system using [RoomDB](https://developer.android.com/reference/android/arch/persistence/room/RoomDatabase).
+To ensure there isn't much load on the [PokeAPI](https://pokeapi.co/), as requested by the API developers,  I implemented a simple cache system using [RoomDB](https://developer.android.com/reference/android/arch/persistence/room/RoomDatabase).
