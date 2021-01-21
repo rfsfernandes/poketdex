@@ -95,7 +95,7 @@ public class MyApplication extends Application {
     }
   }
 
-  public void playPokeballSound(){
+  public void playPokeballSound() {
     if (isCanPlaySounds()) {
 
       if (mMediaPlayerPokeball.isPlaying()) {

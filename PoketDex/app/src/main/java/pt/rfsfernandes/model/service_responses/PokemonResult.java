@@ -2,7 +2,6 @@ package pt.rfsfernandes.model.service_responses;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-import pt.rfsfernandes.custom.Constants;
 import pt.rfsfernandes.model.SimpleModelData;
 
 /**

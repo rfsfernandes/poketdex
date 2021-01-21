@@ -57,24 +57,24 @@ public class Moves {
     return mEffectsEntriesList;
   }
 
-  public EffectsEntries getEffectEntry(){
-    return mEffectsEntriesList.get(0);
-  }
-
   public void setEffectsEntriesList(List<EffectsEntries> effectsEntriesList) {
     mEffectsEntriesList = effectsEntriesList;
+  }
+
+  public EffectsEntries getEffectEntry() {
+    return mEffectsEntriesList.get(0);
   }
 
   public List<FlavourEntries> getFlavourEntriesList() {
     return mFlavourEntriesList;
   }
 
-  public FlavourEntries getFlavourEntry(){
-    return mFlavourEntriesList.get(0);
-  }
-
   public void setFlavourEntriesList(List<FlavourEntries> flavourEntriesList) {
     mFlavourEntriesList = flavourEntriesList;
+  }
+
+  public FlavourEntries getFlavourEntry() {
+    return mFlavourEntriesList.get(0);
   }
 
   public String getName() {

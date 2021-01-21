@@ -72,6 +72,7 @@ public class PokemonTypesAdapter extends BaseAdapter {
 
   /**
    * Assigns a value to the global List of PokemonType and notifies the adapter of that change
+   *
    * @param pokemonTypes New list
    */
   public void refreshList(List<PokemonType> pokemonTypes) {

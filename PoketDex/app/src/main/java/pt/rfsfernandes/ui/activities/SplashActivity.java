@@ -1,25 +1,15 @@
 package pt.rfsfernandes.ui.activities;
 
-import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.transition.Explode;
 import android.view.View;
-import android.view.Window;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
-import android.view.animation.DecelerateInterpolator;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import pt.rfsfernandes.MyApplication;
 import pt.rfsfernandes.R;
 import pt.rfsfernandes.databinding.ActivitySplashBinding;

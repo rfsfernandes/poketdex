@@ -182,13 +182,12 @@ public class PokemonTypeConverters {
   }
 
 
-
   // PokemonSprites
   @TypeConverter
   public static DamageRelations stringToDamageRelations(String data) {
     if (data == null) {
-      return new DamageRelations(new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),
-          new ArrayList<>(),new ArrayList<>(),new ArrayList<>());
+      return new DamageRelations(new ArrayList<>(), new ArrayList<>(), new ArrayList<>(),
+          new ArrayList<>(), new ArrayList<>(), new ArrayList<>());
     }
 
     Type listType = new TypeToken<DamageRelations>() {

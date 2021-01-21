@@ -1,10 +1,7 @@
 package pt.rfsfernandes.custom.adapters;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,8 +24,9 @@ import pt.rfsfernandes.model.pokemon_species.FlavourEntries;
 public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapter.MovesViewHolder> {
 
   private List<Moves> mPokemonMoves = new ArrayList<>();
-  private Context context;
-  private MovesItemClick mMovesItemClick;
+  private final Context context;
+  private final MovesItemClick mMovesItemClick;
+
   public PokemonMovesAdapter(Context context, MovesItemClick movesItemClick) {
     this.context = context;
     this.mMovesItemClick = movesItemClick;
@@ -51,7 +49,8 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
 
   /**
    * Populates each row with the content of the current item
-   * @param holder Holder used to populate
+   *
+   * @param holder   Holder used to populate
    * @param position Position of the item
    */
   private void populateItemRows(MovesViewHolder holder, int position) {
@@ -126,7 +125,15 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
     return mPokemonMoves.size();
   }
 
-
+  /**
+   * Assigns a value to the global List of Moves and notifies the adapter of that change
+   *
+   * @param moves New list
+   */
+  public void refreshList(List<Moves> moves) {
+    this.mPokemonMoves = moves;
+    notifyDataSetChanged();
+  }
 
   public class MovesViewHolder extends RecyclerView.ViewHolder {
     public final View mView;
@@ -151,14 +158,5 @@ public class PokemonMovesAdapter extends RecyclerView.Adapter<PokemonMovesAdapte
       selectedView = view.findViewById(R.id.viewSelect);
     }
 
-  }
-
-  /**
-   * Assigns a value to the global List of Moves and notifies the adapter of that change
-   * @param moves New list
-   */
-  public void refreshList(List<Moves> moves) {
-    this.mPokemonMoves = moves;
-    notifyDataSetChanged();
   }
 }

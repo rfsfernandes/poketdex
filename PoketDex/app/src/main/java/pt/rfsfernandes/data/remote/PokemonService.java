@@ -2,9 +2,9 @@ package pt.rfsfernandes.data.remote;
 
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
-import pt.rfsfernandes.model.type.Type;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonListResponse;
+import pt.rfsfernandes.model.type.Type;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

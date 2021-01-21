@@ -213,10 +213,11 @@ public class MainActivity extends FragmentActivity implements NavController.OnDe
 
   /**
    * Shows a dialog containing the picked move/pokemon type and it's counters/weaknesses
-   * @param type Type of the move/pokemon
+   *
+   * @param type      Type of the move/pokemon
    * @param show_type If it's a move or a pokemon
    */
-  private void showTypeInfoDialog(Type type, Constants.SHOW_TYPE show_type){
+  private void showTypeInfoDialog(Type type, Constants.SHOW_TYPE show_type) {
     TypeCustomDialog typeCustomDialog = new TypeCustomDialog(this);
     typeCustomDialog.show();
 

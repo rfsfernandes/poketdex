@@ -11,17 +11,17 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.MutableLiveData;
 import pt.rfsfernandes.R;
 import pt.rfsfernandes.custom.Constants;
+import pt.rfsfernandes.custom.callbacks.ResponseCallBack;
 import pt.rfsfernandes.data.local.AppDatabase;
 import pt.rfsfernandes.data.remote.DataSource;
 import pt.rfsfernandes.data.repository.Repository;
-import pt.rfsfernandes.custom.callbacks.ResponseCallBack;
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
 import pt.rfsfernandes.model.pokemon.moves.PokemonMoves;
-import pt.rfsfernandes.model.type.Type;
 import pt.rfsfernandes.model.pokemon_species.FlavourEntries;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
+import pt.rfsfernandes.model.type.Type;
 
 import static pt.rfsfernandes.custom.Constants.RESULT_LIMIT;
 
@@ -137,6 +137,7 @@ public class MainViewModel extends AndroidViewModel {
 
   /**
    * Fetches a Pokemon by it's ID
+   *
    * @param pokemonId Pokemon ID
    */
   public void pokemonById(int pokemonId) {
@@ -157,6 +158,7 @@ public class MainViewModel extends AndroidViewModel {
 
   /**
    * Fetches a Species of a Pokemon by it's ID
+   *
    * @param pokemonId Pokemon ID
    */
   public void pokemonSpeciesById(int pokemonId) {
@@ -201,6 +203,7 @@ public class MainViewModel extends AndroidViewModel {
 
   /**
    * Notifies that a view should be loading
+   *
    * @param isLoading If it's loading or not
    */
   public void isLoading(boolean isLoading) {
@@ -229,6 +232,7 @@ public class MainViewModel extends AndroidViewModel {
 
   /**
    * Selects an item from a list
+   *
    * @param listId Item ID to select
    */
   public void setSelected(int listId) {
@@ -248,7 +252,8 @@ public class MainViewModel extends AndroidViewModel {
 
   /**
    * Notifies that a ViewPager has changed his page
-   * @param page Page to change to
+   *
+   * @param page    Page to change to
    * @param wasTurn If the Page was scrolled or forced to change
    */
   public void changePage(int page, boolean wasTurn) {
@@ -272,6 +277,7 @@ public class MainViewModel extends AndroidViewModel {
 
   /**
    * Fetches a list of Moves
+   *
    * @param pokemonMoves List of PokemonMoves to get their ID's
    */
   public void getMovesFromIds(List<PokemonMoves> pokemonMoves) {
@@ -298,6 +304,7 @@ public class MainViewModel extends AndroidViewModel {
 
   /**
    * Fetches a list of Moves from the endpoint
+   *
    * @param movesId List of move ID's
    */
   private void getMovesFromIdsAPI(List<String> movesId) {
@@ -327,7 +334,8 @@ public class MainViewModel extends AndroidViewModel {
 
   /**
    * Get's counters and weaknesses from a type
-   * @param typeId Type to get counters and weaknesses
+   *
+   * @param typeId    Type to get counters and weaknesses
    * @param show_type If the method was called in order to get counters or weaknesses
    */
   public void getTypeAndCounters(int typeId, Constants.SHOW_TYPE show_type) {

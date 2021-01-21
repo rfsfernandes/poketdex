@@ -92,7 +92,7 @@ public class StatsInfoFragment extends Fragment {
       binding.textViewStatsSpeed.setText(String.valueOf(statsList.get(5).getBaseStat()));
     }
 
-    if(getContext() != null) {
+    if (getContext() != null) {
       float weightInKg = pokemon.getWeight() / 10f;
       binding.textViewStatsWeight.setText(String.format(Locale.getDefault(), "%.1f%s", weightInKg,
           getContext().getString(R.string.kilograms)));

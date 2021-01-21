@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import androidx.core.content.res.ResourcesCompat;
 import pt.rfsfernandes.R;
-import pt.rfsfernandes.custom.adapters.PokemonTypesAdapter;
 import pt.rfsfernandes.custom.adapters.TypesAdapter;
 import pt.rfsfernandes.custom.utils.UtilsClass;
 import pt.rfsfernandes.databinding.TypeDialogLayoutBinding;
@@ -26,7 +25,7 @@ public class TypeCustomDialog extends Dialog implements
     View.OnClickListener {
 
   private TypeDialogLayoutBinding binding;
-  private Activity c;
+  private final Activity c;
   private GridView gridViewDoubleDamage;
   private GridView gridViewHalfDamage;
   private GridView gridViewNoDamage;
@@ -36,6 +35,13 @@ public class TypeCustomDialog extends Dialog implements
   private TypesAdapter mPokemonTypesAdapterDoubleDamage;
   private TypesAdapter mPokemonTypesAdapterHalfDamage;
   private TypesAdapter mPokemonTypesAdapterNoDamage;
+
+  public TypeCustomDialog(Activity a) {
+    super(a);
+
+    this.c = a;
+
+  }
 
   public TypesAdapter getPokemonTypesAdapterDoubleDamage() {
     return mPokemonTypesAdapterDoubleDamage;
@@ -57,14 +63,6 @@ public class TypeCustomDialog extends Dialog implements
     return c;
   }
 
-
-  public TypeCustomDialog(Activity a) {
-    super(a);
-
-    this.c = a;
-
-  }
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -79,7 +77,7 @@ public class TypeCustomDialog extends Dialog implements
     gridViewDoubleDamage = binding.gridViewDoubleDamage;
     gridViewHalfDamage = binding.gridViewHalfDamage;
     gridViewNoDamage = binding.gridViewNoDamage;
-    includeTypeRow = (View) view.findViewById(R.id.includeTypeRow);
+    includeTypeRow = view.findViewById(R.id.includeTypeRow);
 
     textViewComparisonType = binding.textViewComparisonType;
 
@@ -94,7 +92,7 @@ public class TypeCustomDialog extends Dialog implements
     close.setOnClickListener(this);
   }
 
-  public void setType(String type){
+  public void setType(String type) {
     TextView textViewType = includeTypeRow.findViewById(R.id.textViewType);
     textViewType.setText(type);
 

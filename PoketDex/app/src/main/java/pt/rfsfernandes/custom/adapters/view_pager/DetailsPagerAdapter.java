@@ -17,7 +17,7 @@ import pt.rfsfernandes.ui.fragments.details_pager_fragments.StatsInfoFragment;
  * By: rodrigofernandes
  */
 public class DetailsPagerAdapter extends FragmentStatePagerAdapter {
-  private Context mContext;
+  private final Context mContext;
 
   public DetailsPagerAdapter(@NonNull FragmentManager fm, int behavior, Context context) {
     super(fm, behavior);
@@ -52,7 +52,7 @@ public class DetailsPagerAdapter extends FragmentStatePagerAdapter {
   public CharSequence getPageTitle(int position) {
     super.getPageTitle(position);
     String title = "";
-    if(mContext != null) {
+    if (mContext != null) {
       switch (position) {
         case 0:
           title = mContext.getString(R.string.general_info);

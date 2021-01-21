@@ -2,13 +2,10 @@ package pt.rfsfernandes.model.type;
 
 import com.google.gson.annotations.SerializedName;
 
-import java.util.List;
-
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 import androidx.room.TypeConverters;
 import pt.rfsfernandes.data.local.PokemonTypeConverters;
-import pt.rfsfernandes.model.SimpleModelData;
 
 /**
  * Class Type created at 1/19/21 23:50 for the project PoketDex

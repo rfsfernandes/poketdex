@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import pt.rfsfernandes.MyApplication;
 import pt.rfsfernandes.custom.Constants;
 import pt.rfsfernandes.custom.adapters.PokemonMovesAdapter;
 import pt.rfsfernandes.custom.callbacks.MovesItemClick;
@@ -54,7 +53,7 @@ public class MovesInfoFragment extends Fragment implements MovesItemClick {
   /**
    * Initiates the viewModel observers
    */
-  private void initViewModel(){
+  private void initViewModel() {
     mMainViewModel.getPokemonMutableLiveData().observe(getViewLifecycleOwner(), pokemon -> {
       mMainViewModel.isLoading(true);
       mMainViewModel.getMovesFromIds(pokemon.getMoveslist());
@@ -71,9 +70,9 @@ public class MovesInfoFragment extends Fragment implements MovesItemClick {
     mMainViewModel.isLoading(true);
     switch (moves_item) {
       case TYPE:
-        if(getActivity() != null) {
+        if (getActivity() != null) {
           mMainViewModel.isLoading(true);
-          ((MainActivity)getActivity()).setShowTypeInfo(true);
+          ((MainActivity) getActivity()).setShowTypeInfo(true);
           mMainViewModel.getTypeAndCounters(Integer.parseInt(text), Constants.SHOW_TYPE.MOVE);
         }
         break;
@@ -85,10 +84,11 @@ public class MovesInfoFragment extends Fragment implements MovesItemClick {
 
   /**
    * Shows a simple custom dialog with a title and a content
-   * @param title Title of the dialog
+   *
+   * @param title   Title of the dialog
    * @param content Content of the dialog
    */
-  private void showSimpleDialogContent(String title, String content){
+  private void showSimpleDialogContent(String title, String content) {
     SimpleCustomDialog simpleCustomDialog = new SimpleCustomDialog(getActivity());
     simpleCustomDialog.show();
     simpleCustomDialog.getTextViewSimpleTitle().setText(title);

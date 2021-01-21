@@ -66,7 +66,8 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
 
   /**
    * Populates each row with the content of the current item
-   * @param holder Holder used to populate
+   *
+   * @param holder   Holder used to populate
    * @param position Position of the item
    */
   private void populateItemRows(PokemonResultViewHolder holder, int position) {
@@ -89,6 +90,16 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
   @Override
   public int getItemCount() {
     return mPokemonResultList.size();
+  }
+
+  /**
+   * Assigns a value to the global List of PokemonResult and notifies the adapter of that change
+   *
+   * @param pokemonResults New list
+   */
+  public void refreshList(List<PokemonResult> pokemonResults) {
+    this.mPokemonResultList = pokemonResults;
+    notifyDataSetChanged();
   }
 
   public class PokemonResultViewHolder extends RecyclerView.ViewHolder {
@@ -125,15 +136,6 @@ public class PokemonResultAdapter extends RecyclerView.Adapter<RecyclerView.View
       progressBar = itemView.findViewById(R.id.progressBar);
 
     }
-  }
-
-  /**
-   * Assigns a value to the global List of PokemonResult and notifies the adapter of that change
-   * @param pokemonResults New list
-   */
-  public void refreshList(List<PokemonResult> pokemonResults) {
-    this.mPokemonResultList = pokemonResults;
-    notifyDataSetChanged();
   }
 
 }

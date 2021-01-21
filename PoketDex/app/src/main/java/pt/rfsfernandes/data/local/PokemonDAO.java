@@ -7,9 +7,9 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
-import pt.rfsfernandes.model.type.Type;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
+import pt.rfsfernandes.model.type.Type;
 
 import static androidx.room.OnConflictStrategy.REPLACE;
 

@@ -2,16 +2,12 @@ package pt.rfsfernandes.custom.dialogs;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
-import pt.rfsfernandes.R;
 import pt.rfsfernandes.databinding.SimpleDialogLayoutBinding;
 
 /**
@@ -22,9 +18,16 @@ public class SimpleCustomDialog extends Dialog implements
     android.view.View.OnClickListener {
 
   private SimpleDialogLayoutBinding binding;
-  private Activity c;
+  private final Activity c;
   private TextView textViewSimpleTitle;
   private TextView textViewSimpleText;
+
+  public SimpleCustomDialog(Activity a) {
+    super(a);
+
+    this.c = a;
+
+  }
 
   public TextView getTextViewSimpleTitle() {
     return textViewSimpleTitle;
@@ -32,13 +35,6 @@ public class SimpleCustomDialog extends Dialog implements
 
   public TextView getTextViewSimpleText() {
     return textViewSimpleText;
-  }
-
-  public SimpleCustomDialog(Activity a) {
-    super(a);
-
-    this.c = a;
-
   }
 
   @Override

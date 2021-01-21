@@ -33,18 +33,18 @@ public class SimpleModelData {
     this.name = name;
   }
 
-  public String getUrlId(){
+  public String getUrlId() {
     StringBuilder id = new StringBuilder();
     int counter = 0;
 
     for (int i = url.length() - 1; i < url.length(); i--) {
-      if(url.charAt(i) == '/'){
+      if (url.charAt(i) == '/') {
         counter++;
       } else {
         id.append(url.charAt(i));
       }
 
-      if(counter == 2) {
+      if (counter == 2) {
         break;
       }
     }

@@ -10,10 +10,10 @@ import pt.rfsfernandes.data.local.PokemonDAO;
 import pt.rfsfernandes.data.remote.PokemonService;
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
-import pt.rfsfernandes.model.type.Type;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonListResponse;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
+import pt.rfsfernandes.model.type.Type;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,8 +33,9 @@ public class Repository {
   /**
    * Fetches a list of pokemons. If there is a list already in the local database, should return
    * that list. If there isn't, should use API Endpoint
-   * @param offset Where the list begins
-   * @param limit Size of the list to be fetched
+   *
+   * @param offset   Where the list begins
+   * @param limit    Size of the list to be fetched
    * @param callBack Used when data is ready to be delivered
    */
   public void getPokemonList(int offset, int limit,
@@ -93,7 +94,8 @@ public class Repository {
   /**
    * Fetches a pokemon by id. If there is a pokemon with that ID already in the local database,
    * should return that pokemon. If there isn't, should use API Endpoint
-   * @param id Pokemon ID
+   *
+   * @param id       Pokemon ID
    * @param callBack Used when data is ready to be delivered
    */
   public void getPokemonById(int id, ResponseCallBack<Pokemon> callBack) {
@@ -134,8 +136,9 @@ public class Repository {
   /**
    * Fetches a pokemon species by pokemonId. If there is a species with that ID already in the
    * local database, should return that species. If there isn't, should use API Endpoint
+   *
    * @param pokemonId Pokemon ID
-   * @param callBack Used when data is ready to be delivered
+   * @param callBack  Used when data is ready to be delivered
    */
   public void getPokemonSpeciesById(int pokemonId, ResponseCallBack<PokemonSpecies> callBack) {
     new Thread(() -> {
@@ -176,11 +179,12 @@ public class Repository {
   /**
    * Fetches a move by id. If there is a move with that ID already in the local database,
    * should return that move. If there isn't, should use API Endpoint
-   * @param moveId Move ID
+   *
+   * @param moveId   Move ID
    * @param callBack Used when data is ready to be delivered
    */
   public void getMoveById(String moveId, ResponseCallBack<Moves> callBack) {
-    if(!moveId.isEmpty()) {
+    if (!moveId.isEmpty()) {
       new Thread(() -> {
         Moves pokemonSpecies = mPokemonDAO.getMovesByMoveId(Integer.parseInt(moveId));
         if (pokemonSpecies == null) {
@@ -217,6 +221,7 @@ public class Repository {
 
   /**
    * Fetches a List of Moves from a List of movesId from the database
+   *
    * @param movesIds Moves IDs to fetch
    * @param callBack Used when data is ready to be delivered
    */
@@ -224,7 +229,7 @@ public class Repository {
     new Thread(() -> {
       List<Moves> movesList = mPokemonDAO.getMovesFromIdList(movesIds);
 
-      if(movesList != null && movesList.size() != 0) {
+      if (movesList != null && movesList.size() != 0) {
         callBack.onSuccess(movesList);
       } else {
         callBack.onFailure("");
@@ -236,13 +241,14 @@ public class Repository {
   /**
    * Fetches a Type by id. If there is a Type with that ID already in the local database,
    * should return that Type. If there isn't, should use API Endpoint
-   * @param typeId Type ID
+   *
+   * @param typeId   Type ID
    * @param callBack Used when data is ready to be delivered
    */
-  public void getTypeInfoById(int typeId, ResponseCallBack<Type> callBack){
+  public void getTypeInfoById(int typeId, ResponseCallBack<Type> callBack) {
     new Thread(() -> {
       Type type = mPokemonDAO.getTypeById(typeId);
-      if(type == null) {
+      if (type == null) {
         Call<Type> call = mPokemonService.getTypeInfoById(typeId);
         call.enqueue(new Callback<Type>() {
           @Override
