@@ -24,3 +24,8 @@ This functionality is also available on the landscape mode, but the description 
 All the calls to [PokeAPI](https://pokeapi.co/) are made using [Retrofit](https://square.github.io/retrofit/).
 
 To ensure there isn't much load on the [PokeAPI](https://pokeapi.co/), as requested by the API developers,  I implemented a simple cache system using [RoomDB](https://developer.android.com/reference/android/arch/persistence/room/RoomDatabase).
+
+# Postman Collections
+To develop the application and keep the endpoints organized, I created a [Postman](https://www.postman.com/) collection containing all the enpoints used.
+
+You can check them out [here](https://documenter.getpostman.com/view/6099206/TVza9Yz2).
