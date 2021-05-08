@@ -1,6 +1,6 @@
 
-# Android Challenge - PoketDex
-A repository to complete the Android Challenge using the [PokeAPI](https://pokeapi.co/).
+# PoketDex
+A repository used to develop an app using the [PokeAPI](https://pokeapi.co/).
 
 # Aproach
 I developed this app in order to make it look and function like a Pokédex from the game and series Pokémon.
