@@ -17,7 +17,6 @@ import pt.rfsfernandes.data.remote.DataSource;
 import pt.rfsfernandes.data.repository.Repository;
 import pt.rfsfernandes.model.moves.Moves;
 import pt.rfsfernandes.model.pokemon.Pokemon;
-import pt.rfsfernandes.model.pokemon.moves.PokemonMoves;
 import pt.rfsfernandes.model.pokemon_species.FlavourEntries;
 import pt.rfsfernandes.model.pokemon_species.PokemonSpecies;
 import pt.rfsfernandes.model.service_responses.PokemonResult;
