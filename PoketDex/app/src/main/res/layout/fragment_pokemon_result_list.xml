@@ -24,7 +24,7 @@
       android:layout_height="match_parent"
       android:background="@android:color/transparent"
       app:layoutManager="LinearLayoutManager"
-      tools:context=".ui.fragments.PokemonResultListFragment"
+      tools:context=".pocketdex.ui.fragments.PokemonResultListFragment"
       tools:listitem="@layout/pokemon_result_row" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

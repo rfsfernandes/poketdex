@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent"
-    tools:context=".ui.fragments.details_pager_fragments.MovesInfoFragment">
+    tools:context=".pocketdex.ui.fragments.details_pager_fragments.MovesInfoFragment">
 
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/recyclerViewMovesInfo"

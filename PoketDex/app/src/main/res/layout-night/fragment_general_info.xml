@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.details_pager_fragments.GeneralInfoFragment">
+    tools:context=".pocketdex.ui.fragments.details_pager_fragments.GeneralInfoFragment">
 
   <LinearLayout
       android:layout_width="0dp"

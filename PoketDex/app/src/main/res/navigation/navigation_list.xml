@@ -7,7 +7,7 @@
 
   <fragment
       android:id="@+id/pokemonResultListFragment"
-      android:name="pt.rfsfernandes.ui.fragments.PokemonResultListFragment"
+      android:name="pt.rfsfernandes.pocketdex.ui.fragments.PokemonResultListFragment"
       android:label="fragment_pokemon_result_list"
       tools:layout="@layout/fragment_pokemon_result_list">
     <action
@@ -20,7 +20,7 @@
   </fragment>
   <fragment
       android:id="@+id/pokemonDetailsFragment"
-      android:name="pt.rfsfernandes.ui.fragments.PokemonDetailsFragment"
+      android:name="pt.rfsfernandes.pocketdex.ui.fragments.PokemonDetailsFragment"
       android:label="fragment_pokemon_details"
       tools:layout="@layout/fragment_pokemon_details"/>
 </navigation>
