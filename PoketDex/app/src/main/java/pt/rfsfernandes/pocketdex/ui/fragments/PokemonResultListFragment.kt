@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import pt.rfsfernandes.pocketdex.MyCustomApplication
 import pt.rfsfernandes.pocketdex.custom.adapters.PokemonResultAdapter
 import pt.rfsfernandes.pocketdex.custom.callbacks.ItemListClicked
 import pt.rfsfernandes.pocketdex.databinding.FragmentPokemonResultListBinding
-import pt.rfsfernandes.pocketdex.MyCustomApplication
 import pt.rfsfernandes.pocketdex.model.service_responses.PokemonResult
 import pt.rfsfernandes.pocketdex.ui.activities.MainActivity
 import pt.rfsfernandes.pocketdex.viewmodels.MainViewModel
@@ -28,8 +28,10 @@ class PokemonResultListFragment : Fragment(), ItemListClicked<PokemonResult?> {
     private var isLoading = false
     private var mMediaPlayer: MediaPlayer? = null
     private lateinit var mMyCustomApplication: MyCustomApplication
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentPokemonResultListBinding.inflate(inflater, container, false)
         val view: View = binding.root
         mPokemonResultAdapter = PokemonResultAdapter(requireContext(), this)
@@ -68,7 +70,8 @@ class PokemonResultListFragment : Fragment(), ItemListClicked<PokemonResult?> {
      * Initiates viewModel observers
      */
     private fun initViewModel() {
-        mMainViewModel.pokemonListResponseMutableLiveData.observe(viewLifecycleOwner
+        mMainViewModel.pokemonListResponseMutableLiveData.observe(
+            viewLifecycleOwner
         ) { results: List<PokemonResult?>? ->
             binding.progressBarResultList.visibility = View.GONE
             isLoading = false

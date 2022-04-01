@@ -10,7 +10,11 @@ import pt.rfsfernandes.pocketdex.model.pokemon_species.PokemonSpecies
 import pt.rfsfernandes.pocketdex.model.service_responses.PokemonResult
 import pt.rfsfernandes.pocketdex.model.type.Type
 
-@Database(entities = [PokemonResult::class, Pokemon::class, PokemonSpecies::class, Moves::class, Type::class], version = DBContract.DATABASE_VERSION, exportSchema = false)
+@Database(
+    entities = [PokemonResult::class, Pokemon::class, PokemonSpecies::class, Moves::class, Type::class],
+    version = DBContract.DATABASE_VERSION,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
     abstract val pokemonDAO: PokemonDAO?
 
@@ -28,10 +32,14 @@ abstract class AppDatabase : RoomDatabase() {
         }
 
         private fun buildDatabase(context: Context): AppDatabase {
-            return Room.databaseBuilder(context.applicationContext, AppDatabase::class.java, DBContract.DATABASE_NAME)
-                    .addCallback(object : Callback() {
-                    })
-                    .build()
+            return Room.databaseBuilder(
+                context.applicationContext,
+                AppDatabase::class.java,
+                DBContract.DATABASE_NAME
+            )
+                .addCallback(object : Callback() {
+                })
+                .build()
         }
     }
 }

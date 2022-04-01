@@ -16,8 +16,10 @@ import java.util.*
 class StatsInfoFragment : Fragment() {
     private lateinit var binding: FragmentStatsInfoBinding
     private val mMainViewModel: MainViewModel by sharedViewModel()
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentStatsInfoBinding.inflate(inflater, container, false)
         val view: View = binding.root
         return view
@@ -68,11 +70,15 @@ class StatsInfoFragment : Fragment() {
         }
         if (context != null) {
             val weightInKg = pokemon.weight / 10f
-            binding.textViewStatsWeight.text = String.format(Locale.getDefault(), "%.1f%s", weightInKg,
-                    requireContext().getString(R.string.kilograms))
+            binding.textViewStatsWeight.text = String.format(
+                Locale.getDefault(), "%.1f%s", weightInKg,
+                requireContext().getString(R.string.kilograms)
+            )
             val heightInMeters = pokemon.height / 10f
-            binding.textViewStatsHeight.text = String.format(Locale.getDefault(), "%.1f%s", heightInMeters,
-                    requireContext().getString(R.string.meters))
+            binding.textViewStatsHeight.text = String.format(
+                Locale.getDefault(), "%.1f%s", heightInMeters,
+                requireContext().getString(R.string.meters)
+            )
         }
         binding.textViewStatsBaseExperience.text = pokemon.baseExperience.toString()
     }

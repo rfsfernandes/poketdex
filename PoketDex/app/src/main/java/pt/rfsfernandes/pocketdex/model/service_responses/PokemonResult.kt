@@ -6,11 +6,11 @@ import pt.rfsfernandes.pocketdex.model.SimpleModelData
 
 @Entity
 class PokemonResult(
-        name: String,
-        url: String,
-        @PrimaryKey var listPosition: Int,
-        var pokemonImage: String,
-        var isSelected: Boolean
+    name: String,
+    url: String,
+    @PrimaryKey var listPosition: Int,
+    var pokemonImage: String,
+    var isSelected: Boolean
 ) : SimpleModelData(name, url) {
 
 

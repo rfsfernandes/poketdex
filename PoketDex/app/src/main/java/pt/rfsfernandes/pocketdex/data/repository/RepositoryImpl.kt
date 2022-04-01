@@ -24,7 +24,10 @@ class RepositoryImpl(
      * @param offset   Where the list begins
      * @param limit    Size of the list to be fetched
      */
-    override suspend fun getPokemonList(offset: Int, limit: Int): Flow<Resource<List<PokemonResult?>?>> =
+    override suspend fun getPokemonList(
+        offset: Int,
+        limit: Int
+    ): Flow<Resource<List<PokemonResult?>?>> =
         flow {
 
             val pokemonResultList =
@@ -118,35 +121,38 @@ class RepositoryImpl(
      *
      * @param pokemonId Pokemon ID
      */
-    override suspend fun getPokemonSpeciesById(pokemonId: Int): Flow<Resource<PokemonSpecies?>> = flow {
-        val pokemonSpecies = mPokemonDAO.getSpeciesByPokemonId(pokemonId)
-        pokemonSpecies?.let {
-            emit(Resource.Success(it))
-        }
-        if (pokemonSpecies == null) {
-            emit(Resource.Loading(isLoading = true))
-            try {
-                val serviceResponse = mPokemonService.getPokemonSpeciesById(pokemonId)
-                serviceResponse?.let { response ->
-                    if (response.isSuccessful) {
-                        if (response.body() != null) {
-                            val tempPokemonSpecies = response.body()
-                            tempPokemonSpecies!!.id = pokemonId
-                            mPokemonDAO.insertSpecies(tempPokemonSpecies.apply { id = pokemonId })
-                            emit(Resource.Success(mPokemonDAO.getSpeciesByPokemonId(pokemonId)))
+    override suspend fun getPokemonSpeciesById(pokemonId: Int): Flow<Resource<PokemonSpecies?>> =
+        flow {
+            val pokemonSpecies = mPokemonDAO.getSpeciesByPokemonId(pokemonId)
+            pokemonSpecies?.let {
+                emit(Resource.Success(it))
+            }
+            if (pokemonSpecies == null) {
+                emit(Resource.Loading(isLoading = true))
+                try {
+                    val serviceResponse = mPokemonService.getPokemonSpeciesById(pokemonId)
+                    serviceResponse?.let { response ->
+                        if (response.isSuccessful) {
+                            if (response.body() != null) {
+                                val tempPokemonSpecies = response.body()
+                                tempPokemonSpecies!!.id = pokemonId
+                                mPokemonDAO.insertSpecies(tempPokemonSpecies.apply {
+                                    id = pokemonId
+                                })
+                                emit(Resource.Success(mPokemonDAO.getSpeciesByPokemonId(pokemonId)))
+                            } else {
+                                emit(Resource.Error(response.message()))
+                            }
                         } else {
                             emit(Resource.Error(response.message()))
                         }
-                    } else {
-                        emit(Resource.Error(response.message()))
                     }
-                }
 
-            } catch (e: Exception) {
-                emit(Resource.Error(e.localizedMessage))
+                } catch (e: Exception) {
+                    emit(Resource.Error(e.localizedMessage))
+                }
             }
         }
-    }
 
     /**
      * Fetches a move by id. If there is a move with that ID already in the local database,
@@ -186,17 +192,18 @@ class RepositoryImpl(
      *
      * @param movesIds Moves IDs to fetch
      */
-    override suspend fun getMovesFromIds(movesIds: List<String?>?): Flow<Resource<List<Moves?>?>> = flow {
-        val movesList = mPokemonDAO.getMovesFromIdList(movesIds)
-        if (movesList != null && movesList.isNotEmpty()) {
-            emit(Resource.Success(movesList))
-        } else {
-            movesIds?.forEach {
-                getMoveById(it.toString())
+    override suspend fun getMovesFromIds(movesIds: List<String?>?): Flow<Resource<List<Moves?>?>> =
+        flow {
+            val movesList = mPokemonDAO.getMovesFromIdList(movesIds)
+            if (movesList != null && movesList.isNotEmpty()) {
+                emit(Resource.Success(movesList))
+            } else {
+                movesIds?.forEach {
+                    getMoveById(it.toString())
+                }
+                emit(Resource.Success(mPokemonDAO.getMovesFromIdList(movesIds)))
             }
-            emit(Resource.Success(mPokemonDAO.getMovesFromIdList(movesIds)))
         }
-    }
 
 
     /**

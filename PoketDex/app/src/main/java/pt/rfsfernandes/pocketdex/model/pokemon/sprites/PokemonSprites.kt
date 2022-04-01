@@ -1,7 +1,7 @@
 package pt.rfsfernandes.pocketdex.model.pokemon.sprites
 
-import com.google.gson.annotations.SerializedName
 import androidx.room.TypeConverters
+import com.google.gson.annotations.SerializedName
 import pt.rfsfernandes.pocketdex.data.local.PokemonTypeConverters
 
 /**
@@ -9,13 +9,13 @@ import pt.rfsfernandes.pocketdex.data.local.PokemonTypeConverters
  * By: rodrigofernandes
  */
 data class PokemonSprites(
-        @SerializedName("front_default")
-        var frontDefault: String,
-        @SerializedName("front_shiny")
-        var frontShiny: String,
-        @TypeConverters(PokemonTypeConverters::class)
-        @SerializedName("other")
-        var otherInfo: OtherSpriteInfo
+    @SerializedName("front_default")
+    var frontDefault: String,
+    @SerializedName("front_shiny")
+    var frontShiny: String,
+    @TypeConverters(PokemonTypeConverters::class)
+    @SerializedName("other")
+    var otherInfo: OtherSpriteInfo
 ) {
 
     override fun toString(): String {

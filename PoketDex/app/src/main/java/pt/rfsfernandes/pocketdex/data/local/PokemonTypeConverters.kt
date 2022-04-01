@@ -152,8 +152,10 @@ object PokemonTypeConverters {
     @TypeConverter
     fun stringToDamageRelations(data: String?): DamageRelations {
         if (data == null) {
-            return DamageRelations(ArrayList(), ArrayList(), ArrayList(),
-                    ArrayList(), ArrayList(), ArrayList())
+            return DamageRelations(
+                ArrayList(), ArrayList(), ArrayList(),
+                ArrayList(), ArrayList(), ArrayList()
+            )
         }
         val listType = object : TypeToken<DamageRelations?>() {}.type
         return Gson().fromJson(data, listType)

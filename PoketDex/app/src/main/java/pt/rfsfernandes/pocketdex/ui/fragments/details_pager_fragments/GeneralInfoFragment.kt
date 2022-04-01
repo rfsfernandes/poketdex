@@ -8,10 +8,10 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemClickListener
 import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import pt.rfsfernandes.pocketdex.MyCustomApplication
 import pt.rfsfernandes.pocketdex.custom.Constants
 import pt.rfsfernandes.pocketdex.custom.adapters.PokemonTypesAdapter
 import pt.rfsfernandes.pocketdex.databinding.FragmentGeneralInfoBinding
-import pt.rfsfernandes.pocketdex.MyCustomApplication
 import pt.rfsfernandes.pocketdex.model.pokemon.Pokemon
 import pt.rfsfernandes.pocketdex.ui.activities.MainActivity
 import pt.rfsfernandes.pocketdex.viewmodels.MainViewModel
@@ -23,8 +23,10 @@ class GeneralInfoFragment : Fragment() {
     private lateinit var mPokemonTypesAdapter: PokemonTypesAdapter
     private var isGeneralInfoLoaded = false
     private var isDescriptionLoaded = false
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentGeneralInfoBinding.inflate(inflater, container, false)
         val view: View = binding.root
         mMyCustomApplication = requireActivity().application as MyCustomApplication
@@ -36,13 +38,14 @@ class GeneralInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViewModel()
-        binding.pokemonTypeGridView.onItemClickListener = OnItemClickListener { parent: AdapterView<*>?, view1: View?, position: Int, id: Long ->
-            mMainViewModel.isLoading(true)
-            if (activity != null) {
-                (activity as MainActivity?)!!.setShowTypeInfo(true)
-                mMainViewModel.getTypeAndCounters(id.toInt(), Constants.SHOW_TYPE.POKEMON)
+        binding.pokemonTypeGridView.onItemClickListener =
+            OnItemClickListener { parent: AdapterView<*>?, view1: View?, position: Int, id: Long ->
+                mMainViewModel.isLoading(true)
+                if (activity != null) {
+                    (activity as MainActivity?)!!.setShowTypeInfo(true)
+                    mMainViewModel.getTypeAndCounters(id.toInt(), Constants.SHOW_TYPE.POKEMON)
+                }
             }
-        }
     }
 
     /**
@@ -57,7 +60,8 @@ class GeneralInfoFragment : Fragment() {
                 stopLoading()
             }
         }
-        mMainViewModel.pokemonDescriptionLiveData.observe(viewLifecycleOwner
+        mMainViewModel.pokemonDescriptionLiveData.observe(
+            viewLifecycleOwner
         ) { description: String? ->
             binding.textViewDescription.text = description
             isDescriptionLoaded = true

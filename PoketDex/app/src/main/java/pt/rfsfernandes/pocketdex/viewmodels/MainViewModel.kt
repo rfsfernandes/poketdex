@@ -119,7 +119,8 @@ class MainViewModel(private val mRepositoryImpl: RepositoryImpl) : ViewModel() {
                         val resourceResponse = it.data
                         resourceResponse?.let { response ->
                             var chosenFlavour = ""
-                            val country = Locale.getDefault().language.split("-").toTypedArray()[0].lowercase()
+                            val country = Locale.getDefault().language.split("-")
+                                .toTypedArray()[0].lowercase()
                             for (flavour in response.flavourEntriesList) {
                                 if (flavour.language.name.contains(country)) {
                                     chosenFlavour = flavour.getFlavourText()

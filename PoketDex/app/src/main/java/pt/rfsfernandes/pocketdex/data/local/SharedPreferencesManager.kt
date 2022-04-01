@@ -30,7 +30,8 @@ class SharedPreferencesManager {
         fun getInstance(application: Application?): SharedPreferencesManager {
             mApplication = application
             if (instance == null) {
-                sharedPrefs = mApplication!!.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
+                sharedPrefs =
+                    mApplication!!.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
                 sharedPrefsEditor = sharedPrefs.edit()
                 instance = SharedPreferencesManager()
             }

@@ -5,14 +5,14 @@ import com.google.gson.annotations.SerializedName
 
 @Entity
 data class PokemonListResponse(
-        @SerializedName("count")
-         var count: Int = 0,
-        @SerializedName("next")
-         var nextPage: String? = null,
-        @SerializedName("previous")
-         var previousPage: String? = null,
-        @SerializedName("results")
-         var resultList: List<PokemonResult>? = null
+    @SerializedName("count")
+    var count: Int = 0,
+    @SerializedName("next")
+    var nextPage: String? = null,
+    @SerializedName("previous")
+    var previousPage: String? = null,
+    @SerializedName("results")
+    var resultList: List<PokemonResult>? = null
 
 ) {
 

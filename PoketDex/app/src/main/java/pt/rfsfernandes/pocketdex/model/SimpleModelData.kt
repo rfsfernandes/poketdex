@@ -1,17 +1,16 @@
 package pt.rfsfernandes.pocketdex.model
 
 import com.google.gson.annotations.SerializedName
-import java.lang.StringBuilder
 
 /**
  * Class SimpleModelData created at 1/16/21 15:00 for the project PoketDex
  * By: rodrigofernandes
  */
 open class SimpleModelData(
-        @SerializedName("name")
-        var name: String,
-        @SerializedName("url")
-        var url: String
+    @SerializedName("name")
+    var name: String,
+    @SerializedName("url")
+    var url: String
 ) {
 
     val urlId: String

@@ -22,8 +22,10 @@ class MovesInfoFragment : Fragment(), MovesItemClick {
     private lateinit var binding: FragmentMovesInfoBinding
     private val mMainViewModel: MainViewModel by sharedViewModel()
     private lateinit var mPokemonMovesAdapter: PokemonMovesAdapter
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentMovesInfoBinding.inflate(inflater, container, false)
         val view: View = binding.root
         mPokemonMovesAdapter = PokemonMovesAdapter(requireContext(), this)
@@ -77,7 +79,7 @@ class MovesInfoFragment : Fragment(), MovesItemClick {
                     ?.let { mMainViewModel.getTypeAndCounters(it, Constants.SHOW_TYPE.MOVE) }
             }
             MOVES_ITEM.SIMPLE -> {
-                if(title != null && text != null)
+                if (title != null && text != null)
                     showSimpleDialogContent(title, text)
             }
         }

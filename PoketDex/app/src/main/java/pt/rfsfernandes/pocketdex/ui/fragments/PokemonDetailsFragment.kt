@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import pt.rfsfernandes.pocketdex.MyCustomApplication
 import pt.rfsfernandes.pocketdex.R
 import pt.rfsfernandes.pocketdex.custom.adapters.view_pager.DetailsPagerAdapter
 import pt.rfsfernandes.pocketdex.databinding.FragmentPokemonDetailsBinding
-import pt.rfsfernandes.pocketdex.MyCustomApplication
 import pt.rfsfernandes.pocketdex.model.pokemon.Pokemon
 import pt.rfsfernandes.pocketdex.viewmodels.MainViewModel
 
@@ -21,8 +21,10 @@ class PokemonDetailsFragment : Fragment() {
     private lateinit var mMyCustomApplication: MyCustomApplication
     private lateinit var mDetailsPagerAdapter: DetailsPagerAdapter
     private var maxPage = 1
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         binding = FragmentPokemonDetailsBinding.inflate(inflater, container, false)
         val view: View = binding.root
@@ -35,12 +37,18 @@ class PokemonDetailsFragment : Fragment() {
      * Sets up views
      */
     private fun setupViews() {
-        mDetailsPagerAdapter = DetailsPagerAdapter(childFragmentManager,
-                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, context)
+        mDetailsPagerAdapter = DetailsPagerAdapter(
+            childFragmentManager,
+            FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT, context
+        )
         binding.viewPagerDetails.adapter = mDetailsPagerAdapter
         maxPage = mDetailsPagerAdapter.count
         binding.viewPagerDetails.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
                 if (positionOffset == 0f) {
                     binding.textViewPagerTitle.text = mDetailsPagerAdapter.getPageTitle(position)
                 }
@@ -94,10 +102,17 @@ class PokemonDetailsFragment : Fragment() {
         }
         mMainViewModel.pokemonMutableLiveData.observe(viewLifecycleOwner) { pokemon: Pokemon? ->
             if (pokemon != null) {
-                binding.textViewPokemonNumber.text = String.format("%s%s",
-                        resources.getString(R.string.no), pokemon.id)
+                binding.textViewPokemonNumber.text = String.format(
+                    "%s%s",
+                    resources.getString(R.string.no), pokemon.id
+                )
             }
         }
-        mMainViewModel.detailsPagerLiveData.observe(viewLifecycleOwner) { page: Int? -> binding.viewPagerDetails.setCurrentItem(page!!, true) }
+        mMainViewModel.detailsPagerLiveData.observe(viewLifecycleOwner) { page: Int? ->
+            binding.viewPagerDetails.setCurrentItem(
+                page!!,
+                true
+            )
+        }
     }
 }

@@ -7,10 +7,10 @@ import com.google.gson.annotations.SerializedName
  * By: rodrigofernandes
  */
 data class EffectsEntries(
-        @SerializedName("effect")
-        var effect: String,
-        @SerializedName("short_effect")
-        var shortEffect: String
+    @SerializedName("effect")
+    var effect: String,
+    @SerializedName("short_effect")
+    var shortEffect: String
 ) {
 
     override fun toString(): String {
