@@ -4,6 +4,7 @@ import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.SearchView
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.navigation.NavController
@@ -16,11 +17,12 @@ import pt.rfsfernandes.pocketdex.R
 import pt.rfsfernandes.pocketdex.custom.Constants.SHOW_TYPE
 import pt.rfsfernandes.pocketdex.custom.dialogs.TypeCustomDialog
 import pt.rfsfernandes.pocketdex.databinding.ActivityMainBinding
+import pt.rfsfernandes.pocketdex.model.Resource
 import pt.rfsfernandes.pocketdex.model.service_responses.PokemonResult
 import pt.rfsfernandes.pocketdex.model.type.Type
 import pt.rfsfernandes.pocketdex.viewmodels.MainViewModel
 
-class MainActivity : FragmentActivity(), NavController.OnDestinationChangedListener {
+class MainActivity : FragmentActivity(), NavController.OnDestinationChangedListener, SearchView.OnQueryTextListener {
     private val mMainViewModel: MainViewModel by viewModel()
     private var mActivityMainBinding: ActivityMainBinding? = null
     private var mNavControllerList: NavController? = null
@@ -30,6 +32,7 @@ class MainActivity : FragmentActivity(), NavController.OnDestinationChangedListe
     private var mMyCustomApplication: MyCustomApplication? = null
     private var showTypeInfo = false
     private var pokemonId = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mMediaPlayerMenuSound = (application as MyCustomApplication).mediaPlayerMenuSound
@@ -46,12 +49,16 @@ class MainActivity : FragmentActivity(), NavController.OnDestinationChangedListe
         mNavControllerList!!.addOnDestinationChangedListener(this)
         initViewModel(savedInstanceState)
         mMainViewModel.isLoading(true)
-        mActivityMainBinding!!.imageButtonSound.setOnClickListener { e: View? -> handleMusic(true) }
-        if (mActivityMainBinding!!.imageButtonBack != null) {
-            mActivityMainBinding!!.imageButtonBack!!.visibility = if (mMyCustomApplication!!.isLandscape) View.INVISIBLE else if (pokemonId != 0) View.VISIBLE else View.INVISIBLE
-            mActivityMainBinding!!.imageButtonBack!!.setOnClickListener { e: View? -> mNavControllerList!!.popBackStack() }
-        }
+        mActivityMainBinding?.imageButtonSound?.setOnClickListener { e: View? -> handleMusic(true) }
+
+        mActivityMainBinding?.imageButtonBack?.visibility =
+            if (mMyCustomApplication!!.isLandscape) View.INVISIBLE else if (pokemonId != 0) View.VISIBLE else View.INVISIBLE
+        mActivityMainBinding?.imageButtonBack?.setOnClickListener { e: View? -> mNavControllerList!!.popBackStack() }
+
+        mMainViewModel.getAutoCompleteWords()
+        mActivityMainBinding?.searchView?.setOnQueryTextListener(this)
     }
+
 
     private fun handleMusic(fromClick: Boolean) {
         if (mMyCustomApplication!!.canPlaySounds) {
@@ -83,11 +90,11 @@ class MainActivity : FragmentActivity(), NavController.OnDestinationChangedListe
     }
 
     fun onItemClick(pokemonId: Int) {
-        if (!mMyCustomApplication!!.isLandscape) {
-            mNavControllerList!!.navigate(R.id.action_pokemonResultListFragment_to_pokemonDetailsFragment2)
+        if (mMyCustomApplication?.isLandscape == false) {
+            mNavControllerList?.navigate(R.id.action_pokemonResultListFragment_to_pokemonDetailsFragment2)
         } else {
-            if (mActivityMainBinding!!.linearLaoutDetailsContainer != null) {
-                mActivityMainBinding!!.linearLaoutDetailsContainer!!.visibility = View.VISIBLE
+            if (mActivityMainBinding?.linearLaoutDetailsContainer != null) {
+                mActivityMainBinding?.linearLaoutDetailsContainer!!.visibility = View.VISIBLE
             }
         }
         mMainViewModel.isLoading(true)
@@ -118,7 +125,11 @@ class MainActivity : FragmentActivity(), NavController.OnDestinationChangedListe
      */
     private fun handleMuteButton() {
         mActivityMainBinding!!.imageButtonSound.setImageDrawable(
-                if (mMyCustomApplication!!.canPlaySounds) ResourcesCompat.getDrawable(resources, R.drawable.volume_on, theme) else ResourcesCompat.getDrawable(resources, R.drawable.volume_off, theme)
+            if (mMyCustomApplication!!.canPlaySounds) ResourcesCompat.getDrawable(
+                resources,
+                R.drawable.volume_on,
+                theme
+            ) else ResourcesCompat.getDrawable(resources, R.drawable.volume_off, theme)
         )
     }
 
@@ -126,14 +137,30 @@ class MainActivity : FragmentActivity(), NavController.OnDestinationChangedListe
      * Initiates viewModel observers
      */
     private fun initViewModel(savedState: Bundle?) {
+        mMainViewModel.pokemonsForAutocomplete.observe(this) {
+            if (it is Resource.Success) {
+                val mutableListOfNames = it.data?.map { data ->
+                    val name = data?.name
+                    name?.substring(0, 1)?.uppercase() + name?.substring(1)
+                }
+//                mutableListOfNames?.let { arr ->
+//                    val adapter = ArrayAdapter(this@MainActivity, android.R.layout.simple_list_item_1, arr)
+//                    mActivityMainBinding?.autoCompleteTextView?.setAdapter(adapter)
+//                }
+
+            }
+        }
+
         mMainViewModel.pokemonListResponseMutableLiveData.observe(this) { pokemonListResponse: List<PokemonResult?>? ->
             if (pokemonListResponse != null && pokemonListResponse.size > 0) {
                 Log.d("Info from db", "Success")
             }
         }
         mMainViewModel.fetchErrorLiveData.observe(this) { message: String? ->
-            Snackbar.make(findViewById(android.R.id.content), message!!,
-                    Snackbar.LENGTH_LONG).show()
+            Snackbar.make(
+                findViewById(android.R.id.content), message!!,
+                Snackbar.LENGTH_LONG
+            ).show()
         }
         mMainViewModel.selectedPokemonId.observe(this) { pokemonId: Int ->
             this.pokemonId = pokemonId
@@ -143,7 +170,8 @@ class MainActivity : FragmentActivity(), NavController.OnDestinationChangedListe
                         mNavControllerList!!.navigate(R.id.pokemonDetailsFragment)
                     } else {
                         if (mActivityMainBinding!!.linearLaoutDetailsContainer != null) {
-                            mActivityMainBinding!!.linearLaoutDetailsContainer!!.visibility = View.VISIBLE
+                            mActivityMainBinding!!.linearLaoutDetailsContainer!!.visibility =
+                                View.VISIBLE
                         }
                         mNavControllerList!!.navigate(R.id.pokemonResultListFragment)
                     }
@@ -216,19 +244,38 @@ class MainActivity : FragmentActivity(), NavController.OnDestinationChangedListe
         }
     }
 
-    override fun onDestinationChanged(controller: NavController, destination: NavDestination, arguments: Bundle?) {
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?
+    ) {
         if (destination.id == R.id.pokemonDetailsFragment && !mMyCustomApplication!!.isLandscape) {
             if (mActivityMainBinding!!.imageButtonBack != null) {
                 mActivityMainBinding!!.imageButtonBack!!.visibility = View.VISIBLE
             }
         } else if (destination.id == R.id.pokemonResultListFragment && !mMyCustomApplication!!.isLandscape) {
             if (mActivityMainBinding!!.imageButtonBack != null) {
-                mActivityMainBinding!!.imageButtonBack!!.visibility = View.GONE
+                mActivityMainBinding!!.imageButtonBack!!.visibility = View.INVISIBLE
             }
         } else {
             if (mActivityMainBinding!!.imageButtonBack != null) {
-                mActivityMainBinding!!.imageButtonBack!!.visibility = View.GONE
+                mActivityMainBinding!!.imageButtonBack!!.visibility = View.INVISIBLE
             }
         }
+    }
+
+    var mQuery: String? = ""
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        mQuery = query
+        mMainViewModel.pokemonListResponseMutableLiveData.postValue(mutableListOf())
+        mMainViewModel.getPokemonList(mQuery)
+        return true
+    }
+
+    override fun onQueryTextChange(newText: String?): Boolean {
+        mQuery = newText
+        mMainViewModel.pokemonListResponseMutableLiveData.postValue(mutableListOf())
+        mMainViewModel.getPokemonList(mQuery)
+        return true
     }
 }

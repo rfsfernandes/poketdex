@@ -12,8 +12,14 @@ import pt.rfsfernandes.pocketdex.model.type.Type
 
 @Dao
 interface PokemonDAO {
+    @Query("SELECT * FROM pokemonresult")
+    suspend fun getPokemonCount(): List<PokemonResult>?
+
     @Query("SELECT * FROM pokemonresult WHERE listPosition BETWEEN :from AND :to")
     suspend fun getPokemonsFromOffsetWithLimit(from: Int, to: Int): List<PokemonResult>?
+
+    @Query("SELECT * FROM pokemonresult WHERE name LIKE :query")
+    suspend fun getPokemonsByName(query: String): List<PokemonResult>?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertPokemonResults(pokemonResult: List<PokemonResult?>?)

@@ -19,10 +19,13 @@
 
   <androidx.recyclerview.widget.RecyclerView
       android:id="@+id/list"
-      android:overScrollMode="never"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:background="@android:color/transparent"
+      android:clipToPadding="false"
+      android:fadingEdgeLength="32dp"
+      android:overScrollMode="never"
+      android:requiresFadingEdge="vertical"
       app:layoutManager="LinearLayoutManager"
       tools:context=".pocketdex.ui.fragments.PokemonResultListFragment"
       tools:listitem="@layout/pokemon_result_row" />

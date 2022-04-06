@@ -8,6 +8,7 @@
   <color name="white">#fafafa</color>
   <color name="black">#343334</color>
   <color name="darkish_gray">#DDDBDD</color>
+  <color name="darkish_gray_op">#43000000</color>
   <color name="slightly_light_gray">#E6E6E7</color>
   <color name="transparent">#00FFFFFF</color>
 <!--  Pokemon types colors -->

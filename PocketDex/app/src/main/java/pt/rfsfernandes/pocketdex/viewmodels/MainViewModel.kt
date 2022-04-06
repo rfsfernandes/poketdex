@@ -20,6 +20,7 @@ import java.util.*
 
 class MainViewModel(private val mRepositoryImpl: RepositoryImpl) : ViewModel() {
     val pokemonListResponseMutableLiveData = MutableLiveData<MutableList<PokemonResult?>?>()
+    val pokemonsForAutocomplete = MutableLiveData<Resource<List<PokemonResult?>?>>()
     val fetchErrorLiveData = MutableLiveData<String>()
     val pokemonMutableLiveData = MutableLiveData<Pokemon>()
     val isLoadingMutableLiveData = MutableLiveData<Boolean>()
@@ -35,19 +36,21 @@ class MainViewModel(private val mRepositoryImpl: RepositoryImpl) : ViewModel() {
     /**
      * Fetches a list of Pokemons with an offset and a limit
      */
-    fun getPokemonList() {
+    fun getPokemonList(query: String? = "") {
         viewModelScope.launch {
-            mRepositoryImpl.getPokemonList(currentOffset, Constants.RESULT_LIMIT).collect {
+            if(query.isNullOrEmpty())
+                mRepositoryImpl.getPokemonList(currentOffset, Constants.RESULT_LIMIT).collect {
                 when (it) {
                     is Resource.Success -> {
                         val resourceResponse = it.data as MutableList
                         resourceResponse.let { response ->
                             if (pokemonListResponseMutableLiveData.value != null) {
                                 val tempPokemonList = pokemonListResponseMutableLiveData.value
-                                tempPokemonList!!.removeAt(tempPokemonList.size - 1)
-                                tempPokemonList.addAll(response)
-                                tempPokemonList.add(null)
-                                pokemonListResponseMutableLiveData.postValue(tempPokemonList)
+                                tempPokemonList?.addAll(response)
+                                tempPokemonList?.let { list ->
+                                    pokemonListResponseMutableLiveData.postValue(list)
+                                }
+
                             } else {
                                 response.add(null)
                                 pokemonListResponseMutableLiveData.postValue(response)
@@ -70,6 +73,29 @@ class MainViewModel(private val mRepositoryImpl: RepositoryImpl) : ViewModel() {
                     }
                 }
             }
+            else
+                mRepositoryImpl.getPokemonByQuery(query).collect {
+                    when (it) {
+                        is Resource.Success -> {
+                            currentOffset = 0
+                            val resourceResponse = it.data as MutableList
+                            resourceResponse.let { response ->
+                                pokemonListResponseMutableLiveData.postValue(response)
+                            }
+                        }
+                        is Resource.Error -> {
+                            it.message?.let {
+                                fetchErrorLiveData.postValue(it)
+                            }
+
+                        }
+                        is Resource.NetworkError -> {
+                            it.message?.let {
+                                fetchErrorLiveData.postValue(it)
+                            }
+                        }
+                    }
+                }
         }
     }
 
@@ -252,32 +278,6 @@ class MainViewModel(private val mRepositoryImpl: RepositoryImpl) : ViewModel() {
 
     }
 
-/*    */
-    /**
-     * Fetches a list of Moves from the endpoint
-     *
-     * @param movesId List of move ID's
-     *//*
-    private fun getMovesFromIdsAPI(movesId: List<String?>) {
-        Thread {
-            val movesList: MutableList<Moves> = ArrayList()
-            val counter = intArrayOf(0)
-            for (moveId in movesId) {
-                mRepositoryImpl.getMoveById(moveId!!, object : ResponseCallBack<Moves?> {
-                    override fun onSuccess(response: Moves) {
-                        counter[0]++
-                        movesList.add(response)
-                        if (movesList.size == counter[0]) {
-                            movesInfo.postValue(movesList)
-                        }
-                    }
-
-                    override fun onFailure(errorMessage: String) {}
-                })
-            }
-        }.start()
-    }*/
-
     /**
      * Get's counters and weaknesses from a type
      *
@@ -307,6 +307,17 @@ class MainViewModel(private val mRepositoryImpl: RepositoryImpl) : ViewModel() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Gets all pokemons from DB or API
+     */
+    fun getAutoCompleteWords() {
+        viewModelScope.launch {
+            mRepositoryImpl.getWholePokemonList().collect {
+                pokemonsForAutocomplete.postValue(it)
             }
         }
     }

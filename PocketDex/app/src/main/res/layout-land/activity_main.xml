@@ -14,19 +14,30 @@
     tools:context="pt.rfsfernandes.pocketdex.ui.activities.MainActivity">
   <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:orientation="horizontal"
-      android:background="@drawable/topbar_portrait">
+      android:layout_height="50dp"
+      android:background="@drawable/topbar_portrait"
+      android:gravity="center_vertical"
+      android:orientation="horizontal">
 
     <Space
+        android:layout_width="48dp"
+        android:layout_height="24dp" />
+
+    <SearchView
+        android:id="@+id/searchView"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/search_background"
+        android:iconifiedByDefault="false"
+        android:queryBackground="@color/transparent" />
 
     <ImageButton
         android:id="@+id/imageButtonSound"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:backgroundTint="@android:color/transparent"
         android:src="@drawable/volume_on" />
 
@@ -35,19 +46,19 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:orientation="horizontal">
+
     <fragment
-        android:name="androidx.navigation.fragment.NavHostFragment"
         android:id="@+id/displayPokemonList"
+        android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="2"
+        app:defaultNavHost="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:navGraph="@navigation/navigation_list"
-        app:defaultNavHost="true"
-        />
+        app:navGraph="@navigation/navigation_list" />
 
     <LinearLayout
         android:id="@+id/linearLaoutDetailsContainer"

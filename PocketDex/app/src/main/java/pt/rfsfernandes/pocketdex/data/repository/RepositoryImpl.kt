@@ -3,7 +3,6 @@ package pt.rfsfernandes.pocketdex.data.repository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.runBlocking
 import pt.rfsfernandes.pocketdex.custom.Constants
 import pt.rfsfernandes.pocketdex.data.local.PokemonDAO
 import pt.rfsfernandes.pocketdex.data.remote.PokemonService
@@ -19,6 +18,60 @@ class RepositoryImpl(
     private val mPokemonDAO: PokemonDAO
 ) : Repository {
 
+    override suspend fun getWholePokemonList(): Flow<Resource<List<PokemonResult?>?>> =
+        flow {
+            try {
+                val pokemonCachedList = mPokemonDAO.getPokemonCount()
+                if (pokemonCachedList.isNullOrEmpty()) {
+                    val firstResponse =
+                        mPokemonService.getPokemonListPagination(1, 0)
+                    if (firstResponse.isSuccessful) {
+                        firstResponse.body()?.let {
+                            val response =
+                                mPokemonService.getPokemonListPagination(0, it.count)
+                            if (response.isSuccessful) {
+                                val tempList: MutableList<PokemonResult> = ArrayList()
+                                response.body()?.resultList?.let { list ->
+                                    for (i in list.indices) {
+                                        val pokemonResult: PokemonResult = list[i]
+                                        tempList.add(
+                                            PokemonResult(
+                                                pokemonResult.name, pokemonResult.url,
+                                                i + 1,
+                                                Constants.ARTWORK_URL.replace(
+                                                    "{pokemonId}",
+                                                    (i + 1).toString()
+                                                ), false
+                                            )
+                                        )
+                                    }
+                                    mPokemonDAO.insertPokemonResults(tempList)
+                                    emit(
+                                        Resource.Success(
+                                            tempList
+                                        )
+                                    )
+                                }
+                            } else {
+                                emit(Resource.Error(firstResponse.message(), listOf()))
+                            }
+                        }
+                    } else {
+                        emit(Resource.Error(firstResponse.message(), listOf()))
+                    }
+                } else {
+                    emit(
+                        Resource.Success(
+                            pokemonCachedList
+                        )
+                    )
+                }
+            } catch (e: Exception) {
+                emit(Resource.NetworkError(e.localizedMessage))
+            }
+
+        }
+
     /**
      * Fetches a list of pokemons. If there is a list already in the local database, should return
      * that list. If there isn't, should use API Endpoint
@@ -26,7 +79,10 @@ class RepositoryImpl(
      * @param offset   Where the list begins
      * @param limit    Size of the list to be fetched
      */
-    override suspend fun getPokemonList(offset: Int, limit: Int): Flow<Resource<List<PokemonResult?>?>> =
+    override suspend fun getPokemonList(
+        offset: Int,
+        limit: Int
+    ): Flow<Resource<List<PokemonResult?>?>> =
         flow {
 
             val pokemonResultList =
@@ -38,7 +94,7 @@ class RepositoryImpl(
                 emit(Resource.Loading(isLoading = true))
                 try {
                     val serviceResponse = mPokemonService.getPokemonListPagination(offset, limit)
-                    serviceResponse?.let { response ->
+                    serviceResponse.let { response ->
                         if (response.isSuccessful) {
                             val tempList: MutableList<PokemonResult> = ArrayList()
                             response.body()?.let { body ->
@@ -78,6 +134,24 @@ class RepositoryImpl(
 
             }
         }
+
+    /**
+     * Fetches a list of pokemons with a name like query
+     *
+     * @param query Name to be queried
+     */
+    override suspend fun getPokemonByQuery(
+        query: String
+    ): Flow<Resource<List<PokemonResult?>?>> =
+        flow {
+
+            val pokemonResultList =
+                mPokemonDAO.getPokemonsByName("%$query%")
+            pokemonResultList?.let {
+                emit(Resource.Success(it))
+            }
+        }
+
 
     /**
      * Fetches a pokemon by id. If there is a pokemon with that ID already in the local database,
@@ -120,35 +194,38 @@ class RepositoryImpl(
      *
      * @param pokemonId Pokemon ID
      */
-    override suspend fun getPokemonSpeciesById(pokemonId: Int): Flow<Resource<PokemonSpecies?>> = flow {
-        val pokemonSpecies = mPokemonDAO.getSpeciesByPokemonId(pokemonId)
-        pokemonSpecies?.let {
-            emit(Resource.Success(it))
-        }
-        if (pokemonSpecies == null) {
-            emit(Resource.Loading(isLoading = true))
-            try {
-                val serviceResponse = mPokemonService.getPokemonSpeciesById(pokemonId)
-                serviceResponse?.let { response ->
-                    if (response.isSuccessful) {
-                        if (response.body() != null) {
-                            val tempPokemonSpecies = response.body()
-                            tempPokemonSpecies!!.id = pokemonId
-                            mPokemonDAO.insertSpecies(tempPokemonSpecies.apply { id = pokemonId })
-                            emit(Resource.Success(mPokemonDAO.getSpeciesByPokemonId(pokemonId)))
+    override suspend fun getPokemonSpeciesById(pokemonId: Int): Flow<Resource<PokemonSpecies?>> =
+        flow {
+            val pokemonSpecies = mPokemonDAO.getSpeciesByPokemonId(pokemonId)
+            pokemonSpecies?.let {
+                emit(Resource.Success(it))
+            }
+            if (pokemonSpecies == null) {
+                emit(Resource.Loading(isLoading = true))
+                try {
+                    val serviceResponse = mPokemonService.getPokemonSpeciesById(pokemonId)
+                    serviceResponse?.let { response ->
+                        if (response.isSuccessful) {
+                            if (response.body() != null) {
+                                val tempPokemonSpecies = response.body()
+                                tempPokemonSpecies!!.id = pokemonId
+                                mPokemonDAO.insertSpecies(tempPokemonSpecies.apply {
+                                    id = pokemonId
+                                })
+                                emit(Resource.Success(mPokemonDAO.getSpeciesByPokemonId(pokemonId)))
+                            } else {
+                                emit(Resource.Error(response.message()))
+                            }
                         } else {
                             emit(Resource.Error(response.message()))
                         }
-                    } else {
-                        emit(Resource.Error(response.message()))
                     }
-                }
 
-            } catch (e: Exception) {
-                emit(Resource.Error(e.localizedMessage))
+                } catch (e: Exception) {
+                    emit(Resource.Error(e.localizedMessage))
+                }
             }
         }
-    }
 
     /**
      * Fetches a move by id. If there is a move with that ID already in the local database,
@@ -188,19 +265,20 @@ class RepositoryImpl(
      *
      * @param movesIds Moves IDs to fetch
      */
-    override suspend fun getMovesFromIds(movesIds: List<String?>?): Flow<Resource<List<Moves?>?>> = flow {
-        val movesList = mPokemonDAO.getMovesFromIdList(movesIds)
-        if (movesList != null && movesList.isNotEmpty()) {
-            emit(Resource.Success(movesList))
-        } else {
-            movesIds?.forEach {
+    override suspend fun getMovesFromIds(movesIds: List<String?>?): Flow<Resource<List<Moves?>?>> =
+        flow {
+            val movesList = mPokemonDAO.getMovesFromIdList(movesIds)
+            if (movesList != null && movesList.isNotEmpty()) {
+                emit(Resource.Success(movesList))
+            } else {
+                movesIds?.forEach {
 //                runBlocking {
-                    getMoveById(it.toString()).collect {  }
+                    getMoveById(it.toString()).collect { }
 //                }
+                }
+                emit(Resource.Success(mPokemonDAO.getMovesFromIdList(movesIds)))
             }
-            emit(Resource.Success(mPokemonDAO.getMovesFromIdList(movesIds)))
         }
-    }
 
 
     /**

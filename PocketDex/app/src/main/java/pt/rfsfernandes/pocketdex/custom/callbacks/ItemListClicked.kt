@@ -5,5 +5,5 @@ package pt.rfsfernandes.pocketdex.custom.callbacks
  * By: rodrigofernandes
  */
 interface ItemListClicked<T> {
-    fun onClick(obj: T)
+    fun onClick(obj: T, position: Int)
 }

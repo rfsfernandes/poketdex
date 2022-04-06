@@ -8,6 +8,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.facebook.drawee.drawable.ProgressBarDrawable
 import com.facebook.drawee.generic.GenericDraweeHierarchyBuilder
@@ -15,35 +17,21 @@ import com.facebook.drawee.view.SimpleDraweeView
 import pt.rfsfernandes.pocketdex.R
 import pt.rfsfernandes.pocketdex.custom.callbacks.ItemListClicked
 import pt.rfsfernandes.pocketdex.custom.utils.UtilsClass
+import pt.rfsfernandes.pocketdex.databinding.PokemonResultRowBinding
 import pt.rfsfernandes.pocketdex.model.service_responses.PokemonResult
 
 class PokemonResultAdapter(
     private val mContext: Context,
     private val callback: ItemListClicked<PokemonResult?>
-) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : ListAdapter<PokemonResult, RecyclerView.ViewHolder>(DiffCallback) {
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
-    private var mPokemonResultList: List<PokemonResult?> = ArrayList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return if (viewType == VIEW_TYPE_ITEM) {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.pokemon_result_row, parent, false)
-            PokemonResultViewHolder(view)
-        } else {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.loading_row, parent, false)
-            LoadingViewHolder(view)
-        }
+        return PokemonResultViewHolder(PokemonResultRowBinding.inflate(LayoutInflater.from(parent.context), parent, false), mContext)
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (mPokemonResultList[position] == null) VIEW_TYPE_LOADING else VIEW_TYPE_ITEM
-    }
-
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is PokemonResultViewHolder) {
-            populateItemRows(holder, position)
-        }
+        return VIEW_TYPE_ITEM
     }
 
     /**
@@ -53,14 +41,14 @@ class PokemonResultAdapter(
      * @param position Position of the item
      */
     private fun populateItemRows(holder: PokemonResultViewHolder, position: Int) {
-        val item = mPokemonResultList[position]
+        val item = getItem(position)
         holder.mItem = item
-        holder.textViewPokemonName.text = UtilsClass.toCamelCase(item!!.name)
-        holder.mSimpleDraweeView.setImageURI(item.pokemonImage)
-        holder.textViewPokemonNumber.text = item.listPosition.toString()
-        holder.mView.setOnClickListener { e: View? -> callback.onClick(item) }
-        holder.selectedView.visibility = if (item.isSelected) View.VISIBLE else View.GONE
-        holder.imageViewIconPokeball.setImageDrawable(
+        holder.mBinding.textViewPokemonName.text = UtilsClass.toCamelCase(item!!.name)
+        holder.mBinding.imageViewPokemonList.setImageURI(item.pokemonImage)
+        holder.mBinding.textViewPokemonNumber.text = item.listPosition.toString()
+        holder.mBinding.root.setOnClickListener { e: View? -> callback.onClick(item, position) }
+        holder.mBinding.viewSelect.visibility = if (item.isSelected) View.VISIBLE else View.GONE
+        holder.mBinding.imageViewIconPokeball.setImageDrawable(
             if (item.isSelected) ResourcesCompat.getDrawable(
                 mContext.resources,
                 R.drawable.open,
@@ -69,37 +57,14 @@ class PokemonResultAdapter(
         )
     }
 
-    override fun getItemCount(): Int {
-        return mPokemonResultList.size
-    }
+    class PokemonResultViewHolder(val mBinding: PokemonResultRowBinding, val mContext: Context) : RecyclerView.ViewHolder(mBinding.root) {
 
-    /**
-     * Assigns a value to the global List of PokemonResult and notifies the adapter of that change
-     *
-     * @param pokemonResults New list
-     */
-    fun refreshList(pokemonResults: List<PokemonResult?>) {
-        mPokemonResultList = pokemonResults
-        notifyDataSetChanged()
-    }
-
-    inner class PokemonResultViewHolder(val mView: View) : RecyclerView.ViewHolder(mView) {
-        val textViewPokemonName: TextView
-        val mSimpleDraweeView: SimpleDraweeView
-        val textViewPokemonNumber: TextView
-        val selectedView: View
-        val imageViewIconPokeball: ImageView
         var mItem: PokemonResult? = null
 
         init {
-            textViewPokemonName = mView.findViewById(R.id.textViewPokemonName)
-            textViewPokemonNumber = mView.findViewById(R.id.textViewPokemonNumber)
-            selectedView = mView.findViewById(R.id.viewSelect)
-            mSimpleDraweeView = mView.findViewById(R.id.imageViewPokemonList)
-            mSimpleDraweeView.hierarchy = GenericDraweeHierarchyBuilder(mContext.resources)
+            mBinding.imageViewPokemonList.hierarchy = GenericDraweeHierarchyBuilder(mContext.resources)
                 .setProgressBarImage(ProgressBarDrawable())
                 .build()
-            imageViewIconPokeball = mView.findViewById(R.id.imageViewIconPokeball)
         }
     }
 
@@ -108,6 +73,25 @@ class PokemonResultAdapter(
 
         init {
             progressBar = itemView.findViewById(R.id.progressBar)
+        }
+    }
+
+
+    object DiffCallback : DiffUtil.ItemCallback<PokemonResult>() {
+        override fun areItemsTheSame(
+            oldItem: PokemonResult,
+            newItem: PokemonResult
+        ): Boolean = oldItem.listPosition == newItem.listPosition
+
+        override fun areContentsTheSame(
+            oldItem: PokemonResult,
+            newItem: PokemonResult
+        ): Boolean = oldItem.listPosition == newItem.listPosition
+    }
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is PokemonResultViewHolder) {
+            populateItemRows(holder, position)
         }
     }
 }

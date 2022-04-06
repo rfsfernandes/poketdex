@@ -21,11 +21,11 @@ class PokemonResult(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
         other as PokemonResult
-
+        if(name != other.name) return false
+        if(url != other.url) return false
         if (listPosition != other.listPosition) return false
         if (pokemonImage != other.pokemonImage) return false
         if (isSelected != other.isSelected) return false
@@ -39,5 +39,6 @@ class PokemonResult(
         result = 31 * result + isSelected.hashCode()
         return result
     }
+
 
 }
